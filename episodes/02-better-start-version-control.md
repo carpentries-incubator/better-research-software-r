@@ -48,12 +48,17 @@ ls -laF
 total 272
 drwxr-xr-x@   5 jsgro  staff     160 Oct 14 10:04 ./
 drwx------@ 717 jsgro  staff   22944 Oct 28 09:57 ../
+-rw-r--r--@   1 jsgro  staff    6148 Oct 28 17:26 .DS_Store
+drwxr-xr-x    5 jsgro  staff     160 Oct 28 17:24 .Rproj.user/
+-rw-r--r--    1 jsgro  staff      40 Oct 28 17:24 .gitignore
 drwxr-xr-x@   4 jsgro  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
 -rw-r--r--@   1 jsgro  staff  132981 Oct 14 09:58 data.json
 -rw-r--r--@   1 jsgro  staff    1762 Oct 14 09:35 my code v2.R
 ```
 
-(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`. Windows or Linux users will not see this symbol.)
+(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`. Windows or Linux users will not see this symbol or file `.DS_Store` which is specific to macOS.
+
+The directory `Rproj.user/` was created by RStudio when the project was created in the previous section.
 
 Over the rest of the course, we will transform a collection of these files into a well-structured software project that 
 follows established good practices in research software engineering.
@@ -157,6 +162,8 @@ and the most common commands used to work with one.
 
 ::: instructor
 
+CHANGE TBD
+
 Open up VS Code, and launch a **Git Bash** terminal.
 Call out how your prompt looks,
 and make sure that Windows users are not accidentally using PowerShell.
@@ -182,18 +189,17 @@ $ git init
 
 It should be noted that this repository is "hidden" as it starts with a dot. We can find its name with the same list command used previously:
 
-
 ```bash
-$ git init
+$ ls -laF
 ```
 
-A new entry will be visible:
+A new line will be visible:
 
-```
+```output
 drwxr-xr-x   10 jsgro  staff     320 Oct 28 14:11 .git/
 ```
 
-We can see that its name is `.git` and the trailing slash confirms that it is a directory
+We can see that its name is **`.git`** and the trailing slash confirms that it is a directory into which the Git software will write.
 
 We can check everything is set up correctly by asking Git to tell us the status of our project:
 
@@ -222,17 +228,30 @@ Git to track and store (GBs to TBs of space telescope data) or require sensitive
 
 Before we commit this initial version, we should try to run it. This is often the first thing you might do upon receiving someone's code.
 
-```bash
-$ python3 my\ code\ v2.py
-```
+There are multiple ways to run R code:
 
-You will get an error that looks something like the following:
+Option 1: In RStudio 
+
+- Click once on the file `my code v2.R` within the Files Tab. This will open the file in the top left quadrant.
+- Then click on the **"Source"** icon located at the top right of the opened file
+
+Option 2: from the Shell window
+
+- Any R script can be run within the shell with command **`RSCRIPT`** which is part of any R installation.
+- The command is all uppercase and blank spaces in the file name have to be escaped by a backslash
+
+```bash
+$ RSCRIPT my\ code\ v2.R 
+```
+In both cases running this file will produce an error:
 
 ```output
-Traceback (most recent call last):
-  File "/Users/USERNAME/Downloads/spacewalks/my code v2.py", line 2, in <module>
-    data_f = open('/home/sarah/Projects/astronaut-analysis/data.json', 'r')
-FileNotFoundError: [Errno 2] No such file or directory: '/home/sarah/Projects/astronaut-analysis/data.json'
+Error in open.connection(con, "rb") : cannot open the connection
+Calls: read_json ... parse_and_simplify -> parseJSON -> parse_con -> open -> open.connection
+In addition: Warning message:
+In open.connection(con, "rb") :
+  cannot open file '/home/sarah/Projects/astronaut-analysis/data.json': No such file or directory
+Execution halted
 ```
 
 We get this error because the paths to the data files have been hard coded as absolute paths for the original developer's machine.
@@ -243,10 +262,17 @@ This is a best practice if you decide to commit broken code.
 
 ### Add files into repository
 
+Befgore proceeding let's display once more the files as Git sees them:
+
+```bash
+$ git status
+```
+
+From this point we are going to start tracking files with Git.
 We can tell Git to track a file using `git add`:
 
 ```bash
-$ git add my\ code\ v2.py
+$ git add my\ code\ v2.R
 $ git add data.json
 ```
 and then check the right thing happened:
@@ -263,13 +289,25 @@ No commits yet
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 	new file:   data.json
-	new file:   my code v2.py
+	new file:   my code v2.R
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.DS_Store
+	.gitignore
+	spacewalks.Rproj
 ```
 
-Git now knows that should track the changes to `my code v2.py` and `data.json`,
+Git now knows that we should track the changes to files `my code v2.R` and `data.json`,
 but it has not 'committed' those changes to the record yet.
-A commit is a snapshot of how your tracked files have changed at a stage in time.
-To create a commit that records we added two new files, we need to run one more command:
+
+When we are sure that we want to proceed, we can *commit* the changes with a `git commit` command often called "a commit".
+
+A commit is a snapshot of how your tracked files have changed at this moment in time, which is referred to as a "stage".
+To create a commit that records the fact that we added two new files, we need to run one more command.
+
+The following is a multiline commit as the double quote is not closed at the end of the first line.
+As you press Enter or Return, you will see a temporary prompt: `dquote>` which simply means that more text can be entered on this and perhaps more lines until the double quote is closed on the last line:
 
 ```bash
 $ git commit -m "Add the initial spacewalks data and code
@@ -278,10 +316,10 @@ BREAKING CHANGE: Path to data is hard coded and needs to be fixed"
 ```
 
 ```output
-[main (root-commit) bf55eb7] Add the initial spacewalks data and code
- 2 files changed, 437 insertions(+)
+[main (root-commit) 551dc9d] Add the initial spacewalks data and code BREAKING CHANGE: Path to data is hard coded and needs to be fixed
+ 2 files changed, 448 insertions(+)
  create mode 100644 data.json
- create mode 100644 my code v2.py
+ create mode 100644 my code v2.R
 ```
 
 At this point, Git has taken everything we have told it to save with the `git add` command and stored a copy (snapshot) of the files in a special, hidden `.git` directory.
@@ -301,6 +339,9 @@ Use this additional space to explain why you made changes and/or what their impa
 
 ### Choose how you teach version control steps from here
 
+CHANGE TBD
+
+
 At this point in the lesson, you may choose to demonstrate how the same steps of staging and committing changes can also be achieved with the VS Code graphical interface.
 
 ![The Source Control interface to Git in VS Code](fig/vscode-source-control.png){alt="Screenshot of VS Code with the SOURCE CONTROL interface open in the left hand pane of the window. The interface shows one modified file staged for commit, an empty text input box where a commit message can be entered, and a green button labeled 'Commit & Push'"}
@@ -315,6 +356,19 @@ If we run `git status` now, we see:
 ```bash
 $ git status
 ```
+```
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.DS_Store
+	.gitignore
+	spacewalks.Rproj
+
+nothing added to commit but untracked files present (use "git add" to track)output
+```
+These files and directory do not need to be tracked and we'll take care of them shortly. 
+
+CONTINUE BELOW JYS
 
 ```output
 On branch main
