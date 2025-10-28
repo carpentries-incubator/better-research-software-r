@@ -35,14 +35,12 @@ and start tracking changes to it with version control.
 ## From script to software project
 
 In the previous episode you have unzipped `spacewalks.zip` into a directory `spacewalks` in your home directory.
-If you have not opened the software directory in VS Code already – go to **File -> Open Folder** and find `spacewalks`.
 
-We also need access to a command line terminal to type various commands. In VS Code start a new terminal 
-via **Terminal -> New Terminal** (Windows users need to make sure the new terminal is "GitBash"; not "PowerShell" or "cmd"). 
-Alternatively, you can work with a shell terminal directly (and not within VS Code), if you so prefer.
+Within the RStudio the files contained within `spacewalks` should appear within the **`Files`** Tab located in the bottom-right quadrant by default.
 
-If you are not already inside this directory, from your command line terminal you can navigate to it and list its 
-contents with:
+However, it is useful to also work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
+
+Within the Shell terminal, if you are not already inside this directory, from your command line terminal you can navigate to it and list its contents with:
 
 ```bash
 cd ~/spacewalks
