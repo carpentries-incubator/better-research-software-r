@@ -38,20 +38,22 @@ In the previous episode you have unzipped `spacewalks.zip` into a directory `spa
 
 Within the RStudio the files contained within `spacewalks` should appear within the **`Files`** Tab located in the bottom-right quadrant by default.
 
-However, it is useful to also work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
+However, it is useful to access files and work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
 
-Within the Shell terminal, if you are not already inside this directory, from your command line terminal you can navigate to it and list its contents with:
+Within the Shell terminal, if you are not already inside the `spacewalks` directory, you can navigate into it and list its contents. The symbol **`~`** reprensents your user's home directory, and the **`-F`** flag places a forward slash **`/`** if the item listed is a directory. The **`-a`** flag will request to show all files, including hidden files with a name starting with a dot. 
 
 ```bash
 cd ~/spacewalks
-ls -la
+ls -laF
 total 272
-drwx------@   5 mbassan2  staff     160 26 Jun 11:35 .
-drwx------@ 489 mbassan2  staff   15648 26 Jun 11:41 ..
-drwxrwxr-x@   4 mbassan2  staff     128  4 Apr 10:48 astronaut-data-analysis-old
--rw-rw-r--@   1 mbassan2  staff  132981  4 Apr 10:48 data.json
--rw-rw-r--@   1 mbassan2  staff    1518  4 Apr 10:48 my code v2.py
+drwxr-xr-x@   5 jsgro  staff     160 Oct 14 10:04 ./
+drwx------@ 717 jsgro  staff   22944 Oct 28 09:57 ../
+drwxr-xr-x@   4 jsgro  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
+-rw-r--r--@   1 jsgro  staff  132981 Oct 14 09:58 data.json
+-rw-r--r--@   1 jsgro  staff    1762 Oct 14 09:35 my code v2.R
 ```
+
+(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`. Windows or Linux users will not see this symbol.)
 
 Over the rest of the course, we will transform a collection of these files into a well-structured software project that 
 follows established good practices in research software engineering.
@@ -63,6 +65,7 @@ this folder so it does not cause confusion:
 ```bash
 rm -r astronaut-data-analysis-old
 ```
+As a reminder, be careful with this *recursive remove* command as there is no undo possibility.
 
 ## Version control
 
@@ -70,7 +73,7 @@ Before we do any further changes to our software, we want to make sure we can ke
 we inherited the code from our colleague.
 
 We can track changes with version control. Later on, we will store those changes on a remote server too --
-both for safe-keeping and to make them easier to share with others. In later episodes, we will also see how version control 
+both for safe-keeping and to make those changes easier to share with others. In later episodes, we will also see how version control 
 makes it easier for multiple collaborators to work together on the same project at the same time and combine 
 their contributions.
 
@@ -110,7 +113,7 @@ and is particularly effective with text-based files (e.g. source code like `.py`
 
 Git helps multiple people work on the same project (even the same file) at the same time.
 Initially, we will use Git to start tracking changes to files on our local machines; later on we will start sharing our
-work on GitHub allowing other people to see and contribute to our work.
+work on [GitHub](https://github.com) allowing other people to see and contribute to our work.
 
 :::::: callout
 
@@ -171,11 +174,26 @@ $ git config --global init.defaultBranch main
 ```
 
 At this point, we should be located in our `spacewalks` directory. We want to tell Git to make `spacewalks` a repository --
-a directory where Git can track changes to our files. We do that with:
+a directory where Git can track changes to our files. We initialize this new repository with:
 
 ```bash
 $ git init
 ```
+
+It should be noted that this repository is "hidden" as it starts with a dot. We can find its name with the same list command used previously:
+
+
+```bash
+$ git init
+```
+
+A new entry will be visible:
+
+```
+drwxr-xr-x   10 jsgro  staff     320 Oct 28 14:11 .git/
+```
+
+We can see that its name is `.git` and the trailing slash confirms that it is a directory
 
 We can check everything is set up correctly by asking Git to tell us the status of our project:
 
@@ -191,7 +209,7 @@ No commits yet
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	data.json
-	my code v2.py
+	my code v2.R
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
