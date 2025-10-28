@@ -1,153 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/01-introduction.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/02-better-start-version-control.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/02-better-start-version-control.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/03-reproducible-dev-environment.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/03-reproducible-dev-environment.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/04-code-readability.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/04-code-readability.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/05-code-structure.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/05-code-structure.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/06-code-correctness.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/06-code-correctness.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/07-software-documentation.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/07-software-documentation.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/08-open-collaboration.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/08-open-collaboration.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/09-wrap-up.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/09-wrap-up.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/404.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/404.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/AUTHORS.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/AUTHORS.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/CODE_OF_CONDUCT.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/LICENSE.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/aio.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/aio.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/ci-for-testing.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/ci-for-testing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/ethical-environmental-considerations.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/ethical-environmental-considerations.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/images.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/images.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/index.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/index.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/installation-instructions.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/installation-instructions.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/01-introduction.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/02-better-start-version-control.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/02-better-start-version-control.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/03-reproducible-dev-environment.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/03-reproducible-dev-environment.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/04-code-readability.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/04-code-readability.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/05-code-structure.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/05-code-structure.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/06-code-correctness.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/06-code-correctness.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/07-software-documentation.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/07-software-documentation.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/08-open-collaboration.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/08-open-collaboration.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/09-wrap-up.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/09-wrap-up.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/404.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/404.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/AUTHORS.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/AUTHORS.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/CODE_OF_CONDUCT.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/LICENSE.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/aio.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/aio.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/ci-for-testing.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/ci-for-testing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/ethical-environmental-considerations.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/ethical-environmental-considerations.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/images.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/images.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/index.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/index.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/installation-instructions.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/installation-instructions.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/instructor-notes.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/instructor-notes.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/key-points.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/key-points.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/licensing.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/licensing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/profiles.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/profiles.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/reproducible-research-discussion.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/reproducible-research-discussion.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor/test-suite-exercise.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor/test-suite-exercise.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/instructor-notes.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/instructor-notes.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/key-points.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/key-points.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/licensing.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/licensing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/profiles.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/profiles.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/reproducible-research-discussion.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/reproducible-research-discussion.html</loc>
   </url>
   <url>
-    <loc>https://carpentries-incubator.github.io/better-research-software/test-suite-exercise.html</loc>
+    <loc>https://carpentries-incubator.github.io/better-research-software-r/test-suite-exercise.html</loc>
   </url>
 </urlset>
