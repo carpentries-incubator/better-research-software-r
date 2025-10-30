@@ -45,27 +45,22 @@ Within the Shell terminal, if you are not already inside the `spacewalks` direct
 ```bash
 cd ~/spacewalks
 ls -laF
-total 272
-drwxr-xr-x@   5 jsgro  staff     160 Oct 14 10:04 ./
-drwx------@ 717 jsgro  staff   22944 Oct 28 09:57 ../
--rw-r--r--@   1 jsgro  staff    6148 Oct 28 17:26 .DS_Store
-drwxr-xr-x    5 jsgro  staff     160 Oct 28 17:24 .Rproj.user/
--rw-r--r--    1 jsgro  staff      40 Oct 28 17:24 .gitignore
+drwxr-xr-x@   7 jsgro  staff     224 Oct 29 18:53 ./
+drwx------@ 725 jsgro  staff   23200 Oct 29 18:53 ../
+drwxr-xr-x    4 jsgro  staff     128 Oct 29 18:53 .Rproj.user/
 drwxr-xr-x@   4 jsgro  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
 -rw-r--r--@   1 jsgro  staff  132981 Oct 14 09:58 data.json
 -rw-r--r--@   1 jsgro  staff    1762 Oct 14 09:35 my code v2.R
+-rw-r--r--    1 jsgro  staff     257 Oct 29 18:53 spacewalks.Rproj
 ```
 
-(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`. Windows or Linux users will not see this symbol or file `.DS_Store` which is specific to macOS.
+(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`.
 
-The directory `Rproj.user/` was created by RStudio when the project was created in the previous section.
+The directory `.Rproj.user/` was created by RStudio when the project was created in the previous section. Its presence is revealed by the `-a` option to show hidden files. Another hidden file named `.DS_Store` might be seen by Mac users and can be ignore for the moment.
 
-Over the rest of the course, we will transform a collection of these files into a well-structured software project that 
-follows established good practices in research software engineering.
+Over the rest of the course, we will transform a collection of these files into a well-structured software project that follows established good practices in research software engineering.
 
-The first thing you may notice that our software project contains folder `astronaut-data-analysis-old` which presumably tries to keep track
-of older versions of the code. There is a better way to do that using version control tool, such as Git, and we can delete 
-this folder so it does not cause confusion:
+The first thing you may notice that our software project contains folder `astronaut-data-analysis-old` which presumably tries to keep track of older versions of the code. There is a better way to do that using version control tool, such as Git, and we can delete this folder so it does not cause confusion:
 
 ```bash
 rm -r astronaut-data-analysis-old
@@ -74,13 +69,10 @@ As a reminder, be careful with this *recursive remove* command as there is no un
 
 ## Version control
 
-Before we do any further changes to our software, we want to make sure we can keep a history of what changes we have done since 
-we inherited the code from our colleague.
+Before we do any further changes to our software, we want to make sure we can keep a history of what changes we have done since we inherited the code from our colleague.
 
 We can track changes with version control. Later on, we will store those changes on a remote server too --
-both for safe-keeping and to make those changes easier to share with others. In later episodes, we will also see how version control 
-makes it easier for multiple collaborators to work together on the same project at the same time and combine 
-their contributions.
+both for safe-keeping and to make those changes easier to share with others. In later episodes, we will also see how version control makes it easier for multiple collaborators to work together on the same project at the same time and combine their contributions.
 
 :::::: callout
 
@@ -180,20 +172,19 @@ They work the same, but we want to keep things consistent for clarity.
 $ git config --global init.defaultBranch main
 ```
 
-At this point, we should be located in our `spacewalks` directory. We want to tell Git to make `spacewalks` a repository --
-a directory where Git can track changes to our files. We initialize this new repository with:
+At this point, we should be located in our `spacewalks` directory. 
+We want to tell Git to make `spacewalks` a repository -- a directory where Git can track changes to our files. We initialize this new repository with:
 
 ```bash
 $ git init
 ```
-
-It should be noted that this repository is "hidden" as it starts with a dot. We can find its name with the same list command used previously:
+This repository just created is "hidden" as it starts with a dot. We can find its name with the same list command used previously:
 
 ```bash
 $ ls -laF
 ```
 
-A new line will be visible:
+A new line will be visible in the output:
 
 ```output
 drwxr-xr-x   10 jsgro  staff     320 Oct 28 14:11 .git/
@@ -214,36 +205,36 @@ No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
+	.DS_Store
+	.Rproj.user/
 	data.json
 	my code v2.R
+	spacewalks.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-This tells us that Git has noticed two files in our directory, but unlike Dropbox or OneDrive,
-it does not *automatically* track them. We need to tell Git explicitly which files we want it to track.
-This is not a handicap, but rather helpful, since scientific code can have vast inputs or outputs we might not want 
-Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share
-(for example, medical records).
+This tells us that Git has noticed two files in our directory, but unlike Dropbox or OneDrive, it does not *automatically* track them. We need to tell Git explicitly which files we want it to track.
+This is not a handicap, but rather helpful, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
 
 Before we commit this initial version, we should try to run it. This is often the first thing you might do upon receiving someone's code.
 
 There are multiple ways to run R code:
 
-Option 1: In RStudio 
+Option 1: within RStudio 
 
 - Click once on the file `my code v2.R` within the Files Tab. This will open the file in the top left quadrant.
 - Then click on the **"Source"** icon located at the top right of the opened file
 
 Option 2: from the Shell window
 
-- Any R script can be run within the shell with command **`RSCRIPT`** which is part of any R installation.
-- The command is all uppercase and blank spaces in the file name have to be escaped by a backslash
+- An R script can be run within the shell with command **`RSCRIPT`** which is part of any R installation.
+- The command is all uppercase and blank spaces in the file name have to be escaped by a backslash as shown:
 
 ```bash
 $ RSCRIPT my\ code\ v2.R 
 ```
-In both cases running this file will produce an error:
+Regardless of which option you use to run the code, the file "`my code v2.R`" will produce an error:
 
 ```output
 Error in open.connection(con, "rb") : cannot open the connection
@@ -294,20 +285,20 @@ Changes to be committed:
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	.DS_Store
-	.gitignore
+	.Rproj.user/
 	spacewalks.Rproj
 ```
 
 Git now knows that we should track the changes to files `my code v2.R` and `data.json`,
 but it has not 'committed' those changes to the record yet.
 
-When we are sure that we want to proceed, we can *commit* the changes with a `git commit` command often called "a commit".
+When we are sure that we want to proceed, we can *commit* the changes with a `git commit` command usually referred to as "a commit".
 
-A commit is a snapshot of how your tracked files have changed at this moment in time, which is referred to as a "stage".
+A commit is a snapshot of how your tracked files have changed at this moment in time, which is referred to as a "stage", "a moment in time."
 To create a commit that records the fact that we added two new files, we need to run one more command.
 
 The following is a multiline commit as the double quote is not closed at the end of the first line.
-As you press Enter or Return, you will see a temporary prompt: `dquote>` which simply means that more text can be entered on this and perhaps more lines until the double quote is closed on the last line:
+As you press Enter or Return, you will see a temporary prompt: `dquote>` which simply means that more text can be entered on this and perhaps more lines until the double quote is closed on the last line.
 
 ```bash
 $ git commit -m "Add the initial spacewalks data and code
@@ -322,13 +313,14 @@ BREAKING CHANGE: Path to data is hard coded and needs to be fixed"
  create mode 100644 my code v2.R
 ```
 
-At this point, Git has taken everything we have told it to save with the `git add` command and stored a copy (snapshot) of the files in a special, hidden `.git` directory.
+At this point, Git has recorded the changes for the files we asked to be tracked when we issued the command `git add`. The changes from the older to the new file versiosn are saved within the `.git/` as a *snapshot* which could be retried at a later date.
 This is called a commit (or revision).
 
 The `-m` option means message, and records a short, descriptive, and specific comment that will help us remember later on what we did and why.
 If we run `git commit` *without* `-m` ,
 Git will still expect a message -- 
 and will launch a text editor so that we can write a longer one.
+The editor will depend on settings and operating system.
 
 Remember, good commit messages start with a brief (<50 characters) statement about the changes made in the commit.
 Generally, the message should complete the sentence "If applied, this commit will...".
@@ -356,16 +348,17 @@ If we run `git status` now, we see:
 ```bash
 $ git status
 ```
-```
+```output
 On branch main
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	.DS_Store
-	.gitignore
+	.Rproj.user/
 	spacewalks.Rproj
 
-nothing added to commit but untracked files present (use "git add" to track)output
+nothing added to commit but untracked files present (use "git add" to track)
 ```
+
 These files and directory do not need to be tracked and we'll take care of them shortly. 
 
 CONTINUE BELOW JYS
