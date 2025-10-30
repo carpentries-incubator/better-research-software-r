@@ -45,18 +45,24 @@ Within the Shell terminal, if you are not already inside the `spacewalks` direct
 ```bash
 cd ~/spacewalks
 ls -laF
-drwxr-xr-x@   7 jsgro  staff     224 Oct 29 18:53 ./
-drwx------@ 725 jsgro  staff   23200 Oct 29 18:53 ../
-drwxr-xr-x    4 jsgro  staff     128 Oct 29 18:53 .Rproj.user/
+```
+
+```output
+total 280
+drwxr-xr-x@   8 jsgro  staff     256 Oct 30 18:19 ./
+drwx------@ 727 jsgro  staff   23264 Oct 30 18:18 ../
+drwxr-xr-x    4 jsgro  staff     128 Oct 30 18:19 .Rproj.user/
 drwxr-xr-x@   4 jsgro  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
 -rw-r--r--@   1 jsgro  staff  132981 Oct 14 09:58 data.json
 -rw-r--r--@   1 jsgro  staff    1762 Oct 14 09:35 my code v2.R
--rw-r--r--    1 jsgro  staff     257 Oct 29 18:53 spacewalks.Rproj
+-rw-r--r--    1 jsgro  staff     205 Oct 30 18:19 spacewalks.Rproj
 ```
 
 (Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`.
 
-The directory `.Rproj.user/` was created by RStudio when the project was created in the previous section. Its presence is revealed by the `-a` option to show hidden files. Another hidden file named `.DS_Store` might be seen by Mac users and can be ignore for the moment.
+The directory `.Rproj.user/` was created by RStudio when the project was created in the previous section. Its presence is revealed by the `-a` option to show hidden files. 
+In some cases some other files may appear depending on your OS or other factors: 
+afile named `.DS_Store` might be seen by Mac users and can be ignore for the moment and a file named `.Rhistory` might appear. It is very possible that you do not see these files at the time.
 
 Over the rest of the course, we will transform a collection of these files into a well-structured software project that follows established good practices in research software engineering.
 
@@ -187,7 +193,7 @@ $ ls -laF
 A new line will be visible in the output:
 
 ```output
-drwxr-xr-x   10 jsgro  staff     320 Oct 28 14:11 .git/
+drwxr-xr-x    9 jsgro  staff     288 Oct 30 18:21 .git/
 ```
 
 We can see that its name is **`.git`** and the trailing slash confirms that it is a directory into which the Git software will write.
@@ -205,7 +211,6 @@ No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	.DS_Store
 	.Rproj.user/
 	data.json
 	my code v2.R
@@ -287,7 +292,6 @@ Changes to be committed:
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	.DS_Store
 	.Rproj.user/
 ```
 
@@ -310,7 +314,7 @@ BREAKING CHANGE: Path to data is hard coded and needs to be fixed"
 
 ```output
 [main (root-commit) bc5252e] Add the initial spacewalks data and code
- 3 files changed, 464 insertions(+)
+ 3 files changed, 461 insertions(+)
  create mode 100644 data.json
  create mode 100644 my code v2.R
  create mode 100644 spacewalks.Rproj
@@ -355,21 +359,61 @@ $ git status
 On branch main
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	.DS_Store
 	.Rproj.user/
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-These files and directory do not need to be tracked and we'll take care of them shortly with an option to ignore them. 
+You may see one or more hidden files or directries (starting with a dot) that are not tracked.
+To avoid seeing the "Untracked files" message every time we'll create a special text file called `.gitignore` to list these files. RStudio might create one automatically later, in which case you can see its content with command `cat .gitignore`. But let's learn how to do this now.
 
+The method that does not need any special editing software is via the shell, thanks the `echo` command and the power of redirection. The first command uses a single ">" to create the file. Note that if the `.gitignore` file already was present, this command would erase the content of the original. For the same reason the second command uses two `>>` to add (i.e. append) to the file without overwriting it. But we also need to add itself to the list
+
+```bash
+$ echo ".Rproj.user" > .gitignore
+$ echo "..gitignore" >> .gitignore
+```
+If you issue a `git status` at this point Git will let you know that 
+wealso need to track itself:
+
+```bash
+$ git add .gitignore
+```
+
+```bash
+$ git status
+```
+
+```output
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .gitignore
+```
+
+We still need to commit that change:
+
+```bash
+git commit -m "add .gitignore"
+```
+```output          
+[main c9bde81] add .gitignore
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+```
+A final status check will let us know that we are up to date on all fronts.
+
+
+```bash
+$ git status
+```
 
 ```output
 On branch main
 nothing to commit, working tree clean
 ```
 
-This tells us that everything is up to date.
+This is the procedure we'll continue to follow, alterning `add` and `commit` commands and checking things with `status`.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -384,13 +428,13 @@ and *also* stops us accidentally deleting them!
 You can see the hidden Git directory using the `-a` flag to show all files and folders:
 
 ```bash
-$ ls -a
+$ ls -aF
 ```
 
 ```output
 .
 ..
-.git
+.git/
 ```
 
 If you were to delete `.git`, your directory would stop being a repository,
@@ -430,11 +474,6 @@ On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	renamed:    my code v2.R -> my_code_v2.R
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	.DS_Store
-	.Rproj.user/
 ```
 
 ```bash
@@ -442,7 +481,7 @@ $ git commit -m "removed spaces from filename"
 ```
 
 ```output
-[main 40200ee] removed spaces from filename
+[main 9445e74] removed spaces from filename
  1 file changed, 0 insertions(+), 0 deletions(-)
  rename my code v2.R => my_code_v2.R (100%)
 ```
@@ -476,7 +515,7 @@ Firstly, let's update the file names in our R script in RStudio:
 ```r
 data_f_file = './eva-data.json'
 data_t_file = './eva-data.csv'
-g_file = ./cumulative_eva_graph.png'
+g_file = './cumulative_eva_graph.png'
 ```
 
 Save the file after changes are implemented.
@@ -488,6 +527,7 @@ git mv data.json eva-data.json
 git mv my_code_v2.R eva_data_analysis.R
 git status
 ```
+This will show the fact that we changed the file name and made changes in its content (i.e. the paths for files.)
 
 ```output
 On branch main
@@ -495,16 +535,22 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	renamed:    data.json -> eva-data.json
 	renamed:    my_code_v2.R -> eva_data_analysis.R
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   eva_data_analysis.R
 ```
 (Untracked files are omitted for clarity.)
 
 Finally, we can commit our changes:
+
 ```bash
-git commit -m "Implement informative file names"
+git commit -m "Implement informative file names and script editing"
 ```
 
 ```output
-[main 5e3e897] Implement informative file names
+[main 692b680] Implement informative file names and script editing
  2 files changed, 0 insertions(+), 0 deletions(-)
  rename data.json => eva-data.json (100%)
  rename my_code_v2.R => eva_data_analysis.R (100%)
@@ -512,7 +558,8 @@ git commit -m "Implement informative file names"
 
 :::::::::::::::::::::::
 
-CONTINUE BELOW JYS
+JYS: FOR NOW I DO NOT CHANGE ANYTHING BELOW FOR GITHUB
+
 
 ::::::::::::::::::::::::::::::::::::::
 
