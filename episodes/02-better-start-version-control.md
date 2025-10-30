@@ -260,11 +260,13 @@ $ git status
 ```
 
 From this point we are going to start tracking files with Git.
-We can tell Git to track a file using `git add`:
+We can tell Git to track a file using `git add`. 
+We also add the project file `spacewalks.Rproj`.
 
 ```bash
 $ git add my\ code\ v2.R
 $ git add data.json
+$ git add spacewalks.Rproj
 ```
 and then check the right thing happened:
 
@@ -281,12 +283,12 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 	new file:   data.json
 	new file:   my code v2.R
+	new file:   spacewalks.Rproj
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	.DS_Store
 	.Rproj.user/
-	spacewalks.Rproj
 ```
 
 Git now knows that we should track the changes to files `my code v2.R` and `data.json`,
@@ -307,10 +309,11 @@ BREAKING CHANGE: Path to data is hard coded and needs to be fixed"
 ```
 
 ```output
-[main (root-commit) 551dc9d] Add the initial spacewalks data and code BREAKING CHANGE: Path to data is hard coded and needs to be fixed
- 2 files changed, 448 insertions(+)
+[main (root-commit) bc5252e] Add the initial spacewalks data and code
+ 3 files changed, 464 insertions(+)
  create mode 100644 data.json
  create mode 100644 my code v2.R
+ create mode 100644 spacewalks.Rproj
 ```
 
 At this point, Git has recorded the changes for the files we asked to be tracked when we issued the command `git add`. The changes from the older to the new file versiosn are saved within the `.git/` as a *snapshot* which could be retried at a later date.
@@ -354,14 +357,12 @@ Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	.DS_Store
 	.Rproj.user/
-	spacewalks.Rproj
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-These files and directory do not need to be tracked and we'll take care of them shortly. 
+These files and directory do not need to be tracked and we'll take care of them shortly with an option to ignore them. 
 
-CONTINUE BELOW JYS
 
 ```output
 On branch main
@@ -392,8 +393,8 @@ $ ls -a
 .git
 ```
 
-If you delete it, your directory will stop being a repository,
-and it will lose your history of changes.
+If you were to delete `.git`, your directory would stop being a repository,
+and it would lose all of your history of changes.
 You never need to look into `.git` yourself --
 Git adds useful commands to do that, which are covered later on.
 
@@ -401,19 +402,19 @@ Git adds useful commands to do that, which are covered later on.
 
 ### Make a change
 
-You may have noticed that the script we received contain blank spaces in filename.
-This meant that, when we were typing the script's name into the terminal, we had to add a slash before the space like this: `my\ code\ v2.py`.
+You may have noticed that the script we received contains blank spaces in its filename.
+This meant that, when we were typing the script's name into the terminal, we had to add a slash before the space like this: `my\ code\ v2.R`.
 Using a backslash in this way is called "escaping".
 It lets the terminal know to treat the space as part of the filename,
-and not a separate argument.
-It is a bit inconvenient and can cause problems if you forget,
-so best practise is to avoid spaces in filenames.
+and not split the name into separate, independent arguments.
+It is a bit inconvenient and will cause errors or problems if you forget.
+Therefore, the best practise is to completely avoid spaces in filenames as well as directories.
 The simplest fix is to replace the spaces with underscores `_` instead.
 
-To rename the files using git you can use the `git mv` command:
+To change the name of the file, it is judicious to use the Git command `git mv` rather than the `mv` shell command:
 
 ```bash
-$ git mv my\ code\ v2.py my_code_v2.py
+$ git mv my\ code\ v2.R my_code_v2.R
 ```
 
 If you run `git status` again, you'll see Git has noticed the change in the filename.
@@ -428,11 +429,22 @@ $ git status
 On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	renamed:    my code v2.py -> my_code_v2.py
+	renamed:    my code v2.R -> my_code_v2.R
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.DS_Store
+	.Rproj.user/
 ```
 
 ```bash
 $ git commit -m "removed spaces from filename"
+```
+
+```output
+[main 40200ee] removed spaces from filename
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename my code v2.R => my_code_v2.R (100%)
 ```
 
 ### Rename our data and output files
@@ -442,11 +454,10 @@ we can use it to make our files and code a bit easier to understand.
 
 We may want to:
 
-1. Give our script and input data file more meaningful names, e.g `eva_data_analysis.py` and `eva-data.json`. This change also uses removes version tracking from the script name as we are using Git for version control
-any more as Git will keep track of that for us.
+1. Give our script and input data file more meaningful names, e.g `eva_data_analysis.R` and `eva-data.json`. This change also removes version tracking from the old script name as we are using Git for version control, and Git will keep track of that for us.
 2. Choose informative file names for our output data file (e.g. `eva-data.csv`) and plot (`cumulative_eva_graph.png`).
 3. Use relative paths (e.g. `./eva-data.json`) instead of absolute paths (e.g. `home/sarah/Projects/astronaut-analysis/data.csv`) to the files (which were hardcoded to the path on our colleagues machine and would not work on ours).
-4. Update the Python script with these changes.
+4. Update the R script with these changes.
 
 :::::::::::::::::::::::::::: challenge
 
@@ -454,42 +465,54 @@ any more as Git will keep track of that for us.
 
 Try to make these changes yourself.
 
-1. Give our Python script and input data file informative names - `eva_data_analysis.py` and `eva-data.json`, respectively.
+1. Give our R script and input data file informative names - `eva_data_analysis.R` and `eva-data.json`, respectively.
 2. Update other file names and paths used in the script - output CSV data (`eva-data.csv` to match the new input data name) and plot(`cumulative_eva_graph.png`).
 3. Stage and commit these changes in the Git repository.
 
 :::::::::::::: solution
 
-Firstly, let's update the file names in our Python script from VS Code:
+Firstly, let's update the file names in our R script in RStudio:
 
-```python
-data_f = open('./eva-data.json', 'r')
-data_t = open('./eva-data.csv','w')
-g_file = './cumulative_eva_graph.png'
+```r
+data_f_file = './eva-data.json'
+data_t_file = './eva-data.csv'
+g_file = ./cumulative_eva_graph.png'
 ```
 
-Next, we need to rename the files on the file system using Git:
+Save the file after changes are implemented.
+
+Next, we need to rename the files on the file system using Git and commit all changes. Since we used `git mv` we don't need to use `add`:
 
 ```bash
 git mv data.json eva-data.json
-git mv my_code_v2.py eva_data_analysis.py
-git add eva_data_analysis.py
+git mv my_code_v2.R eva_data_analysis.R
 git status
 ```
+
 ```output
 On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	renamed:    data.json -> eva-data.json
-	renamed:    my_code_v2.py -> eva_data_analysis.py
+	renamed:    my_code_v2.R -> eva_data_analysis.R
 ```
+(Untracked files are omitted for clarity.)
 
 Finally, we can commit our changes:
 ```bash
 git commit -m "Implement informative file names"
 ```
 
+```output
+[main 5e3e897] Implement informative file names
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ rename data.json => eva-data.json (100%)
+ rename my_code_v2.R => eva_data_analysis.R (100%)
+```
+
 :::::::::::::::::::::::
+
+CONTINUE BELOW JYS
 
 ::::::::::::::::::::::::::::::::::::::
 
