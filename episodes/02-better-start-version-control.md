@@ -554,6 +554,8 @@ git commit -m "Implement informative file names and script editing"
  rename data.json => eva-data.json (100%)
  rename my_code_v2.R => eva_data_analysis.R (100%)
 ```
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::
 
 ### Is the code working now?
 
