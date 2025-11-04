@@ -645,6 +645,15 @@ $  git add eva_data_analysis.R cumulative_eva_graph.png Rplots.pdf .DS_Store
  create mode 100644 cumulative_eva_graph.png
 ```
 
+```bash
+$ git status
+```
+
+```outout
+On branch main
+nothing to commit, working tree clean
+```
+
 JYS: FOR NOW I DO NOT CHANGE ANYTHING BELOW FOR GITHUB
 
 ## Interacting with a remote Git server
