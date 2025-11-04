@@ -371,7 +371,7 @@ The method that does not need any special editing software is via the shell, tha
 
 ```bash
 $ echo ".Rproj.user" > .gitignore
-$ echo "..gitignore" >> .gitignore
+$ echo ".gitignore" >> .gitignore
 ```
 If you issue a `git status` at this point Git will let you know that 
 wealso need to track itself:
@@ -402,7 +402,6 @@ git commit -m "add .gitignore"
  create mode 100644 .gitignore
 ```
 A final status check will let us know that we are up to date on all fronts.
-
 
 ```bash
 $ git status
@@ -556,12 +555,97 @@ git commit -m "Implement informative file names and script editing"
  rename my_code_v2.R => eva_data_analysis.R (100%)
 ```
 
+### Is the code working now?
+
+The code failed because the file name paths did not match as it was hard-coded to a specific user.
+We just updated the file name paths with the hope that the code will work as . But is it?
+
+Try to run the code now as before, either with RStudio or with the `RSCRIPT` command on the shell terminal:
+
+RStudio: click the "source" button as in Option 1 above.
+
+Shell terminal: use the command
+
+```bash
+ Rscript eva_data_analysis.R
+```
+
+In both cases there will be another error: 
+
+```output
+Error in Date() : could not find function "Date"
+```
+
+:::::::::::::::::::::::::::: challenge
+
+- Where in the code is the problem? Which line?
+- Is there a way to find help with the error information?
+
+:::::::::::::: solution
+
+- The error appears on the line with the command `date = Date()` which is on line 24
+- We can ask for help easily in RStudio with `??Date` which will show 7 "Vignettes" entries.
+- In the Shell Terminal the command would be: `Rscript -e "??Date"` (and type `q` to quit afterwards.)
+
+But which Vignette can help us?
+
+If we look 2 lines below the error line in `eva_data_analysis.R` , we can note that the line `library(lubridate)` calls a name that matches a Vignette. It seems that the function `Date()` was called before the library was requested.
+
+Therefore, the solution is to move `library(lubridate)` at least above the `date=-Date()` code line.
+While this should work, it may be judicious to place the `library` command at the top of the script.
+
+Let's edit the file again: place `library(lubridate)` one line above `date = Date()`
+
+Then run the code with either RStudio or `RSCRIPT`. The code should now run its course without error.
+
 :::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::
+
+
+### Code output
+
+We can now better understand the purpose of the code which is to create a plot using the provided data. The result is both a PNG file saved in the current directory, and the display of the same plot within the Rstudio panel "Plots" tab in the botton right panel.
+
+If you ran the `RSCRIPT` command, the display is automatically converted into a PDF file called `Rplots.pdf`. In both cases the file `cumulative_eva_graph.png` is also saved. 
+
+```bash
+$ ls -aF
+```
+
+```output
+-rw-r--r--  1 jsgro  staff   22883 Nov  4 13:03 Rplots.pdf
+-rw-r--r--  1 jsgro  staff   27605 Nov  4 13:03 cumulative_eva_graph.png
+-rw-r--r--@ 1 jsgro  staff    1710 Nov  4 13:02 eva_data_analysis.R
+-rw-r--r--@ 1 jsgro  staff     257 Nov  4 12:43 spacewalks.Rproj
+-rw-r--r--@ 1 jsgro  staff  132981 Oct 14 09:58 eva-data.json
+```
+
+We can therefore save the changes with Git as before:
+
+
+```bash
+$ git status
+```
+
+Then add the new or modified files. Based in how you ran the code you might not have a PDF file. If you are on a Mac the file `.DS_Store` may have now appeared, so add it.
+
+```bash
+$  git add eva_data_analysis.R cumulative_eva_graph.png Rplots.pdf .DS_Store
+```bash
+
+```bash
+ git commit -m "fixed code and saving output files"
+```
+
+```outout
+[main 0e65c91] fixed code and saving output files
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+ create mode 100644 .DS_Store
+ create mode 100644 Rplots.pdf
+ create mode 100644 cumulative_eva_graph.png
+```
 
 JYS: FOR NOW I DO NOT CHANGE ANYTHING BELOW FOR GITHUB
-
-
-::::::::::::::::::::::::::::::::::::::
 
 ## Interacting with a remote Git server
 
