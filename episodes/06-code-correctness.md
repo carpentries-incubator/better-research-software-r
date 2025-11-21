@@ -36,24 +36,9 @@ produced by a piece of code meet our expectations, i.e. are correct.
 ### Code state
 
 At this point, the code in your local software project's directory should be as in:
-<https://github.com/carpentries-incubator/bbrs-software-project/tree/06-code-correctness>
+<https://github.com/carpentries-incubator/better-research-software-r/tree/main/learners/06-spacewalks>
 
 ::::::
-
-::: spoiler
-
-### Activate your virtual environment
-
-If it is not already active, make sure to activate your virtual environment from the root of
-the software project directory:
-
-```bash
-$ source venv_spacewalks/bin/activate # Mac or Linux
-$ source venv_spacewalks/Scripts/activate # Windows
-(venv_spacewalks) $
-```
-
-:::
 
 ## Why use software testing?
 
@@ -135,48 +120,35 @@ Let's do this for our `text_to_duration` function.
 Recall that the `text_to_duration` function converts a spacewalk duration stored as a string
 in format "HH:MM" to a duration in hours - e.g. duration `01:15` (1 hour and 15 minutes) should return a numerical value of `1.25`.
 
-```python
-def text_to_duration(duration):
-    """
-    Convert a text format duration "HH:MM" to duration in hours
-
-    Args:
-        duration (str): The text format duration
-
-    Returns:
-        duration_hours (float): The duration in hours
-    """
-    hours, minutes = duration.split(":")
-    duration_hours = int(hours) + int(minutes)/6
-    return duration_hours
+```r
+#' Convert a text format duration "HH:MM" to duration in hours
+#'
+#' @param duration (str): The text format duration
+#' @return duration_hours (float): The duration in hours
+text_to_duration <- function(duration) {
+  hours_minutes <- strsplit(duration, ":") # results in list of length 2 vectors
+  duration_hours <- vapply(
+    hours_minutes,
+    \(hour_minute) as.numeric(hour_minute[1]) + as.numeric(hour_minute[2])/6,
+    # ^ there is an intentional bug on this line (should divide by 60 not 6)
+    numeric(1)
+  )
+  duration_hours
+}
 ```
 
-To start a Python terminal, you simply type `python3` (with no other parameters) from the root directory of your 
-project in a command line terminal.
+You can type your R code into the Console tab in RStudio.
+It will interactively run your code and return and print results.
+We could copy and paste the code of our `text_to_duration` function.
+Another way to pull in our function definitions is to `source` the file.
 
-```bash
-(venv_spacewalks)$ python3
+```r
+> source("eva_data_analysis.R")
+> text_to_duration("10:00")
+[1] 10
 ```
 
-This will open an interactive Python terminal for you, which may look like this:
-
-```python
-Python 3.11.7 (main, Dec  4 2023, 18:10:11) [Clang 15.0.0 (clang-1500.1.0.2.5)] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> 
-```
-
-Once inside the Python terminal, you can start typing Python code.
-The Python terminal will interactively run your code and return and print results.
-We could copy and paste the code of our `text_to_duration` function, but it is much simpler and more elegant to import and then invoke it.
-
-```python
->>> from eva_data_analysis import text_to_duration
->>> text_to_duration("10:00")
-10.0
-```
-
-So, we have invoked our function with the value "10:00" and it returned the floating point value "10.0" as expected.
+So, we have invoked our function with the value "10:00" and it returned the value "10" as expected.
 
 We can then further explore the behaviour of our function by running:
 
@@ -188,8 +160,6 @@ We can then further explore the behaviour of our function by running:
 This all seems correct so far.
 
 Testing code in this "informal" way in an important process to go through as we draft our code for the first time.
-Another tool that can help here is the [Jupyter Notebook](https://jupyter.org/) - like the Python terminal, the Jupyter Notebook is an interactive environment for writing and running code.
-It is a GUI tool which supports all kinds of interactive outputs, including many interactive visualisation libraries.
 
 However, there are some serious drawbacks to this approach if used as our only form of testing.
 
@@ -237,18 +207,18 @@ These test functions:
 
 Let’s explore this process by writing some formal tests for our `text_to_duration` function. 
 
-In VS Code, create a new Python file `test_code.py` in the root of our project directory to store our tests.
+Create a new R file `test_code.R` in the root of our project directory to store our tests.
 
 Like before in the Python terminal, we need to import `text_to_duration` into our test script. 
 Then, we add our first test function:
 
-``` python
-from eva_data_analysis import text_to_duration
-
-def test_text_to_duration_integer():
-    input_value = "10:00"
-    test_result = text_to_duration("10:00") == 10
-    print(f"text_to_duration('10:00') == 10? {test_result}")
+```r
+source("eva_data_analysis.R")
+test_text_to_duration_integer <- function() {
+  input_value <- "10:00"
+  test_result <- text_to_duration("10:00") == 10
+  print(paste("text_to_duration('10:00') == 10?", test_result))
+}
 
 test_text_to_duration_integer()
 ```
@@ -256,7 +226,7 @@ test_text_to_duration_integer()
 We can run this code from the command line terminal as:
 
 ```bash
-(venv_spacewalks)$ python3 test_code.py 
+$ Rscript test_code.R 
 ```
 
 This test checks that when we apply `text_to_duration` to input value `10:00`, the output matches the expected value
@@ -268,22 +238,17 @@ expectations.
 However, this does not meet our requirement to “Raise an error if the function’s output does not match the expected 
 output” and means that we must carefully read our test function’s output to identify whether it has failed.
 
-To ensure that our code raises an error if the function’s output does not match the expected output, we use Python's 
-`assert` statement. 
-The `assert statement` in Python checks whether a condition is `True` or `False`. 
-If the statement is `True`, `assert` does not return a value and the code continues to run. 
-However, if the statement is `False`, `assert` raises an `AssertError`.
+To ensure that our code raises an error if the function’s output does not match the expected output, we use R's `stopifnot` statement. This function does nothing if passed in `TRUE` and raises an error if passed in `FALSE`.
 
-Let's rewrite our test with an `assert` statement:
+Let's rewrite our test with `stopifnot`:
 
-```python
+```r
 
-from eva_data_analysis import text_to_duration
-
-def test_text_to_duration_integer():
-    assert text_to_duration("10:00") == 10
-
-test_text_to_duration_integer()
+source("eva_data_analysis.R")
+test_text_to_duration_integer <- function() {
+  stopifnot(text_to_duration("10:00") == 10)
+}
+test_text_to_duration_integer(
 ```
 
 Notice that when we run `test_text_to_duration_integer()`, nothing
@@ -294,42 +259,50 @@ Let's add another test to check what happens when duration is not an integer num
 durations with a non-zero minute component, and rerun our test code.
 
 ```python
-from eva_data_analysis import text_to_duration
-
-def test_text_to_duration_float():
-    assert text_to_duration("10:15") == 10.25
-
-def test_text_to_duration_integer():
-    assert text_to_duration("10:00") == 10
-
-test_text_to_duration_float()
+source("eva_data_analysis.R")
+test_text_to_duration_fraction <- function() {
+  stopifnot(text_to_duration("10:15") == 10.25)
+}
+test_text_to_duration_integer <- function() {
+  stopifnot(text_to_duration("10:00") == 10)
+}
+test_text_to_duration_fraction()
 test_text_to_duration_integer()
 ```
 
 ``` error
-(venv_spacewalks) $ python3 test_code.py 
-Traceback (most recent call last):
-  File "/Users/user/Desktop/spacewalks/test_code.py", line 9, in <module>
-    test_text_to_duration_float()
-  File "/Users/user/Desktop/spacewalks/test_code.py", line 4, in test_text_to_duration_float
-    assert text_to_duration("10:15") == 10.25
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError
+ $ Rscript test_code_02.R
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Error in test_text_to_duration_fraction() : 
+  text_to_duration("10:15") == 10.25 is not TRUE
+Calls: test_text_to_duration_fraction -> stopifnot
+Execution haltedr
 ```
 
-Notice that this time, our test `test_text_to_duration_float` fails.
-Our assert statement has raised an `AssertionError` - a clear signal that there is a problem in our code that we
+Notice that this time, our test `test_text_to_duration_fraction` fails.
+Our `stopifnot` function has raised an error - a clear signal that there is a problem in our code that we
 need to fix.
 
 We know that duration `10:15` should be converted to number `10.25`.
 What is wrong with our code?
 If we look at our `text_to_duration` function, we may identify the following line of our code as problematic:
 
-```python
-def text_to_duration(duration):
+```r
+text_to_duration <- function(duration) {
     ...
-    duration_hours = int(hours) + int(minutes)/6 
+    \(hour_minute) as.numeric(hour_minute[1]) + as.numeric(hour_minute[2])/6,
     ...
+}
 ```
 
 You may notice that we have introduced a bug in one of the earlier episodes when we refactored the code - the minutes component should have been divided by 60 and not 6.
@@ -340,9 +313,9 @@ We were only able to uncover this bug **by properly testing our code**.
 
 Let's fix the problematic line and rerun out tests. 
 
-```python
+```r
 ...
-duration_hours = int(hours) + int(minutes)/60 
+\(hour_minute) as.numeric(hour_minute[1]) + as.numeric(hour_minute[2])/60,
 ...
 ```
 
@@ -368,14 +341,13 @@ test_text_to_duration_integer()
 ```
 
 ```error
-(venv_spacewalks) $ python3 test_code.py
-Traceback (most recent call last):
-  File "/Users/user/work/SSI/lessons/astronaut-data-analysis/test_code.py", line 17, in <module>
-    test_text_to_duration_float()
-  File "/Users/user/work/SSI/lessons/astronaut-data-analysis/test_code.py", line 9, in test_text_to_duration_float
-    assert text_to_duration("10:20") == 10.333333
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError
+$ Rscript test_code.R
+...
+
+Error in test_text_to_duration_fraction() : 
+  text_to_duration("10:20") == 10.333333 is not TRUE
+Calls: test_text_to_duration_fraction -> stopifnot
+Execution halted
 ```
 
 Our test is failing again - what is wrong now?
@@ -386,10 +358,11 @@ For this reason, we cannot use a simple double equals sign (`==`) to compare the
 Instead, we check that our floating point numbers are equal within a very small tolerance (e.g. 1e-5).
 Hence, our code should look like:
 
-```python
+```r
 ...
-def test_text_to_duration_float():
-    assert abs(text_to_duration("10:20") - 10.33333333) < 1e-5
+test_text_to_duration_fraction <- function() {
+  stopifnot(abs(text_to_duration("10:20") - 10.333333) < 1e-5)
+}
 ...
 ```
 
@@ -405,164 +378,176 @@ These limitations can be overcome by automating our tests using a **testing fram
 Testing frameworks can automatically find all the tests in our code base, run all of them (so we do not have to invoke 
 them explicitly or, even worse, forget to invoke them), and present the test results as a readable summary.
 
-We will use the Python testing framework `pytest` with its code coverage extension `pytest-cov`. 
+We will use the Python testing framework `testthat` along with the coverage library `covr`.
 To install these libraries into our virtual environment, from the command line terminal do:
 
-``` bash
-(venv_spacewalks) $ python3 -m pip install pytest pytest-cov
+``` R
+> install.packages(c("testthat", "covr"))
 ```
 
-Let’s make sure that our tests are ready to work with `pytest`.
+Let’s set up our tests to work well with `testthat`
 
--   `pytest` automatically discovers tests based on specific naming
-    patterns. It looks for files that start with "test\_" or end with
-    "\_test.py". Then, within these files, `pytest` looks for functions
-    that start with "test_".
-    Our test file already meets these requirements, so there is nothing
-    to do here. However, our script does contain lines to run each of
-    our test functions. These are no-longer required as `pytest` will run
-    our tests so we can remove them:
+With `testthat`, we can label our tests by wrapping them in a `test_that` statement:
 
-    ```python
-    # Delete these 2 lines
-    test_text_to_duration_float()
-    test_text_to_duration_integer()
-    ```
-
--   It is also conventional when working with a testing framework to
-    place test files in a `tests` directory at the root of our project and
-    to name each test file after the code file that it targets. This
-    helps in maintaining a clean structure and makes it easier for
-    others to understand where the tests are located.
-
-A set of tests for a given piece of code is called a test suite. 
-Our test suite is currently located in the root folder of our project. 
-Let’s move it to a dedicated test folder and rename our `test_code.py` file to
-`test_eva_analysis.py`.
-
-You can do it from VS Code or by typing the following commands in the command line terminal:
-
-``` bash
-(venv_spacewalks) $ mkdir tests
-(venv_spacewalks) $ mv test_code.py tests/test_eva_analysis.py
+```r
+library(testthat)
+test_that(
+  "text_to_duration returns expected values for durations with a non-zero minute component",
+  stopifnot(abs(text_to_duration("10:20") - 10.333333) < 1e-5)
+)
+test_that(
+  "text_to_duration returns expected values for typical whole hour durations",
+  stopifnot(text_to_duration("10:00") == 10)
+)
 ```
 
-Before we re-run our tests using `pytest`, let's update our second test
-to use `pytest`'s function `approx()` which is specifically intended for
-comparing floating point numbers within a tolerance.
+::::::::::::::::::::::::::::::::::::::::::::::::::: callout
+### `testthat` vs `test_that`
 
-```python
-import pytest
-from eva_data_analysis import text_to_duration
+The name of the R package is `testthat` (no underscore).
+The function inside the library is `test_that` (with an understore).
+Therefore, we use `testthat` for `install.packages` and `library`,
+but `test_that(...)` when we're defining a testcase.
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-def test_text_to_duration_float():
-    assert text_to_duration("10:20") == pytest.approx(10.33333333)
+Then replace our base R `stopifnot` with `expect_true` which tells testthat
+which errors are the result of the thing we are trying to test not working,
+rather htan the result of other things not working.
 
-def test_text_to_duration_integer():
-    assert text_to_duration("10:00") == 10
-
+```r
+library(testthat)
+test_that(
+  "text_to_duration returns expected values for durations with a non-zero minute component",
+  expect_true(abs(text_to_duration("10:20") - 10.333333) < 1e-5)
+)
+test_that(
+  "text_to_duration returns expected values for typical whole hour durations",
+  expect_true(text_to_duration("10:00") == 10)
+)
 ```
 
-Let's also add some inline comments to clarify what each test is doing
-and expand our syntax to highlight the logic behind our approach:
+Now, when we `source` our test script or run `$ Rscript test_code.R` in the terminal,
+instead of the lack of an error indicating success, we see:
 
-```python
-import pytest
-from eva_data_analysis import text_to_duration
+```output
+Test passed 🌈
+Test passed 😸
+```
 
-def test_text_to_duration_float():
-    """
-    Test that text_to_duration returns expected ground truth values
-    for typical durations with a non-zero minute component
-    """
-    actual_result = text_to_duration("10:20") 
-    expected_result = 10.33333333
-    assert actual_result == pytest.approx(expected_result)
-    
-def test_text_to_duration_integer():
-    """
-    Test that text_to_duration returns expected ground truth values
-    for typical whole hour durations 
-    """
-    actual_result =  text_to_duration("10:00")
-    expected_result = 10
-    assert actual_result == expected_result
-    
+We can also run our script from the R Console with a utility `testthat` provides.
+
+```r
+> testthat::test_file('test_code.R')
+```
+
+```output
+══ Testing test_code.R ══════════════════════════════════════════════════════════════════════════════════════════
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ] Done!
+```
+
+We can also simplify our `expect_` statements by using `expect_identical` (exact)
+and `expect_equal` (approximate).
+
+```R
+source("eva_data_analysis.R")
+
+library(testthat)
+test_that(
+  "duration calcalulation works off the hour",
+  expect_equal(text_to_duration("10:20"), 10.3333333333)
+)
+test_that(
+  "duration calcalulation works on the hour",
+  expect_identical(text_to_duration("10:00"), 10)
+)
 ```
 
 Writing our tests this way highlights the key idea that each test should compare the actual results returned by our 
 function with expected values.
 
-Similarly, writing inline comments for our tests that complete the sentence "Test that ..." helps us to understand 
+Similarly, writing titles for our tests that complete the sentence "Test that ..." helps us to understand 
 what each test is doing and why it is needed.
+Rerunning our tests, they are still passing.
 
-We can now run our tests with `pytest` from our project's root directory (not from the `tests` directory):
-
-``` bash
-(venv_spacewalks) $ python3 -m pytest 
+```r
+> testthat::test_file('test_code.R')
 ```
+
+```output
+══ Testing test_code.R ══════════════════════════════════════════════════════════════════════════════════════════
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ] Done!
+```
+
+::::::::::::::::::::::::::::: instructor
+### Expect equal failing with small diff
+
+At this stage, an expectation like this:
+
+```r
+expect_equal(text_to_duration("10:20"), 10.333333) # only 6 trailing 3s in 10.333333
+```
+
+```error
+── Failure (test_code_04.R:4:1): duration calcalulation works off the hour ─────────────────────────────────────────
+text_to_duration("10:20") not equal to 10.333333.
+1/1 mismatches
+[1] 10.3 - 10.3 == 3.33e-07
+```
+
+This can be resolved in one of two ways:
+
+1) Increase the tolerance in expect equal.
+  ```r
+  expect_equal(text_to_duration("10:20"), 10.333333, tolerance = 1e-5)
+  ```
+
+2) Add more trailing `3`s to the expected value. (There need to be at least 7.)
+  ```r
+  expect_equal(text_to_duration("10:20"), 10.3333333) # 7 trailing 3s in 10.333333
+  ```
+  
+::::::::::::::::::::::::::::::::::::::::
+
 
 Let's now reintroduce our old bug in function `text_to_duration` that affects 
 the durations with a non-zero minute component like "10:20" but not those that are whole hours, e.g. "10:00":
 
-```python
+```r
     ...
-    duration_hours = int(hours) + int(minutes)/6  # Divide by 6 instead of 60
+    \(hour_minute) as.numeric(hour_minute[1]) + as.numeric(hour_minute[2])/6
     ...
 ```
 
 Let's re-run our tests with `pytest` from our project's root directory (not from the `tests` directory):
 
-``` bash
-(venv_spacewalks) $ python3 -m pytest 
+``` r
+>testthat::test_file("test_code.R")
 ```
 
 ``` error
-========================================== test session starts ===========================================
-platform darwin -- Python 3.11.7, pytest-8.3.3, pluggy-1.5.0
-rootdir: /Users/user/work/SSI/lessons/astronaut-data-analysis-not-so-good
-plugins: cov-5.0.0
-collected 2 items                                                                                                                                                                                                                                                                                                     
+══ Testing test_code.R ══════════════════════════════════════════════════════════════════════════════════════════
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 1 ]
 
-tests/test_code.py F.                                                                                                                                                                                                                                                                                           [100%]
-
-================================================ FAILURES ================================================
-________________________________________ test_text_to_duration_float _____________________________________
-
-    def test_text_to_duration_float():
->       assert text_to_duration("10:20") == pytest.approx(10.33333333)
-E       assert 13.333333333333334 == 10.33333333 ± 1.0e-05
-E         
-E         comparison failed
-E         Obtained: 13.333333333333334
-E         Expected: 10.33333333 ± 1.0e-05
-
-tests/test_code.py:5: AssertionError
-=========================================== short test summary info =======================================
-FAILED tests/test_code.py::test_text_to_duration_float - assert 13.333333333333334 == 10.33333333 ± 1.0e-05
-========================================= 1 failed, 1 passed in 0.67s =====================================
+── Failure (test_code.R:4:1): duration calcalulation works off the hour ─────────────────────────────────────────
+text_to_duration("10:20") not equal to 10.3333333.
+1/1 mismatches
+[1] 13.3 - 10.3 == 3
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 1 ]
 
 ```
 
-From the above output from `pytest`'s execution of out tests, we notice that: 
+From the above output from `execution`'s execution of out tests, we notice that: 
 
-- If a test function finishes without triggering an assertion, the test is considered successful and is marked with a
-    dot (`.`).
-- If an assertion fails or an error occurs, the test is marked as a failure with an `F`, 
-and the output includes details about the error to help identify what went wrong.
+- For each testing file, there is a summary of how many successes, skips, and failures occurred in that file. (Since we currently only have one testing file, the file summary and the overall
+summary contain identical info.)
+- Lists the failures, with the file (`test_code.R`), line number (`4`), and character number (`1`) where the failure occurred.
+- Gives an overall summary of the number of successes and failures a the end.
 
-Let's fix our bug once again, and rerun our tests using `pytest`.
+Let's fix our bug once again, and rerun our tests using `testthat`.
 
 ```output
-========================================== test session starts ===========================================
-platform darwin -- Python 3.11.7, pytest-8.3.3, pluggy-1.5.0
-rootdir: /Users/user/work/SSI/lessons/astronaut-data-analysis-not-so-good
-plugins: cov-5.0.0
-collected 2 items                                                                                                                                                                                                                                                                                                     
-
-tests/test_code.py ..                                                                                                                                                                                                                                                                                           [100%]
-
-=========================================== 2 passed in 0.63s =============================================
+══ Testing test_code.R ══════════════════════════════════════════════════════════════════════════════════════════
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ] Done!
 ```
 
 This time, all out tests passed.
@@ -574,66 +559,58 @@ This time, all out tests passed.
 A colleague has asked you to conduct a pre-publication review of their code which analyses time spent in 
 space by various individual astronauts.
 
-You tested their code using `pytest`, and got the following output.
+You tested their code using `testthat`, and got the following output.
 Inspect it and answer the questions below.
 
 #### Example `pytest` output
 
 ``` output
-============================================================ test session starts 
-platform darwin -- Python 3.12.3, pytest-8.2.2, pluggy-1.5.0
-rootdir: /Users/Desktop/AnneResearcher/projects/Spacetravel
-collected 9 items                                                                                                                                                              
+✔ | F W  S  OK | Context
+✖ | 2        4 | analyse                                                                                            
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Failure (test_analyse.R:9:3): Test Total Duration
+calculate_total_duration(c(10, 15, 20, 5)) (`actual`) not equal to 50/60 (`expected`).
 
-tests/test_analyse.py FF....                                              [ 66%]
-tests/test_prepare.py s..                                                 [100%]
+  `actual`: 8.3
+`expected`: 0.8
 
-====================================================================== FAILURES 
-____________________________________________________________ test_total_duration
+Error (test_analyse.R:12:3): Test Mean Duration
+Error in `len(d)`: could not find function "len"
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_equal(...) at test_analyse.R:12:3
+ 2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+ 3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+ 4. └─calculate_mean_duration(c(10, 15, 20, 5))
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+✔ |      1   2 | prepare                                                                                            
 
-    def test_total_duration():
-    
-      durations = [10, 15, 20, 5]
-      expected  = 50/60
-      actual  = calculate_total_duration(durations)
->     assert actual == pytest.approx(expected)
-E     assert 8.333333333333334 == 0.8333333333333334 ± 8.3e-07
-E       
-E       comparison failed
-E       Obtained: 8.333333333333334
-E       Expected: 0.8333333333333334 ± 8.3e-07
+══ Results ═════════════════════════════════════════════════════════════════════════════════════════════════════════
+── Skipped tests (1) ───────────────────────────────────────────────────────────────────────────────────────────────
+• Skipping (1): test_prepare.R:1:21
 
-tests/test_analyse.py:9: AssertionError
-______________________________________________________________________________ test_mean_duration 
+── Failed tests ────────────────────────────────────────────────────────────────────────────────────────────────────
+Failure (test_analyse.R:9:3): Test Total Duration
+calculate_total_duration(c(10, 15, 20, 5)) (`actual`) not equal to 50/60 (`expected`).
 
-    def test_mean_duration():
-       durations = [10, 15, 20, 5]
-    
-       expected = 12.5/60
->      actual  = calculate_mean_duration(durations)
+  `actual`: 8.3
+`expected`: 0.8
 
-tests/test_analyse.py:15: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+Error (test_analyse.R:12:3): Test Mean Duration
+Error in `len(d)`: could not find function "len"
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_equal(...) at test_analyse.R:12:3
+ 2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+ 3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+ 4. └─calculate_mean_duration(c(10, 15, 20, 5))
 
-durations = [10, 15, 20, 5]
-
-    def calculate_mean_duration(durations):
-        """
-        Calculate the mean of a list of durations.
-        """
-        total_duration = sum(durations)/60
->       mean_duration = total_duration / length(durations)
-E       NameError: name 'length' is not defined
-
-Spacetravel.py:45: NameError
-=========================================================================== short test summary info 
-FAILED tests/test_analyse.py::test_total_duration - assert 8.333333333333334 == 0.8333333333333334 ± 8.3e-07
-FAILED tests/test_analyse.py::test_mean_duration - NameError: name 'length' is not defined
-============================================================== 2 failed, 6 passed, 1 skipped in 0.02s 
+[ FAIL 2 | WARN 0 | SKIP 1 | PASS 6 ]
+Error: Test failures
 ```
 
 a.  How many tests has our colleague included in the test suite?
-b.  The first test in test_prepare.py has a status of s; what does this
+b.  The one of the tests in test_prepare.R (`Context`: `prepare`) is listed under the `S` column; what does this
     mean?
 c.  How many tests failed?
 d.  Why did "test_total_duration" fail?
@@ -642,16 +619,15 @@ e.  Why did "test_mean_duration" fail?
 ::: solution
 a.  9 tests were detected in the test suite
 b.  s - stands for "skipped",
-c.  2 tests failed: the first and second tests in test file
+c.  2 tests failed in test_analysis.R
     `test_analyse.py`
 d.  `test_total_duration` failed because the calculated total duration
     differs from the expected value by a factor of 10 i.e. the assertion
     `actual == pytest.approx(expected)` evaluated to `False`
 e.  `test_mean_duration` failed because there is a syntax error in
     `calculate_mean_duration`. Our colleague has used the command
-    `length` (not a python command) instead of `len`. As a result,
-    running the function returns a `NameError` rather than a calculated
-    value and the test assertion evaluates to `False`.
+    `len` (not an R command) instead of `length`.
+    As a result, running the function raises an error rather than returning a calculated value causing the function to be interrupted prematurely and the test to fail.
 :::
 :::
 
@@ -667,7 +643,7 @@ to our data containing the number of astronauts participating in any given space
 How do we know that it works as intended and that it will not break the rest of our code?
 For this, we need to write a test suite with a comprehensive coverage of the new code.
  
-```python
+```r
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
@@ -747,134 +723,68 @@ Cover typical cases and edge cases.
 
 Hint - use the following template when writing tests:
 
-```python
-def test_MYFUNCTION (): # FIXME
-    """
-    Test that ...   #FIXME
-    """
-    
-    # Typical value 1
-    actual_result =  _______________ #FIXME
-    expected_result = ______________ #FIXME
-    assert actual_result == expected_result
-    
-    # Typical value 2
-    actual_result =  _______________ #FIXME
-    expected_result = ______________ #FIXME
-    assert actual_result == expected_result
-    
-```
+```r
+test_that("_______(function) returns _______" { 
+  # Typical value 1
+  actual_result <- _______________ 
+  expected_result <- _______________ 
+  expect________________(actual_result, expected_result) 
+
+  # Typical value 2
+  actual_result <- _______________
+  expected_result <- _______________ 
+  expect________________(actual_result, expected_result) 
+})
 
 ::: solution
 
 We can add the following test functions to out test suite.
 
-```python
-import pytest
-from eva_data_analysis import (
-    text_to_duration,
-    calculate_crew_size
-)
+```r
+test_that("calculate_crew_size returns expected values for typical crew values", {
+  actual_result <- calculate_crew_size("Valentina Tereshkova;")
+  expected_result <- 1L
+  expect_identical(actual_result, expected_result)
 
-...
-
-def test_calculate_crew_size():
-    """
-    Test that calculate_crew_size returns expected ground truth values
-    for typical crew values
-    """
-    actual_result = calculate_crew_size("Valentina Tereshkova;")
-    expected_result = 1
-    assert actual_result == expected_result
-
-    actual_result = calculate_crew_size("Judith Resnik; Sally Ride;")
-    expected_result = 2
-    assert actual_result == expected_result
+  actual_result <- calculate_crew_size("Judith Resnik; Sally Ride;")
+  expected_result <- 2L
+  expect_identical(actual_result, expected_result)
+})
 
 # Edge cases
-def test_calculate_crew_size_edge_cases():
-    """
-    Test that calculate_crew_size returns expected ground truth values
-    for edge case where crew is an empty string
-    """
-    actual_result = calculate_crew_size("")
-    assert actual_result is None
+test_that("calculate_crew_size returns expected values for edge case where crew is an empty string", {
+  actual_result <- calculate_crew_size("")
+  expect_null(actual_result)
+})
 
 ```
 
+:: instructor
+`1L`/`2L` is needed if using `expect_identical` because "identical" means same datatype as well as same value.
+`length` returns an integer. `1`, `2`, etc. by default is numeric (float). `1L` indicates we want an integer.
+
+```output
+> str(1L)
+ int 1
+
+> str(1)
+ num 1
+
+> str(length('a'))
+ int 1
+```
+
+
+::
+
 Let's run out tests:
 
-```bash
-(venv_spacewalks) $ python3 -m pytest
-
+```r
+> testthat::test_file("test_code_06.R")
 ```
 
 :::
 ::::::
-
-### Parameterising tests
-
-Looking at out new test functions, we may notice that they do not follow the [“Don't Repeat Yourself (DRY) principle”][dry-principle] which prevents software - including testing code - from becoming repetitive and too long.
-In our test code, a small block of code is repeated twice with different input values:
-
-```python
-def test_calculate_crew_size():
-    """
-    Test that calculate_crew_size returns expected ground truth values
-    for typical crew values
-    """
-    actual_result = calculate_crew_size("Valentina Tereshkova;")
-    expected_result = 1
-    assert actual_result == expected_result
-
-    actual_result = calculate_crew_size("Judith Resnik; Sally Ride;")
-    expected_result = 2
-    assert actual_result == expected_result
-```
-
-To avoid such repetitions in our test code, we use **test parameterisation**. 
-This allows us to apply our test function to a list of input/expected output pairs without the need for repetition. 
-To parameterise the `test_calculate_crew_size` function, we can rewrite is as follows:
-
-```python
-@pytest.mark.parametrize("input_value, expected_result", [
-    ("Valentina Tereshkova;", 1),
-    ("Judith Resnik; Sally Ride;", 2),
-])
-def test_calculate_crew_size(input_value, expected_result):
-    """
-    Test that calculate_crew_size returns expected ground truth values
-    for typical crew values
-    """
-    actual_result = calculate_crew_size(input_value)
-    assert actual_result == expected_result
-```
-
-Notice the following key changes to our code:
-
-- The unparameterised version of `test_calculate_crew_size` function did not have any arguments and our input/expected values 
-were all defined in the body of our test function.
-- In the parameterised version of `test_calculate_crew_size`, the body of our test function has been rewritten as a 
-parameterised block of code that uses the variables `input_value` and `expected_result` which are now arguments of the
-test function.
-- A Python decorator `@pytest.mark.parametrize` is placed immediately before the test function and indicates that 
-it should be run once for each set of parameters provided.
-
-::: callout
-In Python, a decorator is a function that can modify the behaviour of another function. 
-`@pytest.mark.parametrize` is a decorator provided by `pytest` that modifies the behaviour of our test 
-function by running it multiple times - once for each set of inputs. 
-This decorator takes two main arguments:
-
--   Parameter names: a string with the names of the parameters that the
-    test function will accept, separated by commas – in this case
-    “input_value” and “expected_value”
-
--   Parameter values: a list of tuples, where each tuple contains the
-    values for the parameters specified in the first argument.
-:::
-
-As you can see, the parameterised version of our test function is shorter, more readable and easier to maintain.
 
 ### Just enough tests
 
@@ -886,51 +796,42 @@ using a metric called code coverage:
 
 $$ \text{Line Coverage} = \left( \frac{\text{Number of Executed Lines}}{\text{Total Number of Executable Lines}} \right) \times 100 $$
 
-We can calculate our test coverage using the `pytest-cov` library as follows.
+We can calculate our test coverage using the `covr` library as follows.
 
-``` bash
-(venv_spacewalks) $ python3 -m pytest --cov 
+```r
+> covr::file_coverage(
+  source_files = "eva_data_analysis.R",
+  test_files = "test_code.R"
+)
 ```
 
 ``` output
-========================================================== test session starts 
-platform darwin -- Python 3.12.3, pytest-8.2.2, pluggy-1.5.0
-rootdir: /Users/AnnResearcher/Desktop/Spacewalks
-plugins: cov-5.0.0
-collected 4 items                                                                                                                        
-
-tests/test_eva_data_analysis.py ....                                                                                               [100%]
-
----------- coverage: platform darwin, python 3.12.3-final-0 ----------
-Name                              Stmts   Miss  Cover
------------------------------------------------------
-eva_data_analysis.py                 56     38    32%
-tests/test_eva_data_analysis.py      20      0   100%
------------------------------------------------------
-TOTAL                                76     38    50%
-
-
-=========================================================== 4 passed in 1.04s
+Test passed 🥳
+Test passed 😀
+Test passed 🎊
+Test passed 🥳
+Coverage: 20.41%
+crew_size.R: 20.41%
 ```
 
 To get an in-depth report about which parts of our code are tested and
-which are not, we can add the option `--cov-report=html`.
+which are not, we can send the output of `covr::file_coverage` to `covr::file_report`
 
-``` bash
-(venv_spacewalks) $ python3 -m pytest --cov --cov-report=html 
+``` r
+> covr::file_coverage(covr::file_coverage(
+  source_files = "eva_data_analysis.R",
+  test_files = "test_code.R"
+))
 ```
 
-This option generates a folder `htmlcov` in the project root directory containing a code coverage report in HTML format. 
-This provides structured information about our test coverage including: 
-
-- a table showing the proportion of lines in each function that are currently tested, and 
-- an annotated copy of our code where untested lines are highlighted in red.
+This option opens up a code coverage report in HTML format. 
+The report shows your file in with covered lines in green and coverable lines that 
+are not covered in red.
 
 Ideally, all the lines of code in our code base should be exercised by at least one test. 
 However, if we lack the time and resources to test every line of our code we should:
 
-- avoid testing Python's built-in functions or functions imported from well-known and well-tested libraries like 
-`pandas` or `numpy`.
+- avoid testing R's built-in functions
 - focus on the the parts of our code that carry the greatest "reputational risk", i.e. that could affect the accuracy 
 of our reported results.
 
@@ -946,20 +847,25 @@ Test coverage of 100% does not mean that our code is bug-free.
 
 ### Evaluating code coverage
 
-Generate the code coverage report for your software using the `python3 -m pytest --cov --cov-report=html` command.
+Generate the code coverage report for your software using the following command.
 
-Inspect the `htmlcov` folder created by the above command in the root directory of your propject, then open the 
-`htmlcov/index.html` file in a Web browser and extract the following information:
+``` r
+> covr::file_coverage(covr::file_coverage(
+  source_files = "eva_data_analysis.R",
+  test_files = "test_code.R"
+))
+```
+
+Inspect the html report created by the above command in the root directory of your propject, then open the and extract the following information:
 
 a.  What proportion of the code base is currently "not" exercised by the test suite?
 b.  Which functions in our code base are currently untested?
 
 ::: solution
 
-a.  You can find this information on the "Files" tab of the HTML report saved in the `htmlcov/index.html` file. 
-The proportion of the code base NOT covered by our tests is 68% (100% - 32%) - this may differ for your 
+a.  The proportion of the code base NOT covered by our tests is 80% (100% - 20%) - this may differ for your 
 version of the code.
-b.  You can find this information on the "Functions" tab of the HTML report. 
+b.  You can find this information by looking at which functions have red sections.
 The following functions in our code base are currently untested:
     -   read_json_to_dataframe
     -   write_dataframe_to_csv
@@ -972,19 +878,15 @@ The following functions in our code base are currently untested:
 At this point, now is a good time to commit our test suite to our codebase and push the changes to GitHub.
 
 ``` bash
-(venv_spacewalks) $ git add eva_data_analysis.py 
+(venv_spacewalks) $ git add eva_data_analysis.py
 (venv_spacewalks) $ git commit -m "Add additional analysis functions"
-(venv_spacewalks) $ git add tests/
+(venv_spacewalks) $ git add test_code.R
 (venv_spacewalks) $ git commit -m "Add test suite"
-(venv_spacewalks) $ python3 -m pip freeze > requirements.txt
-(venv_spacewalks) $ git add requirements.txt
-(venv_spacewalks) $ git commit -m "Added pytest and pytest-cov libraries."
+(venv_spacewalks) $ git add env.lock
+(venv_spacewalks) $ git commit -m "Added testthat and covr packages."
 (venv_spacewalks) $ git push origin main
 ```
 
-### (Optional) More practice with a test suite
-
-There is an [optional exercise](../learners/test-suite-exercise.md) to implement additional tests and practice writing tests some more.
 
 ## Continuous Integration for automated testing
 
@@ -997,7 +899,7 @@ for some additional reading.
 
 During this episode, we have covered how to use software tests to verify
 the correctness of our code. We have seen how to write a unit test, how
-to manage and run our tests using the `pytest` framework and how identify
+to manage and run our tests using the `testthat` framework and how identify
 which parts of our code require additional testing using test coverage
 reports.
 
@@ -1009,39 +911,6 @@ experiment with changes to our code knowing that our tests will let us
 know if we break any existing functionality. 
 In other words, software testing supports the [FAIR software principles][fair-principles-research-software] by making our code more **accessible** and
 **reusable**.
-
-:::::: spoiler
-
-### Code state
-
-At this point, the code in your local software project's directory should be as in:
-https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation.
-
-::::::
-
-## Further reading
-
-We recommend the following resources for some additional reading on the
-topic of this episode:
-
--   [The Defensive Programming episode][python-novice-defensive] from
-    the Software Carpentry Python Programming lesson
--   [Using Python to double check your work][ssi-blog-python-check]
-    (Software Sustainability Blog Post) by Peter Inglesby
--   [The Python Testing and Continuous
-    Integration][incubator-python-testing] lesson on The Carpentries
-    Incubator by François Michonneau
--   [Test Driven Development][york-tdd-blog] (University of York
-    Research Coding Club Blog Post) by Peter Hill and Stephen Biggs-Fox
--   [Automated testing - Preventing yourself and others from breaking
-    your functioning code][coderefinery-testing] Coderefinery lesson
--   [The Automatically Testing Software
-    episode][python-irsd-automated-testing] from the Intermediate
-    Research Software Development lesson on The Carpentries Incubator by
-    Aleksandra Nenadic et al.
-
-Also check the [full reference set](learners/reference.md#litref) for
-the course.
 
 ::: keypoints
 
