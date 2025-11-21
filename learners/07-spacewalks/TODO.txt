@@ -1,0 +1,9 @@
+- Make sure crew size main function works
+- Make sure the right number of repeating 3s and 1e-7 consistent throughout snippets.
+- make the hour_min more clear and populate accross all examples.
+
+known questions/issues:
+- logging - remove? formalize? keep?
+- should we introduce package structure at all. if so, in this ep or in the ep before
+- test_that prefers to have braced expressions
+- I don't agree that 100% coverage is the gold standard. It's neither necessary nor sufficient to indicate adequite testing. 
