@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -251,7 +251,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-code-correctness.html">6. Code correctness</a>
+        <a href="06-code-correctness.html">6. Code correctness &amp; testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -269,7 +269,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-open-collaboration.html">8. Open software management &amp; collaboration</a>
+        <a href="08-open-collaboration.html">8. Software management &amp; collaboration</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -306,7 +306,7 @@
                       <li>
                         <a href="../instructor/images.html">Extract All Images</a>
                       </li>
-                      <hr><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+                      <hr><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -342,7 +342,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Installation instructions</h1>
-        <p>Last updated on 2025-09-30 |
+        <p>Last updated on 2025-11-26 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/learners/installation-instructions.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -374,6 +374,8 @@ account</a> if you do not have one already, make sure that you are able
 to log into it, and download the <a href="#spacewalks">Spacewalks data
 and analysis code</a> which we will be used for exercises in the
 course.</p>
+<p>We also provide <a href="./installation-instructions.html#setup-check">“all in one setup
+check”</a> to test everything works as expected.</p>
 <section><h2 class="section-heading" id="command-line-terminal">Command line terminal<a class="anchor" aria-label="anchor" href="#command-line-terminal"></a></h2>
 <hr class="half-width"><p>You will need a command line terminal (also referred to as a shell)
 in order to run Python scripts and various command like tools (such as
@@ -392,7 +394,7 @@ Git and tools that interact with your filesystem).</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-1" class="tab-content">
-<div id="nav-tabpanel-1-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-1-1">
+<div id="nav-tabpanel-1-1" class="tab-pane show active" aria-labelledby="nav-tab-1-1" role="tabpanel">
 <p>Windows users <em>will have to</em> install <strong>Git Bash</strong>
 (which is included in <a href="https://gitforwindows.org/" class="external-link">Git For
 Windows package</a>). This will install the Bash command line terminal
@@ -417,7 +419,7 @@ option - by default this is set to “Let Git decide”; make sure to select
 the “Override the default branch name for new repositories” option and
 type the name “main” in the text field.</li>
 </ul></div>
-<div id="nav-tabpanel-1-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-2">
+<div id="nav-tabpanel-1-2" class="tab-pane" aria-labelledby="nav-tab-1-2" role="tabpanel">
 <p>MacOS and Linux users will already have a command line terminal
 available on their systems. You can use a command line terminal such as
 <a href="https://www.gnu.org/software/bash/" class="external-link">Bash</a>, or any other <a href="https://en.wikipedia.org/wiki/Comparison_of_command_shells" class="external-link">command
@@ -464,12 +466,12 @@ configure Git on your machine in additional steps.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-2" class="tab-content">
-<div id="nav-tabpanel-2-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-2-1">
+<div id="nav-tabpanel-2-1" class="tab-pane show active" aria-labelledby="nav-tab-2-1" role="tabpanel">
 <p>Windows users <em>will have to</em> use <strong>Git Bash</strong> -
 as explained in the <a href="index.html#command-line-tool">command line
 terminal installation section</a>.</p>
 </div>
-<div id="nav-tabpanel-2-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-2-2">
+<div id="nav-tabpanel-2-2" class="tab-pane" aria-labelledby="nav-tab-2-2" role="tabpanel">
 <p>On macOS, Git is included as part of Apple’s <a href="https://en.wikipedia.org/wiki/Xcode" class="external-link">Xcode tools</a> and should be
 available from the command line as long as you have Xcode. If you do not
 have Xcode installed, you can download it from <a href="https://apps.apple.com/us/app/xcode/id497799835?mt=12" class="external-link">Apple’s App
@@ -583,7 +585,10 @@ an SSH key</a>, and</li>
 <li>
 <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account" class="external-link">add
 an SSH key to a GitHub account</a>.</li>
-</ul><p>A short summary of the commands you need to perform is shown
+</ul><p>If you have already configured your SSH key with GitHub - you can
+skip this step (but make sure to test your setup by running
+<code>ssh -T git@github.com</code> command from the terminal).</p>
+<p>A short summary of the commands you need to perform is shown
 below.</p>
 <p>To generate an SSH key pair, you will need to run the
 <code>ssh-keygen</code> command line tool (included with your command
@@ -731,16 +736,49 @@ separately so far).</p>
 <p>Please make sure to <a href="https://code.visualstudio.com/Download" class="external-link">download VS Code</a> for
 your platform.</p>
 <div class="section level3">
-<h3 id="command-line-terminal-git-integration-in-vs-code">Command line terminal &amp; Git integration in VS Code<a class="anchor" aria-label="anchor" href="#command-line-terminal-git-integration-in-vs-code"></a></h3>
+<h3 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a></h3>
+<div class="section level4">
+<h4 id="python-extensions-for-vs-code">Python extensions for VS Code<a class="anchor" aria-label="anchor" href="#python-extensions-for-vs-code"></a></h4>
+<p>You will need to install the <strong>Microsoft Python extension for
+Visual Studio Code</strong> (from <code>View &gt; Extensions</code>
+top-level menu), which provides support for Python language.</p>
+<p>This extension will automatically install the following extensions
+too by default to provide the best Python development experience in VS
+Code:</p>
+<ul><li>Pylance – performant Python language support (IntelliSense)</li>
+<li>Python Debugger – improved debugging experience</li>
+</ul><figure><img src="../fig/vscode-python-extension.png" class="image-with-shadow figure mx-auto d-block" alt="Screenshot of Extension Marketplace View in VS Code showing the search results for the term 'python' in the search result list on the left with the 'Python by Microsoft' extension selected and details of this extension showing in the pane on the right with a button to install it"><div class="figcaption"><em>Python extension for VS Code by
+Microsoft</em></div>
+</figure></div>
+<div class="section level4">
+<h4 id="command-line-terminal-git-integration-in-vs-code">Command line terminal &amp; Git integration in VS Code<a class="anchor" aria-label="anchor" href="#command-line-terminal-git-integration-in-vs-code"></a></h4>
+<div class="tabs">
+<nav><div id="nav-tab-3" class="nav nav-tabs" role="tablist">
+<button class="nav-link active" id="nav-tab-3-1" data-bs-toggle="tab" data-bs-target="#nav-tabpanel-3-1" type="button" role="tab" aria-controls="nav-tabpanel-3-1" aria-selected="true">
+  <h3 class="tab-header" id="nav-tab-heading-3-1">
+  Linux/macOS
+  </h3>
+</button>
+<button class="nav-link" id="nav-tab-3-2" data-bs-toggle="tab" data-bs-target="#nav-tabpanel-3-2" type="button" role="tab" aria-controls="nav-tabpanel-3-2" aria-selected="false">
+  <h3 class="tab-header" id="nav-tab-heading-3-2">
+  Windows
+  </h3>
+</button>
+</div>
+</nav><div id="nav-tabContent-3" class="tab-content">
+<div id="nav-tabpanel-3-1" class="tab-pane show active" aria-labelledby="nav-tab-3-1" role="tabpanel">
 <p>On macOS and Linux systems, VS Code will typically recognise a
 command line terminal you already have on your system (along with all
-programs/commands such as Git you can run from it) and you will not need
-to do anything and it will be available as a “Terminal” in VS Code.</p>
+programs/commands such as Git you can run from it). You do not have to
+install or configure anything additionally - it will be available as a
+“Terminal” in VS Code.</p>
+</div>
+<div id="nav-tabpanel-3-2" class="tab-pane" aria-labelledby="nav-tab-3-2" role="tabpanel">
 <p>On Windows, if VS Code does not automatically recognise Git Bash as a
 command line terminal to be used as a “Terminal”, installing VS Code
-extension “Start git-bash” should help (to view available and installed
+extension “Start git-bash” should help. To view available and installed
 extensions, go to <code>View &gt; Extensions</code> from the top-level
-menu).</p>
+menu.</p>
 <figure><img src="../fig/vscode-gitbash-extension.png" class="image-with-shadow figure mx-auto d-block" alt="Screenshot of Extension Marketplace View in VS Code showing the 'Start git-bash' extension selected in the search result list on the left and the extension details in the pane on the right with a button to install it"><div class="figcaption"><em>Git Bash extension for VS Code</em></div>
 </figure><p>To check the command line integration and that VS Code knows about
 different command line terminal(s) installed on your system select
@@ -752,51 +790,45 @@ of the current terminal is indicated towards the right of the window
 installed on your machine). This can be changed (provided you have
 several command line terminal programmes installed on your machine) by
 clicking the “+” drop-down menu button next to the command line terminal
-indicator. Windows users may have “Powershell” selected by default here
-- you should select “Git Bash” from the list.</p>
+indicator. Windows users may have”Powershell” selected by default here -
+you should select “Git Bash” from the list.</p>
 <p>You can also change the default command line terminal from the same
 drop down menu by using the option “Select Default Profile” (so it will
 use that one next time you open a terminal window).</p>
 <figure><img src="../fig/vscode-terminal.png" alt="Screenshot of the terminal pane in VS Code highlighting the current terminal type and dropdown menu to open a new terminal with 'Select Default Profile' option highlighted in the menu" class="figure mx-auto d-block"><div class="figcaption"><em>Terminal window in VS Code</em></div>
 </figure></div>
-<div class="section level3">
-<h3 id="vs-code-extensions-for-git">VS Code extensions for Git<a class="anchor" aria-label="anchor" href="#vs-code-extensions-for-git"></a></h3>
-<p>You could also install the following VS Code extensions (from
+</div>
+</div>
+</div>
+<div class="section level4">
+<h4 id="vs-code-extensions-for-git-optional">VS Code extensions for Git (optional)<a class="anchor" aria-label="anchor" href="#vs-code-extensions-for-git-optional"></a></h4>
+<p>You can optionally install the following VS Code extensions (from
 <code>View &gt; Extensions</code> top-level menu) to make your Git
 experience in VS Code better:</p>
-<ul><li>GitLense - Git Supercharged (adds a few nice additions to Git
-support in VS Code)</li>
+<ul><li>GitLens - Git Supercharged (adds a few nice additions to Git support
+in VS Code)</li>
 <li>Git Graph (provides nice graphs and visualisations of a Git
 repository in VS Code)</li>
 </ul><figure><img src="../fig/vscode-git-extensions.png" class="image-with-shadow figure mx-auto d-block" alt="Screenshot of Extension Marketplace View in VS Code showing the GitLens and Git Graph extensions under installed extensions on the left with the GitLens extension selected and details of GitLens extension in the pane on the right with buttons to uninstall and disable it"><div class="figcaption"><em>GitLens and Git Graph extensions for VS
 Code</em></div>
-</figure></div>
-<div class="section level3">
-<h3 id="python-integration-in-vs-code">Python integration in VS Code<a class="anchor" aria-label="anchor" href="#python-integration-in-vs-code"></a></h3>
-<p>If you open an existing Python file or create a new blank one (with
-extension “.py”) from VS Code - it should recognise it as a Python file
-already. VS Code may ask you to select a Python interpreter if you try
-to run the file, at which point you should select the Python 3 you
-installed.</p>
+</figure><p>While the above extension may be very useful for your future work, we
+will not be using them in the course as we will type Git commands from
+the command line.</p>
 </div>
-<div class="section level3">
-<h3 id="vs-code-extensions-for-python">VS Code extensions for Python<a class="anchor" aria-label="anchor" href="#vs-code-extensions-for-python"></a></h3>
-<p>You should also install the Python extension for VS Code by Microsoft
-(from <code>View &gt; Extensions</code> top-level menu) to make your
-Python experience in VS Code better.</p>
-<figure><img src="../fig/vscode-python-extension.png" class="image-with-shadow figure mx-auto d-block" alt="Screenshot of Extension Marketplace View in VS Code showing the search results for the term 'python' in the search result list on the left with the 'Python by Microsoft' extension selected and details of this extension showing in the pane on the right with a button to install it"><div class="figcaption"><em>Python extension for VS Code by
-Microsoft</em></div>
-</figure></div>
-<div class="section level3">
-<h3 id="vs-code-extensions-for-viewing-data">VS Code extensions for viewing data<a class="anchor" aria-label="anchor" href="#vs-code-extensions-for-viewing-data"></a></h3>
-<p>You should install the following extensions for viewing and editing
-data in VS Code:</p>
+<div class="section level4">
+<h4 id="vs-code-extensions-for-viewing-data-optional">VS Code extensions for viewing data (optional)<a class="anchor" aria-label="anchor" href="#vs-code-extensions-for-viewing-data-optional"></a></h4>
+<p>You can optionally install the following extensions for additional
+support for viewing and editing different data formats in VS Code:</p>
 <ul><li>Excel Viewer - custom editor and previewer for CSV files and Excel
 spreadsheets</li>
 <li>JSON - custom editor and previewer for JSON files</li>
 </ul><figure><img src="../fig/vscode-data-viewer-extensions.png" class="image-with-shadow figure mx-auto d-block" alt="Screenshot of Extension Marketplace View in VS Code showing the CSV and JSON data editor and viewer extensions among the installed extensions on the left with the JSON extension selected and details of this extension showing in the pane on the right with buttons to uninstall and disable it"><div class="figcaption"><em>CSV and JSON data editor and viewer
 extensions for VS Code</em></div>
-</figure></div>
+</figure><p>While the above extension may be very useful for your future work, we
+will not be using them in the course and the default support for these
+data formats in VS Code will be sufficient.</p>
+</div>
+</div>
 </section><section><h2 class="section-heading" id="spacewalks">Spacewalks data and analysis code<a class="anchor" aria-label="anchor" href="#spacewalks"></a></h2>
 <hr class="half-width"><p>As part of the course, you may receive the
 <code>spacewalks.zip</code> archive from your instructors via email,
@@ -810,6 +842,84 @@ script to analyse and plot this data.</p>
 <p>Save the <code>spacewalks.zip</code> archive to your home directory
 and extract it - you should get a directory called
 <code>spacewalks</code>.</p>
+</section><section><h2 class="section-heading" id="setup-check">Setup check (all in one)<a class="anchor" aria-label="anchor" href="#setup-check"></a></h2>
+<hr class="half-width"><p>Let’s check your setup now to make sure you are ready for the rest of
+this course.</p>
+<div id="check-your-setup-5-min" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="check-your-setup-5-min" class="callout-inner">
+<h3 class="callout-title">Check your setup (5 min)</h3>
+<div class="callout-content">
+<p>From a command line terminal on your operating system or within VS
+Code run the following commands to check you have installed all the
+tools listed in <a href="./installation-instructions.html">the Setup
+page</a> and that are functioning correctly.</p>
+<p>Checking the command line terminal:</p>
+<ol style="list-style-type: decimal"><li><code>$ date</code></li>
+<li><code>$ echo $SHELL</code></li>
+<li><code>$ pwd</code></li>
+<li><code>$ whoami</code></li>
+</ol><p>Checking Python:</p>
+<ol start="5" style="list-style-type: decimal"><li><code>$ python --version</code></li>
+<li><code>$ python3 --version</code></li>
+<li><code>$ which python</code></li>
+<li><code>$ which python3</code></li>
+</ol><p>Checking Git and GitHub:</p>
+<ol start="9" style="list-style-type: decimal"><li><code>$ git --help</code></li>
+<li><code>$ git config --list</code></li>
+<li><code>$ ssh -T git@github.com</code></li>
+</ol><p>Checking VS Code:</p>
+<ol start="12" style="list-style-type: decimal"><li><code>$ code</code></li>
+<li><code>$ code --list-extensions --show-versions</code></li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>The expected out put of each command is:</p>
+<ol style="list-style-type: decimal"><li>Today’s date</li>
+<li>
+<code>bash</code> or <code>zsh</code> - this tells you what shell
+language you are using. In this course we show examples in Bash.</li>
+<li>Your “present working directory” or the folder where your shell is
+running</li>
+<li>Your username</li>
+<li>In this course we are using Python 3. If
+<code>python --version</code> gives you Python 2.x you may have two
+versions of Python installed on your computer and need to be careful
+which one you are using.</li>
+<li>Use this command to be certain you are using Python version 3, not
+2, if you have both installed.</li>
+<li>The file path to where the Python version you are calling is
+installed.</li>
+<li>If you have more than one version these should be different paths,
+if both 5. and 6. gave the same result then 7. and 8. should match as
+well.</li>
+<li>The help message explaining how to use the <code>git</code>
+command.</li>
+<li>You should have <code>user.name</code>, <code>user.email</code> and
+<code>core.editor</code> set in your Git configuration. Check that the
+editor listed is one you know how to use.</li>
+<li>This checks if you have set up your connection to GitHub correctly.
+If is says <code>permission denied</code> you may need to look at the
+instructions for setting up SSH keys again on the Setup page.</li>
+<li>This should open VS Code in your current working directory. macOS
+users may need to first open VS Code and <a href="https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line" class="external-link">add
+it to the PATH</a>.</li>
+<li>You should see the <a href="./installation-instructions.html#extensions">extensions for VS
+Code you installed during setup</a> or previously.</li>
+</ol></div>
+</div>
+</div>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -872,8 +982,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/installation-instructions.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/installation-instructions.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-09-30",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-26",
+  "datePublished": "2025-11-26"
 }
 
   </script><script>

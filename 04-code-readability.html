@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -246,7 +246,7 @@
         <ul><li><a href="#place-import-statements-at-the-top">Place <code>import</code> statements at the top</a></li>
 <li><a href="#use-meaningful-variable-names">Use meaningful variable names</a></li>
 <li><a href="#remove-unused-variables-and-imports">Remove unused variables and imports</a></li>
-<li><a href="#use-third-party-libraries-where-possible">Use third-party libraries where possible</a></li>
+<li><a href="#use-third-party-libraries">Use third-party libraries</a></li>
 <li><a href="#use-comments-to-explain-functionality">Use comments to explain functionality</a></li>
 <li><a href="#separate-units-of-functionality">Separate units of functionality</a></li>
 <li><a href="#use-docstrings-to-document-functions">Use docstrings to document functions</a></li>
@@ -270,7 +270,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-code-correctness.html">6. Code correctness</a>
+        <a href="06-code-correctness.html">6. Code correctness &amp; testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -288,7 +288,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-open-collaboration.html">8. Open software management &amp; collaboration</a>
+        <a href="08-open-collaboration.html">8. Software management &amp; collaboration</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -325,7 +325,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="test-suite-exercise.html">Implementing a test suite</a></li><li><a href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a href="licensing.html">Software licensing</a></li><li><a href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a href="installation-instructions.html">Installation instructions</a></li><li><a href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+                      <li><a href="installation-instructions.html">Installation instructions</a></li><li><a href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a href="test-suite-exercise.html">Implementing a test suite</a></li><li><a href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a href="licensing.html">Software licensing</a></li><li><a href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -361,7 +361,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Code readability</h1>
-        <p>Last updated on 2025-09-30 |
+        <p>Last updated on 2025-11-26 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/04-code-readability.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -392,10 +392,11 @@ of my code?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <p>After completing this episode, participants should be able to:</p>
-<ul><li>Organise code into reusable functions that achieve a singular
-purpose</li>
+<ul><li>Import third-party libraries at the top of a script</li>
 <li>Choose function and variable names that help explain the purpose of
 the function or variable</li>
+<li>Organise code into reusable functions that achieve a singular
+purpose</li>
 <li>Write informative comments and docstrings to provide more detail
 about what the code is doing</li>
 </ul></div>
@@ -482,7 +483,7 @@ readability (accessibility) and reusability of our code.</p>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>data<span class="op">=</span>[]</span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">374</span>):</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">375</span>):</span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    line<span class="op">=</span>data_f.readline()</span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
@@ -581,57 +582,14 @@ variable with the same name and no longer be able to access the original
 <code>input_data</code> would be preferable. Note that this behaviour
 may be explicitly disallowed in other programming languages but is not
 in Python.</li>
-</ul><div id="give-a-descriptive-name-to-a-variable" class="callout challenge">
+</ul><div id="rename-our-variables-to-be-more-descriptive-5-min" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="give-a-descriptive-name-to-a-variable" class="callout-inner">
-<h3 class="callout-title">Give a descriptive name to a variable</h3>
-<div class="callout-content">
-<p>Below we have a variable called <code>var</code> being set the value
-of 9.81. <code>var</code> is not a very descriptive name here as it
-doesn’t tell us what 9.81 means, yet it is a very common constant in
-physics! Go online and find out which constant 9.81 relates to and
-suggest a new name for this variable.</p>
-<p>Hint: the units are <em>metres per second squared</em>!</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>var <span class="op">=</span> <span class="fl">9.81</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
-<div class="accordion-body">
-<p><span class="math display">\[ 9.81 m/s^2 \]</span> is the <a href="https://en.wikipedia.org/wiki/Gravity_of_Earth" class="external-link">gravitational
-force exerted by the Earth</a>. It is often referred to as “little g” to
-distinguish it from “big G” which is the <a href="https://en.wikipedia.org/wiki/Gravitational_constant" class="external-link">Gravitational
-Constant</a>. A more descriptive name for this variable therefore might
-be:</p>
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>g_earth <span class="op">=</span> <span class="fl">9.81</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="rename-our-variables-to-be-more-descriptive" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="rename-our-variables-to-be-more-descriptive" class="callout-inner">
-<h3 class="callout-title">Rename our variables to be more
-descriptive</h3>
+<div id="rename-our-variables-to-be-more-descriptive-5-min" class="callout-inner">
+<h3 class="callout-title">Rename our variables to be more descriptive (5
+min)</h3>
 <div class="callout-content">
 <p>Let’s apply this to <code>eva_data_analysis.py</code>.</p>
 <ol style="list-style-type: lower-alpha"><li>
@@ -647,10 +605,210 @@ variable names:</p>
 name.</em></p>
 </li>
 <li><p>What other variable names in our code would benefit from
-renaming?</p></li>
+renaming? Rename these too. Hint: variables <code>w</code>,
+<code>t</code>, <code>tt</code> and <code>ttt</code> could also be
+renamed to be more descriptive.</p></li>
 <li><p>Commit your changes to your repository. Remember to use an
 informative commit message.</p></li>
 </ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: lower-alpha"><li>Updated code after renaming <code>data_f</code>, <code>data_t</code>
+and <code>g_file</code>:</li>
+</ol><div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>        </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>fieldnames <span class="op">=</span> (<span class="st">"EVA #"</span>, <span class="st">"Country"</span>, <span class="st">"Crew    "</span>, <span class="st">"Vehicle"</span>, <span class="st">"Date"</span>, <span class="st">"Duration"</span>, <span class="st">"Purpose"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    </span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>data<span class="op">=</span>[]</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    </span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">375</span>):</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    line<span class="op">=</span>input_file.readline()</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#data.pop(0)</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">## Comment out this bit if you don't want the spreadsheet</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    </span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>w<span class="op">=</span>csv.writer(output_file)</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    </span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>date <span class="op">=</span>[]</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>    </span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>j<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> data:</span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>    <span class="bu">print</span>(data[j])</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>        <span class="co"># and this bit</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>        w.writerow(data[j].values())</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'duration'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>            tt<span class="op">=</span>data[j][<span class="st">'duration'</span>]</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>            <span class="cf">if</span> tt <span class="op">==</span> <span class="st">''</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>                <span class="cf">pass</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>                t<span class="op">=</span>dt.datetime.strptime(tt,<span class="st">'%H:%M'</span>)</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>                ttt <span class="op">=</span> dt.timedelta(hours<span class="op">=</span>t.hour, minutes<span class="op">=</span>t.minute, seconds<span class="op">=</span>t.second).total_seconds()<span class="op">/</span>(<span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>                <span class="bu">print</span>(t,ttt)</span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>                time.append(ttt)</span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>                <span class="cf">if</span> <span class="st">'date'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>                    date.append(dt.datetime.strptime(data[j][<span class="st">'date'</span>][<span class="dv">0</span>:<span class="dv">10</span>], <span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a>                    <span class="co">#date.append(data[j]['date'][0:10])</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>    </span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a>                    time.pop(<span class="dv">0</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a>        j<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>    </span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>t<span class="op">=</span>[<span class="dv">0</span>]</span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> time:</span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>    t.append(t[<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>i)</span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a>    </span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a>date,time <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span><span class="bu">sorted</span>(<span class="bu">zip</span>(date, time)))</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a>    </span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a>plt.plot(date,t[<span class="dv">1</span>:], <span class="st">'ko-'</span>)</span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<ol start="2" style="list-style-type: lower-alpha"><li>Variables <code>w</code>, <code>t</code>, <code>tt</code> and
+<code>ttt</code> could also be renamed to be more descriptive. We could,
+for example:</li>
+</ol><ul><li>
+<strong>Change <code>w</code> to <code>csv_writer</code></strong>:
+makes it clear this variable is a CSV writer object. Using “w” alone
+would more likely be interpreted as “width” or “weight”.</li>
+<li>
+<strong>Change <code>tt</code> to
+<code>duration_str</code></strong>: represents a string form of the
+duration, indicated by “_str”.</li>
+<li>
+<strong>Change <code>t</code> to <code>duration_dt</code></strong>:
+a datetime object parsed from the string, indicated by “_dt”.</li>
+<li>
+<strong>Change <code>ttt</code> to
+<code>duration_hours</code></strong>: the duration converted into
+(decimal) hours.</li>
+</ul><p>Updated code after renaming <code>w</code>, <code>t</code>,
+<code>tt</code> and <code>ttt</code>:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>fieldnames <span class="op">=</span> (<span class="st">"EVA #"</span>, <span class="st">"Country"</span>, <span class="st">"Crew    "</span>, <span class="st">"Vehicle"</span>, <span class="st">"Date"</span>, <span class="st">"Duration"</span>, <span class="st">"Purpose"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>data<span class="op">=</span>[]</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">375</span>):</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>    line<span class="op">=</span>input_file.readline()</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#data.pop(0)</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">## Comment out this bit if you don't want the spreadsheet</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>csv_writer<span class="op">=</span>csv.writer(output_file)</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>date <span class="op">=</span>[]</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>j<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> data:</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>    <span class="bu">print</span>(data[j])</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>    <span class="co"># and this bit</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>    csv_writer.writerow(data[j].values())</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'duration'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>        duration_str<span class="op">=</span>data[j][<span class="st">'duration'</span>]</span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>        <span class="cf">if</span> duration_str <span class="op">==</span> <span class="st">''</span>:</span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>            <span class="cf">pass</span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>            duration_dt<span class="op">=</span>dt.datetime.strptime(duration_str,<span class="st">'%H:%M'</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>            duration_hours <span class="op">=</span> dt.timedelta(hours<span class="op">=</span>duration_dt.hour, minutes<span class="op">=</span>duration_dt.minute, seconds<span class="op">=</span>duration_dt.second).total_seconds()<span class="op">/</span>(<span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>            <span class="bu">print</span>(duration_dt,duration_hours)</span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>            time.append(duration_hours)</span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">'date'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>                date.append(dt.datetime.strptime(data[j][<span class="st">'date'</span>][<span class="dv">0</span>:<span class="dv">10</span>], <span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>                <span class="co">#date.append(data[j]['date'][0:10])</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>                time.pop(<span class="dv">0</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>    j<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>duration_dt<span class="op">=</span>[<span class="dv">0</span>]</span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> time:</span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a>    duration_dt.append(duration_dt[<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>i)</span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>date,time <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span><span class="bu">sorted</span>(<span class="bu">zip</span>(date, time)))</span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>plt.plot(date,duration_dt[<span class="dv">1</span>:], <span class="st">'ko-'</span>)</span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>plt.show()</span></code></pre>
+</div>
+<ol start="3" style="list-style-type: lower-alpha"><li>Let’s commit our latest changes:</li>
+</ol><div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Use descriptive variable names"</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>As we have now updated all the variable names to be more descriptive,
+we can now go and close the issue on GitHub we created earlier. To do
+so, we open our repository in GitHub, switch to the Issues tab, find the
+issue to “improve variable names” we created earlier. There are more
+automated ways to close issues based on a commit/pull request that we
+will learn later, for now we will click the “Close issue” button at the
+bottom of the discussion.</p>
+</section><section><h2 class="section-heading" id="remove-unused-variables-and-imports">Remove unused variables and imports<a class="anchor" aria-label="anchor" href="#remove-unused-variables-and-imports"></a></h2>
+<hr class="half-width"><p>Unused variables or import statements can cause confusion about what
+the code is doing, making it harder to read and easier to introduce
+mistakes. Such things may seem harmless as they do not cause immediate
+syntax errors - but they can potentially lead to subtle program logic
+errors, unexpected behavior, wrong results and issues later on - making
+them especially tricky to detect and fix. Over time, this makes the
+codebase more fragile and harder to maintain and extend.</p>
+<div id="remove-an-unused-variable-2-min" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="remove-an-unused-variable-2-min" class="callout-inner">
+<h3 class="callout-title">Remove an unused variable (2 min)</h3>
+<div class="callout-content">
+<p>Find and remove an unused variable in our code. Then, commit the
+updated code to the git repo.</p>
+</div>
 </div>
 </div>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
@@ -660,271 +818,221 @@ informative commit message.</p></li>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<ol style="list-style-type: lower-alpha"><li>
-<p>Updated code:</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">import</span> csv</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>fieldnames <span class="op">=</span> (<span class="st">"EVA #"</span>, <span class="st">"Country"</span>, <span class="st">"Crew    "</span>, <span class="st">"Vehicle"</span>, <span class="st">"Date"</span>, <span class="st">"Duration"</span>, <span class="st">"Purpose"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>data<span class="op">=</span>[]</span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">374</span>):</span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>    line<span class="op">=</span>input_file.readline()</span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#data.pop(0)</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">## Comment out this bit if you don't want the spreadsheet</span></span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>w<span class="op">=</span>csv.writer(output_file)</span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>time <span class="op">=</span> []</span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>date <span class="op">=</span>[]</span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>j<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> data:</span>
-<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>    <span class="bu">print</span>(data[j])</span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>    <span class="co"># and this bit</span></span>
-<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>    w.writerow(data[j].values())</span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'duration'</span> <span class="kw">in</span> data[j].keys():</span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>        tt<span class="op">=</span>data[j][<span class="st">'duration'</span>]</span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>        <span class="cf">if</span> tt <span class="op">==</span> <span class="st">''</span>:</span>
-<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>            <span class="cf">pass</span></span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>            t<span class="op">=</span>dt.datetime.strptime(tt,<span class="st">'%H:%M'</span>)</span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>            ttt <span class="op">=</span> dt.timedelta(hours<span class="op">=</span>t.hour, minutes<span class="op">=</span>t.minute, seconds<span class="op">=</span>t.second).total_seconds()<span class="op">/</span>(<span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</span>
-<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>            <span class="bu">print</span>(t,ttt)</span>
-<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>            time.append(ttt)</span>
-<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">'date'</span> <span class="kw">in</span> data[j].keys():</span>
-<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>                date.append(dt.datetime.strptime(data[j][<span class="st">'date'</span>][<span class="dv">0</span>:<span class="dv">10</span>], <span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
-<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a>                <span class="co">#date.append(data[j]['date'][0:10])</span></span>
-<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a></span>
-<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a>                time.pop(<span class="dv">0</span>)</span>
-<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a>    j<span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a></span>
-<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a>t<span class="op">=</span>[<span class="dv">0</span>]</span>
-<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> time:</span>
-<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a>    t.append(t[<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>i)</span>
-<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a></span>
-<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a>date,time <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span><span class="bu">sorted</span>(<span class="bu">zip</span>(date, time)))</span>
-<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a>plt.plot(date,t[<span class="dv">1</span>:], <span class="st">'ko-'</span>)</span>
-<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a>plt.show()</span></code></pre>
-</div>
-</li>
-<li><p>Variables <code>w</code>, <code>t</code>, <code>ttt</code> could
-also be renamed to be more descriptive. Though, we won’t do so
-now.</p></li>
-<li>
-<p>Commit changes:</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Use descriptive variable names"</span></span></code></pre>
-</div>
-</li>
-</ol></div>
-</div>
-</div>
-</div>
-<p>Imagine that we’ve now updated all the variable names to be more
-descriptive, we can now go and close the issue on GitHub we created
-earlier. To do so, we open our repository in GitHub, switch to the
-Issues tab, find the issue to “improve variable names” we created
-earlier. There are more automated ways to close issues based on a
-commit/pull request that we will learn later, for now we will click the
-“Close issue” button at the bottom of the discussion.</p>
-</section><section><h2 class="section-heading" id="remove-unused-variables-and-imports">Remove unused variables and imports<a class="anchor" aria-label="anchor" href="#remove-unused-variables-and-imports"></a></h2>
-<hr class="half-width"><p>Unused variables or import statements can cause confusion about what
-the code is doing, making it harder to read and easier to introduce
-mistakes. Such things may seem harmless as they do not cause immediate
-syntax errors - but they can potentially lead to subtle program logic
-errors, unexpected behavior, wrong results and issues later on - making
-them especially tricky to detect and fix. Over time, this makes the
-codebase more fragile and harder to maintain and extend.</p>
-<div id="remove-an-unused-variable" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="remove-an-unused-variable" class="callout-inner">
-<h3 class="callout-title">Remove an unused variable</h3>
-<div class="callout-content">
-<p>Find and remove an unused variable in our code. Then, commit the
-updated code to the git repo.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
-<div class="accordion-body">
 <p>Variable <code>fieldnames</code> (containing column names for CSV
 data file) is defined but never used in the code - it should be
 deleted.</p>
 <p>Updated code:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="im">import</span> csv</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>data<span class="op">=</span>[]</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">374</span>):</span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>    line<span class="op">=</span>input_file.readline()</span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#data.pop(0)</span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">## Comment out this bit if you don't want the spreadsheet</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>w<span class="op">=</span>csv.writer(output_file)</span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>time <span class="op">=</span> []</span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>date <span class="op">=</span>[]</span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>j<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> data:</span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>    <span class="bu">print</span>(data[j])</span>
-<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>    <span class="co"># and this bit</span></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>    w.writerow(data[j].values())</span>
-<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'duration'</span> <span class="kw">in</span> data[j].keys():</span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        tt<span class="op">=</span>data[j][<span class="st">'duration'</span>]</span>
-<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>        <span class="cf">if</span> tt <span class="op">==</span> <span class="st">''</span>:</span>
-<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a>            <span class="cf">pass</span></span>
-<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>            t<span class="op">=</span>dt.datetime.strptime(tt,<span class="st">'%H:%M'</span>)</span>
-<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a>            ttt <span class="op">=</span> dt.timedelta(hours<span class="op">=</span>t.hour, minutes<span class="op">=</span>t.minute, seconds<span class="op">=</span>t.second).total_seconds()<span class="op">/</span>(<span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</span>
-<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>            <span class="bu">print</span>(t,ttt)</span>
-<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a>            time.append(ttt)</span>
-<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">'date'</span> <span class="kw">in</span> data[j].keys():</span>
-<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a>                date.append(dt.datetime.strptime(data[j][<span class="st">'date'</span>][<span class="dv">0</span>:<span class="dv">10</span>], <span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
-<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a>                <span class="co">#date.append(data[j]['date'][0:10])</span></span>
-<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a></span>
-<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a>                time.pop(<span class="dv">0</span>)</span>
-<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a>    j<span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a>t<span class="op">=</span>[<span class="dv">0</span>]</span>
-<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> time:</span>
-<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a>    t.append(t[<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>i)</span>
-<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a></span>
-<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a>date,time <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span><span class="bu">sorted</span>(<span class="bu">zip</span>(date, time)))</span>
-<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a>plt.plot(date,t[<span class="dv">1</span>:], <span class="st">'ko-'</span>)</span>
-<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>data<span class="op">=</span>[]</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">375</span>):</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>    line<span class="op">=</span>input_file.readline()</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>    <span class="bu">print</span>(line)</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>    data.append(json.loads(line[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#data.pop(0)</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">## Comment out this bit if you don't want the spreadsheet</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>csv_writer<span class="op">=</span>csv.writer(output_file)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>date <span class="op">=</span>[]</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>j<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> data:</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>    <span class="bu">print</span>(data[j])</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>    <span class="co"># and this bit</span></span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>    csv_writer.writerow(data[j].values())</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'duration'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>        duration_str<span class="op">=</span>data[j][<span class="st">'duration'</span>]</span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>        <span class="cf">if</span> duration_str <span class="op">==</span> <span class="st">''</span>:</span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>            <span class="cf">pass</span></span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>            duration_dt<span class="op">=</span>dt.datetime.strptime(duration_str,<span class="st">'%H:%M'</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>            duration_hours <span class="op">=</span> dt.timedelta(hours<span class="op">=</span>duration_dt.hour, minutes<span class="op">=</span>duration_dt.minute, seconds<span class="op">=</span>duration_dt.second).total_seconds()<span class="op">/</span>(<span class="dv">60</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>            <span class="bu">print</span>(duration_dt,duration_hours)</span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>            time.append(duration_hours)</span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">'date'</span> <span class="kw">in</span> data[j].keys():</span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>                date.append(dt.datetime.strptime(data[j][<span class="st">'date'</span>][<span class="dv">0</span>:<span class="dv">10</span>], <span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>                <span class="co">#date.append(data[j]['date'][0:10])</span></span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>                time.pop(<span class="dv">0</span>)</span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>    j<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>duration_dt<span class="op">=</span>[<span class="dv">0</span>]</span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> time:</span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>    duration_dt.append(duration_dt[<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>i)</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>date,time <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span><span class="bu">sorted</span>(<span class="bu">zip</span>(date, time)))</span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>plt.plot(date,duration_dt[<span class="dv">1</span>:], <span class="st">'ko-'</span>)</span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p>Commit changes:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Remove unused variable fieldname"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Remove unused variable fieldname"</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="use-third-party-libraries-where-possible">Use third-party libraries where possible<a class="anchor" aria-label="anchor" href="#use-third-party-libraries-where-possible"></a></h2>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p><a href="https://glosario.carpentries.org/en/#linter" class="external-link">Linters</a>
+(static analysis tools) can be very helpful with tasks like this.
+Linters identify unused variables and unused imports among other useful
+tasks for formatting and making your code readable.</p>
+<p>Some common linters for Python include PyLint, Black, Ruff and
+Flake8.</p>
+</div>
+</div>
+</div>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>IDEs can significantly help developers enhance code readability. They
+use built-in linters that automatically identify and flag issues in
+real-time as you write code. This process improves readability in
+several ways:</p>
+<ul><li>
+<strong>enforcing coding standards</strong>: check for consistent
+style, formatting, and conventions, e.g. flagging inconsistent
+indentation, incorrect naming conventions, and excessive line length
+violations, which helps ensure a consistent look and feel across the
+entire codebase, making it easier for any developer to read and
+understand.</li>
+<li>
+<strong>syntax highlighting and error detection</strong>: use
+different colors and font styles for different parts of the code
+(keywords, variables, comments, etc.), providing visual cues that make
+the code easier to parse and read. For example, flagging syntax errors
+(e.g., missing brackets, semicolons, or misspelled keywords) with visual
+indicators like wavy red underlines (“squigglies”), allowing for
+immediate correction and preventing errors from becoming
+entrenched.</li>
+<li>
+<strong>highlighting “code smells” and inefficiencies</strong>:
+beyond simple syntax, advanced IDEs and their extensions can identify
+“code smells” and potential inefficiencies, such as unused variables,
+overly complex functions, or duplicate code blocks. This encourages
+developers to refactor the code into smaller, more meaningful functions
+and classes, which improves clarity and maintainability.</li>
+<li>
+<strong>providing contextual guidance</strong>: many IDEs provide
+rich, contextual help and suggestions on how to fix an issue and why it
+is a problem, helping developers learn and apply best practices for
+writing high-quality, readable code.</li>
+<li>
+<strong>facilitating code navigation and refactoring</strong>:
+features like intelligent code completion, symbol resolution, and
+automated refactoring support (e.g., renaming variables or extracting
+methods) allow developers to restructure code to be more efficient and
+readable without changing its core functionality. The IDE understands
+the underlying structure of the code, which makes these complex
+operations simple and safe.</li>
+</ul></div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="use-third-party-libraries">Use third-party libraries<a class="anchor" aria-label="anchor" href="#use-third-party-libraries"></a></h2>
 <hr class="half-width"><p>Our script currently reads the data line-by-line from the JSON data
 file and uses custom code to manipulate the data. Variables of interest
 are stored in lists but there are more suitable data structures
-(e.g. data frames) to store data in our case. By choosing custom code
-over popular and well-tested libraries, we are making our code less
-readable and understandable and more error-prone.</p>
+(e.g. <code>pandas</code>’ dataframe) to store data in our case. By
+choosing custom code over popular and well-tested libraries, we are
+making our code less readable and understandable and more
+error-prone.</p>
 <p>The main functionality of our code can be rewritten as follows using
 the <code>pandas</code> library to load and manipulate the data in data
 frames.</p>
 <p>First, we need to install this dependency into our virtual
-environment (which should be active at this point).</p>
-<div class="codewrapper sourceCode" id="cb10">
+environment.</p>
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install pandas</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install pandas</span></code></pre>
 </div>
-<p>Then we will edit the code to use pandas. For the sake of time in the
-workshop, we will give you the updated code. The code should now look
-like:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<p>Then we will edit the code to use <code>pandas</code>. For the sake
+of time in the workshop, we will give you the updated code. The code
+should now look like:</p>
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"># Data source: https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>])</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>eva_df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>eva_df[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>eva_df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_df[<span class="st">'duration_hours'</span>].cumsum()</span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>plt.plot(eva_df[<span class="st">'date'</span>], eva_df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># Data source: https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>eva_df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>eva_df[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>eva_df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_df[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>plt.plot(eva_df[<span class="st">'date'</span>], eva_df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p>Once we have replaced the code in our Python script
-<code>eva_data_analysis.py</code> with the above code, we need to commit
-the changes. Remember to use an informative commit message.</p>
+<code>eva_data_analysis.py</code> with the above code, we need to make
+sure that we capture the changes in our virtual development environment
+too.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span></code></pre>
+</div>
+<p>Now, we need to commit the changes we have made. We can add multiple
+files to the same commit by listing all of them. Remember to use an
+informative commit message.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Refactor code to use standard libraries"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py requirements.txt</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Refactor code and add Pandas to venv"</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
-<p>Make sure to capture the changes to your virtual development
-environment too.</p>
-<div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add requirements.txt</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Added Pandas library."</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
-</div>
-<p>Note, in practice we may have wanted to commit the code and the
-environment changes together since they are related.</p>
+<p>We have committed the code and the environment changes together since
+they are related and form one logical unit of change.</p>
 </section><section><h2 class="section-heading" id="use-comments-to-explain-functionality">Use comments to explain functionality<a class="anchor" aria-label="anchor" href="#use-comments-to-explain-functionality"></a></h2>
 <hr class="half-width"><p>Commenting is a very useful practice to help convey the context of
 the code. It can be helpful as a reminder for your future self or your
@@ -946,20 +1054,20 @@ span multiple lines and has a start and end sequence. To comment out a
 block of code in Python, you can either add a # at the beginning of each
 line of the block or surround the entire block with three single
 (<code>'''</code>) or double quotes (<code>"""</code>).</li>
-</ul><div class="codewrapper sourceCode" id="cb14">
+</ul><div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span>  <span class="co"># In Python, inline comments begin with the `#` symbol and a single space.</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co"># this is a single-line comment</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">+</span> <span class="dv">10</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>z <span class="op">=</span> y<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> x</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">This is a multiline</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">comment</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">in Python.</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">'''</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span>  <span class="co"># In Python, inline comments begin with the `#` symbol and a single space.</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co"># this is a single-line comment</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>z <span class="op">=</span> y<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> x</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">This is a multiline</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">comment</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">in Python.</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">'''</span></span></code></pre>
 </div>
 <p>Here are a few things to keep in mind when commenting your code:</p>
 <ul><li>Focus on the <strong>why</strong> and the <strong>how</strong> of
@@ -975,36 +1083,36 @@ unreadable and difficult to maintain.</li>
 make a priority of keeping comments up-to-date when code changes.</li>
 </ul><div class="section level3">
 <h3 id="examples-of-unhelpful-comments">Examples of unhelpful comments<a class="anchor" aria-label="anchor" href="#examples-of-unhelpful-comments"></a></h3>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>statetax <span class="op">=</span> <span class="fl">1.0625</span>  <span class="co"># Assigns the float 1.0625 to the variable 'statetax'</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>citytax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Assigns the float 1.01 to the variable 'citytax'</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>specialtax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Assigns the float 1.01 to the variable 'specialtax'</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>statetax <span class="op">=</span> <span class="fl">1.0625</span>  <span class="co"># Assigns the float 1.0625 to the variable 'statetax'</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>citytax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Assigns the float 1.01 to the variable 'citytax'</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>specialtax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Assigns the float 1.01 to the variable 'specialtax'</span></span></code></pre>
 </div>
 <p>The comments in this code simply tell us what the code does, which is
 easy enough to figure out without the inline comments.</p>
 </div>
 <div class="section level3">
 <h3 id="examples-of-helpful-comments">Examples of helpful comments<a class="anchor" aria-label="anchor" href="#examples-of-helpful-comments"></a></h3>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>statetax <span class="op">=</span> <span class="fl">1.0625</span>  <span class="co"># State sales tax rate is 6.25% through Jan. 1</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>citytax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># City sales tax rate is 1% through Jan. 1</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>specialtax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Special sales tax rate is 1% through Jan. 1</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>statetax <span class="op">=</span> <span class="fl">1.0625</span>  <span class="co"># State sales tax rate is 6.25% through Jan. 1</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>citytax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># City sales tax rate is 1% through Jan. 1</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>specialtax <span class="op">=</span> <span class="fl">1.01</span>  <span class="co"># Special sales tax rate is 1% through Jan. 1</span></span></code></pre>
 </div>
 <p>In this case, it might not be immediately obvious what each variable
 represents, so the comments offer helpful, real-world context. The date
 in the comment also indicates when the code might need to be
 updated.</p>
-<div id="add-comments-to-our-code" class="callout challenge">
+<div id="add-comments-to-our-code-10-min" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="add-comments-to-our-code" class="callout-inner">
-<h3 class="callout-title">Add comments to our code</h3>
+<div id="add-comments-to-our-code-10-min" class="callout-inner">
+<h3 class="callout-title">Add comments to our code (10 min)</h3>
 <div class="callout-content">
 <ol style="list-style-type: lower-alpha"><li>Examine <code>eva_data_analysis.py</code>. Add as many comments as
 you think is required to help yourself and others understand what that
@@ -1014,57 +1122,62 @@ informative commit message.</li>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Some good comments may look like the example below.</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
-<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>])</span>
-<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co"># Clean the data by removing any incomplete rows and sort by date</span></span>
-<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a>eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a></span>
-<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="co"># Save dataframe to CSV file for later analysis</span></span>
-<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a>eva_df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a></span>
-<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
-<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a>eva_df[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
-<span id="cb17-26"><a href="#cb17-26" tabindex="-1"></a>eva_df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_df[<span class="st">'duration_hours'</span>].cumsum()</span>
-<span id="cb17-27"><a href="#cb17-27" tabindex="-1"></a>plt.plot(eva_df[<span class="st">'date'</span>], eva_df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
-<span id="cb17-28"><a href="#cb17-28" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb17-29"><a href="#cb17-29" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb17-30"><a href="#cb17-30" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb17-31"><a href="#cb17-31" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb17-32"><a href="#cb17-32" tabindex="-1"></a>plt.show()</span>
-<span id="cb17-33"><a href="#cb17-33" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co"># https://data.nasa.gov/resource/eva.json (with modifications)</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co"># Clean the data by removing any rows where duration is missing</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="co"># Save dataframe to CSV file for later analysis</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>eva_df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="co"># Sort dataframe by date ready to be plotted (date values are on x-axis)</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a>eva_df[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>eva_df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_df[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a>plt.plot(eva_df[<span class="st">'date'</span>], eva_df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
 </div>
+<p>Note that we have also added some useful print statements, to let us
+know what stage the analysis is in.</p>
 <p>Commit changes:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Add inline comments to the code"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Add inline comments to the code"</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 </div>
 </div>
@@ -1089,7 +1202,7 @@ future episode, testing code also becomes simpler when code is written
 in functions. Each function can be individually checked to ensure it is
 doing what is intended, which improves confidence in the software as a
 whole.</p>
-<div id="callout1" class="callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -1109,64 +1222,67 @@ functionality:</p>
 <li>processing/cleaning the data and preparing it for analysis</li>
 <li>data analysis and visualising the results</li>
 </ol><p>Let’s refactor our code so that reading the data in JSON format into
-a dataframe (step 1.) and converting it and saving to the CSV format
-(step 2.) are extracted into separate functions. Let’s name those
+a dataframe (step 1) and converting it and saving to the CSV format
+(step 2) are extracted into separate functions. Let’s name those
 functions <code>read_json_to_dataframe</code> and
 <code>write_dataframe_to_csv</code> respectively. The main part of the
 script should then be simplified to invoke these new functions, while
 the functions themselves contain the complexity of each of these two
-steps. We will continue to work on steps 3. and 4. above later on.</p>
+steps. We will continue to work on steps 3 and 4 above later on.</p>
+
 <p>After the initial refactoring, our code may look something like the
 following.</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>])</span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>    <span class="co"># Clean the data by removing any incomplete rows and sort by date</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>    eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span>
-<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="kw">def</span> write_dataframe_to_csv(df, output_file):</span>
-<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
-<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a></span>
-<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co"># Main code</span></span>
-<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a></span>
-<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
-<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a></span>
-<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a></span>
-<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a><span class="co"># Read the data from JSON file</span></span>
-<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a>eva_data <span class="op">=</span> read_json_to_dataframe(input_file)</span>
-<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a></span>
-<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a><span class="co"># Convert and export data to CSV file</span></span>
-<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a>write_dataframe_to_csv(eva_data, output_file)</span>
-<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a></span>
-<span id="cb19-35"><a href="#cb19-35" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
-<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a>eva_data[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_data[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
-<span id="cb19-38"><a href="#cb19-38" tabindex="-1"></a>eva_data[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_data[<span class="st">'duration_hours'</span>].cumsum()</span>
-<span id="cb19-39"><a href="#cb19-39" tabindex="-1"></a>plt.plot(eva_data[<span class="st">'date'</span>], eva_data[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
-<span id="cb19-40"><a href="#cb19-40" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb19-41"><a href="#cb19-41" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb19-42"><a href="#cb19-42" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-43"><a href="#cb19-43" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb19-44"><a href="#cb19-44" tabindex="-1"></a>plt.show()</span>
-<span id="cb19-45"><a href="#cb19-45" tabindex="-1"></a></span>
-<span id="cb19-46"><a href="#cb19-46" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>    <span class="co"># Clean the data by removing any rows where duration is missing</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="kw">def</span> write_dataframe_to_csv(df, output_file):</span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a><span class="co"># Main code</span></span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a><span class="co"># Read the data from JSON file</span></span>
+<span id="cb18-29"><a href="#cb18-29" tabindex="-1"></a>eva_data <span class="op">=</span> read_json_to_dataframe(input_file)</span>
+<span id="cb18-30"><a href="#cb18-30" tabindex="-1"></a></span>
+<span id="cb18-31"><a href="#cb18-31" tabindex="-1"></a><span class="co"># Convert and export data to CSV file</span></span>
+<span id="cb18-32"><a href="#cb18-32" tabindex="-1"></a>write_dataframe_to_csv(eva_data, output_file)</span>
+<span id="cb18-33"><a href="#cb18-33" tabindex="-1"></a></span>
+<span id="cb18-34"><a href="#cb18-34" tabindex="-1"></a><span class="co"># Sort dataframe by date ready to be plotted (date values are on x-axis)</span></span>
+<span id="cb18-35"><a href="#cb18-35" tabindex="-1"></a>eva_data.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-36"><a href="#cb18-36" tabindex="-1"></a></span>
+<span id="cb18-37"><a href="#cb18-37" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
+<span id="cb18-38"><a href="#cb18-38" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-39"><a href="#cb18-39" tabindex="-1"></a>eva_data[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_data[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb18-40"><a href="#cb18-40" tabindex="-1"></a>eva_data[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_data[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb18-41"><a href="#cb18-41" tabindex="-1"></a>plt.plot(eva_data[<span class="st">'date'</span>], eva_data[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb18-42"><a href="#cb18-42" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb18-43"><a href="#cb18-43" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb18-44"><a href="#cb18-44" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-45"><a href="#cb18-45" tabindex="-1"></a>plt.savefig(graph_file)</span>
+<span id="cb18-46"><a href="#cb18-46" tabindex="-1"></a>plt.show()</span>
+<span id="cb18-47"><a href="#cb18-47" tabindex="-1"></a></span>
+<span id="cb18-48"><a href="#cb18-48" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
 </div>
 <p>We have chosen to create functions for reading in and writing out
 data files since this is a very common task within research software.
@@ -1176,6 +1292,97 @@ data reading, converting and writing operations, it can be useful to
 package these steps together into reusable functions if you need to read
 in or write out a lot of similarly structured files and process them in
 the same way.</p>
+<p>We can further simplify the main part of our code by extracting the
+code to plot a graph into a separate function
+<code>plot_cumulative_time_in_space</code>. Let’s do that as an
+exercise.</p>
+<div id="extract-functionality-into-a-function-5-min" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="extract-functionality-into-a-function-5-min" class="callout-inner">
+<h3 class="callout-title">Extract functionality into a function (5
+min)</h3>
+<div class="callout-content">
+<p>Extract the code to plot a graph into a separate function
+<code>plot_cumulative_time_in_space(df, graph_file)</code>. The function
+should take the following two arguments:</p>
+<ol style="list-style-type: decimal"><li>a dataframe <code>df</code>, and</li>
+<li>a file object or a file path string <code>graph_file</code> where to
+save the plot.</li>
+</ol><p>Make sure to commit and push your changes.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div class="accordion-body">
+<p>After extracting the code to plot a graph into a separate function,
+our code may look something like the following:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>    <span class="co"># Clean the data by removing any rows where duration is missing</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="kw">def</span> write_dataframe_to_csv(df, output_file):</span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="kw">def</span> plot_cumulative_time_in_space(df, graph_file):</span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a>    df[<span class="st">'duration_hours'</span>] <span class="op">=</span> df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a>    df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> df[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a>    plt.plot(df[<span class="st">'date'</span>], df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a>    plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a>    plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a>    plt.savefig(graph_file)</span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a>    plt.show()</span>
+<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a><span class="co"># Main code</span></span>
+<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a></span>
+<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
+<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a></span>
+<span id="cb19-35"><a href="#cb19-35" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb19-38"><a href="#cb19-38" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" tabindex="-1"></a><span class="co"># Read the data from JSON file</span></span>
+<span id="cb19-40"><a href="#cb19-40" tabindex="-1"></a>eva_data <span class="op">=</span> read_json_to_dataframe(input_file)</span>
+<span id="cb19-41"><a href="#cb19-41" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" tabindex="-1"></a><span class="co"># Convert and export data to CSV file</span></span>
+<span id="cb19-43"><a href="#cb19-43" tabindex="-1"></a>write_dataframe_to_csv(eva_data, output_file)</span>
+<span id="cb19-44"><a href="#cb19-44" tabindex="-1"></a></span>
+<span id="cb19-45"><a href="#cb19-45" tabindex="-1"></a><span class="co"># Sort dataframe by date ready to be plotted (date values are on x-axis)</span></span>
+<span id="cb19-46"><a href="#cb19-46" tabindex="-1"></a>eva_data.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-47"><a href="#cb19-47" tabindex="-1"></a></span>
+<span id="cb19-48"><a href="#cb19-48" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
+<span id="cb19-49"><a href="#cb19-49" tabindex="-1"></a>plot_cumulative_time_in_space(eva_data, graph_file)</span>
+<span id="cb19-50"><a href="#cb19-50" tabindex="-1"></a></span>
+<span id="cb19-51"><a href="#cb19-51" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section><section><h2 class="section-heading" id="use-docstrings-to-document-functions">Use docstrings to document functions<a class="anchor" aria-label="anchor" href="#use-docstrings-to-document-functions"></a></h2>
 <hr class="half-width"><p>Now that we have written some functions, it is time to document them
 so that we can quickly recall (and others looking at our code in the
@@ -1258,33 +1465,33 @@ docstring may look like:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">    Read the data from a JSON file into a Pandas dataframe.</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">    Clean the data by removing any incomplete rows and sort by date</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">    Clean the data by removing any rows where the 'duration' value is missing.</span></span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">        input_file (str): The path to the JSON file.</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">        input_file (file or str): The file object or path to the JSON file.</span></span>
 <span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a></span>
 <span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">    Returns:</span></span>
 <span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure</span></span>
 <span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
-<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>])</span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
 <span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>    <span class="co"># Clean the data by removing any incomplete rows and sort by date</span></span>
-<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>    eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span></code></pre>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>    <span class="co"># Clean the data by removing any rows where duration is missing</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span></code></pre>
 </div>
-<div id="writing-docstrings" class="callout challenge">
+<div id="writing-docstrings-5-min" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="writing-docstrings" class="callout-inner">
-<h3 class="callout-title">Writing docstrings</h3>
+<div id="writing-docstrings-5-min" class="callout-inner">
+<h3 class="callout-title">Writing docstrings (5 min)</h3>
 <div class="callout-content">
-<p>Write a docstring for the function
-<code>write_dataframe_to_csv</code> we introduced earlier.</p>
+<p>Write docstrings for the functions
+<code>write_dataframe_to_csv</code> and
+<code>plot_cumulative_time_in_space</code> we introduced earlier.</p>
 </div>
 </div>
 </div>
@@ -1306,99 +1513,147 @@ docstring may look like:</p>
 <span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">    Args:</span></span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">        df (pd.DataFrame): The input dataframe.</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">        output_file (str): The path to the output CSV file.</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">        output_file (file or str): The file object or path to the output CSV file.</span></span>
 <span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a></span>
 <span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">    Returns:</span></span>
 <span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">        None</span></span>
 <span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>)</span></code></pre>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span></code></pre>
+</div>
+<p>Our <code>plot_cumulative_time_in_space</code> function fully
+described by a docstring may look like:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">def</span> plot_cumulative_time_in_space(df, graph_file):</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">    Plot the cumulative time spent in space over years.</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">    Convert the duration column from strings to number of hours</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">    Calculate cumulative sum of durations</span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">    Generate a plot of cumulative time spent in space over years and</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">    save it to the specified location</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">        df (pd.DataFrame): The input dataframe.</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">        graph_file (file or str): The file object or path to the output graph file.</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">        None</span></span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a>    df[<span class="st">'duration_hours'</span>] <span class="op">=</span> df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a>    df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> df[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a>    plt.plot(df[<span class="st">'date'</span>], df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb24-20"><a href="#cb24-20" tabindex="-1"></a>    plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" tabindex="-1"></a>    plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb24-23"><a href="#cb24-23" tabindex="-1"></a>    plt.savefig(graph_file)</span>
+<span id="cb24-24"><a href="#cb24-24" tabindex="-1"></a>    plt.show()</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <p>Finally, our code may look something like the following:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">    Read the data from a JSON file into a Pandas dataframe.</span></span>
-<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">    Clean the data by removing any incomplete rows and sort by date</span></span>
-<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">        input_file (str): The path to the JSON file.</span></span>
-<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure</span></span>
-<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
-<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>])</span>
-<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
-<span id="cb24-20"><a href="#cb24-20" tabindex="-1"></a>    <span class="co"># Clean the data by removing any incomplete rows and sort by date</span></span>
-<span id="cb24-21"><a href="#cb24-21" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-22"><a href="#cb24-22" tabindex="-1"></a>    eva_df.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-23"><a href="#cb24-23" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span>
-<span id="cb24-24"><a href="#cb24-24" tabindex="-1"></a></span>
-<span id="cb24-25"><a href="#cb24-25" tabindex="-1"></a></span>
-<span id="cb24-26"><a href="#cb24-26" tabindex="-1"></a><span class="kw">def</span> write_dataframe_to_csv(df, output_file):</span>
-<span id="cb24-27"><a href="#cb24-27" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb24-28"><a href="#cb24-28" tabindex="-1"></a><span class="co">    Write the dataframe to a CSV file.</span></span>
-<span id="cb24-29"><a href="#cb24-29" tabindex="-1"></a></span>
-<span id="cb24-30"><a href="#cb24-30" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb24-31"><a href="#cb24-31" tabindex="-1"></a><span class="co">        df (pd.DataFrame): The input dataframe.</span></span>
-<span id="cb24-32"><a href="#cb24-32" tabindex="-1"></a><span class="co">        output_file (str): The path to the output CSV file.</span></span>
-<span id="cb24-33"><a href="#cb24-33" tabindex="-1"></a></span>
-<span id="cb24-34"><a href="#cb24-34" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb24-35"><a href="#cb24-35" tabindex="-1"></a><span class="co">        None</span></span>
-<span id="cb24-36"><a href="#cb24-36" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb24-37"><a href="#cb24-37" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb24-38"><a href="#cb24-38" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
-<span id="cb24-39"><a href="#cb24-39" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb24-40"><a href="#cb24-40" tabindex="-1"></a></span>
-<span id="cb24-41"><a href="#cb24-41" tabindex="-1"></a></span>
-<span id="cb24-42"><a href="#cb24-42" tabindex="-1"></a><span class="co"># Main code</span></span>
-<span id="cb24-43"><a href="#cb24-43" tabindex="-1"></a></span>
-<span id="cb24-44"><a href="#cb24-44" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
-<span id="cb24-45"><a href="#cb24-45" tabindex="-1"></a></span>
-<span id="cb24-46"><a href="#cb24-46" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb24-47"><a href="#cb24-47" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb24-48"><a href="#cb24-48" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
-<span id="cb24-49"><a href="#cb24-49" tabindex="-1"></a></span>
-<span id="cb24-50"><a href="#cb24-50" tabindex="-1"></a><span class="co"># Read the data from JSON file</span></span>
-<span id="cb24-51"><a href="#cb24-51" tabindex="-1"></a>eva_data <span class="op">=</span> read_json_to_dataframe(input_file)</span>
-<span id="cb24-52"><a href="#cb24-52" tabindex="-1"></a></span>
-<span id="cb24-53"><a href="#cb24-53" tabindex="-1"></a><span class="co"># Convert and export data to CSV file</span></span>
-<span id="cb24-54"><a href="#cb24-54" tabindex="-1"></a>write_dataframe_to_csv(eva_data, output_file)</span>
-<span id="cb24-55"><a href="#cb24-55" tabindex="-1"></a></span>
-<span id="cb24-56"><a href="#cb24-56" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb24-57"><a href="#cb24-57" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
-<span id="cb24-58"><a href="#cb24-58" tabindex="-1"></a>eva_data[<span class="st">'duration_hours'</span>] <span class="op">=</span> eva_data[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
-<span id="cb24-59"><a href="#cb24-59" tabindex="-1"></a>eva_data[<span class="st">'cumulative_time'</span>] <span class="op">=</span> eva_data[<span class="st">'duration_hours'</span>].cumsum()</span>
-<span id="cb24-60"><a href="#cb24-60" tabindex="-1"></a>plt.plot(eva_data[<span class="st">'date'</span>], eva_data[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
-<span id="cb24-61"><a href="#cb24-61" tabindex="-1"></a>plt.xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb24-62"><a href="#cb24-62" tabindex="-1"></a>plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
-<span id="cb24-63"><a href="#cb24-63" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb24-64"><a href="#cb24-64" tabindex="-1"></a>plt.savefig(graph_file)</span>
-<span id="cb24-65"><a href="#cb24-65" tabindex="-1"></a>plt.show()</span>
-<span id="cb24-66"><a href="#cb24-66" tabindex="-1"></a></span>
-<span id="cb24-67"><a href="#cb24-67" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="kw">def</span> read_json_to_dataframe(input_file):</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="co">    Read the data from a JSON file into a Pandas dataframe.</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="co">    Clean the data by removing any rows where the 'duration' value is missing.</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="co">        input_file (file or str): The file object or path to the JSON file.</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="co">         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Reading JSON file </span><span class="sc">{</span>input_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>    <span class="co"># Read the data from a JSON file into a Pandas dataframe</span></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>    eva_df <span class="op">=</span> pd.read_json(input_file, convert_dates<span class="op">=</span>[<span class="st">'date'</span>], encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>    eva_df[<span class="st">'eva'</span>] <span class="op">=</span> eva_df[<span class="st">'eva'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>    <span class="co"># Clean the data by removing any rows where duration is missing</span></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a>    eva_df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'duration'</span>, <span class="st">'date'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a>    <span class="cf">return</span> eva_df</span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" tabindex="-1"></a><span class="kw">def</span> write_dataframe_to_csv(df, output_file):</span>
+<span id="cb25-25"><a href="#cb25-25" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-26"><a href="#cb25-26" tabindex="-1"></a><span class="co">    Write the dataframe to a CSV file.</span></span>
+<span id="cb25-27"><a href="#cb25-27" tabindex="-1"></a></span>
+<span id="cb25-28"><a href="#cb25-28" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb25-29"><a href="#cb25-29" tabindex="-1"></a><span class="co">        df (pd.DataFrame): The input dataframe.</span></span>
+<span id="cb25-30"><a href="#cb25-30" tabindex="-1"></a><span class="co">        output_file (file or str): The file object or path to the output CSV file.</span></span>
+<span id="cb25-31"><a href="#cb25-31" tabindex="-1"></a></span>
+<span id="cb25-32"><a href="#cb25-32" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb25-33"><a href="#cb25-33" tabindex="-1"></a><span class="co">        None</span></span>
+<span id="cb25-34"><a href="#cb25-34" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-35"><a href="#cb25-35" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Saving to CSV file </span><span class="sc">{</span>output_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-36"><a href="#cb25-36" tabindex="-1"></a>    <span class="co"># Save dataframe to CSV file for later analysis</span></span>
+<span id="cb25-37"><a href="#cb25-37" tabindex="-1"></a>    df.to_csv(output_file, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb25-38"><a href="#cb25-38" tabindex="-1"></a></span>
+<span id="cb25-39"><a href="#cb25-39" tabindex="-1"></a><span class="kw">def</span> plot_cumulative_time_in_space(df, graph_file):</span>
+<span id="cb25-40"><a href="#cb25-40" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-41"><a href="#cb25-41" tabindex="-1"></a><span class="co">    Plot the cumulative time spent in space over years.</span></span>
+<span id="cb25-42"><a href="#cb25-42" tabindex="-1"></a></span>
+<span id="cb25-43"><a href="#cb25-43" tabindex="-1"></a><span class="co">    Convert the duration column from strings to number of hours</span></span>
+<span id="cb25-44"><a href="#cb25-44" tabindex="-1"></a><span class="co">    Calculate cumulative sum of durations</span></span>
+<span id="cb25-45"><a href="#cb25-45" tabindex="-1"></a><span class="co">    Generate a plot of cumulative time spent in space over years and</span></span>
+<span id="cb25-46"><a href="#cb25-46" tabindex="-1"></a><span class="co">    save it to the specified location</span></span>
+<span id="cb25-47"><a href="#cb25-47" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb25-49"><a href="#cb25-49" tabindex="-1"></a><span class="co">        df (pd.DataFrame): The input dataframe.</span></span>
+<span id="cb25-50"><a href="#cb25-50" tabindex="-1"></a><span class="co">        graph_file (file or str): The file object or path to the output graph file.</span></span>
+<span id="cb25-51"><a href="#cb25-51" tabindex="-1"></a></span>
+<span id="cb25-52"><a href="#cb25-52" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb25-53"><a href="#cb25-53" tabindex="-1"></a><span class="co">        None</span></span>
+<span id="cb25-54"><a href="#cb25-54" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-55"><a href="#cb25-55" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Plotting cumulative spacewalk duration and saving to </span><span class="sc">{</span>graph_file<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-56"><a href="#cb25-56" tabindex="-1"></a>    df[<span class="st">'duration_hours'</span>] <span class="op">=</span> df[<span class="st">'duration'</span>].<span class="bu">str</span>.split(<span class="st">":"</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">int</span>(x[<span class="dv">0</span>]) <span class="op">+</span> <span class="bu">int</span>(x[<span class="dv">1</span>])<span class="op">/</span><span class="dv">60</span>)</span>
+<span id="cb25-57"><a href="#cb25-57" tabindex="-1"></a>    df[<span class="st">'cumulative_time'</span>] <span class="op">=</span> df[<span class="st">'duration_hours'</span>].cumsum()</span>
+<span id="cb25-58"><a href="#cb25-58" tabindex="-1"></a>    plt.plot(df[<span class="st">'date'</span>], df[<span class="st">'cumulative_time'</span>], <span class="st">'ko-'</span>)</span>
+<span id="cb25-59"><a href="#cb25-59" tabindex="-1"></a>    plt.xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb25-60"><a href="#cb25-60" tabindex="-1"></a>    plt.ylabel(<span class="st">'Total time spent in space to date (hours)'</span>)</span>
+<span id="cb25-61"><a href="#cb25-61" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb25-62"><a href="#cb25-62" tabindex="-1"></a>    plt.savefig(graph_file)</span>
+<span id="cb25-63"><a href="#cb25-63" tabindex="-1"></a>    plt.show()</span>
+<span id="cb25-64"><a href="#cb25-64" tabindex="-1"></a></span>
+<span id="cb25-65"><a href="#cb25-65" tabindex="-1"></a><span class="co"># Main code</span></span>
+<span id="cb25-66"><a href="#cb25-66" tabindex="-1"></a></span>
+<span id="cb25-67"><a href="#cb25-67" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--START--"</span>)</span>
+<span id="cb25-68"><a href="#cb25-68" tabindex="-1"></a></span>
+<span id="cb25-69"><a href="#cb25-69" tabindex="-1"></a>input_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb25-70"><a href="#cb25-70" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb25-71"><a href="#cb25-71" tabindex="-1"></a>graph_file <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span>
+<span id="cb25-72"><a href="#cb25-72" tabindex="-1"></a></span>
+<span id="cb25-73"><a href="#cb25-73" tabindex="-1"></a><span class="co"># Read the data from JSON file</span></span>
+<span id="cb25-74"><a href="#cb25-74" tabindex="-1"></a>eva_data <span class="op">=</span> read_json_to_dataframe(input_file)</span>
+<span id="cb25-75"><a href="#cb25-75" tabindex="-1"></a></span>
+<span id="cb25-76"><a href="#cb25-76" tabindex="-1"></a><span class="co"># Convert and export data to CSV file</span></span>
+<span id="cb25-77"><a href="#cb25-77" tabindex="-1"></a>write_dataframe_to_csv(eva_data, output_file)</span>
+<span id="cb25-78"><a href="#cb25-78" tabindex="-1"></a></span>
+<span id="cb25-79"><a href="#cb25-79" tabindex="-1"></a><span class="co"># Sort dataframe by date ready to be plotted (date values are on x-axis)</span></span>
+<span id="cb25-80"><a href="#cb25-80" tabindex="-1"></a>eva_data.sort_values(<span class="st">'date'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-81"><a href="#cb25-81" tabindex="-1"></a></span>
+<span id="cb25-82"><a href="#cb25-82" tabindex="-1"></a><span class="co"># Plot cumulative time spent in space over years</span></span>
+<span id="cb25-83"><a href="#cb25-83" tabindex="-1"></a>plot_cumulative_time_in_space(eva_data, graph_file)</span>
+<span id="cb25-84"><a href="#cb25-84" tabindex="-1"></a></span>
+<span id="cb25-85"><a href="#cb25-85" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--END--"</span>)</span></code></pre>
 </div>
 <p>Do not forget to commit any uncommitted changes you may have and then
 push your work to GitHub.</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add <span class="op">&lt;</span>your_changed_files<span class="op">&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Your commit message"</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add <span class="op">&lt;</span>your_changed_files<span class="op">&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Your commit message"</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
@@ -1409,6 +1664,12 @@ Readable code reduces the risk of errors, speeds up onboarding of new
 team members, and simplifies code reviews. It also supports long-term
 sustainability, as clear code is more adaptable and easier to extend or
 refactor over time.</p>
+<p>Integrated Development Environments (IDEs) significantly enhance code
+readability by using built-in static analysis tools (linters) that
+automatically identify and flag issues in real-time as you write code.
+This proactive approach allows developers to identify and fix many
+issues as they write code, rather than later in the development
+cycle.</p>
 <div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
@@ -1523,8 +1784,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/04-code-readability.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/04-code-readability.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-09-30",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-26",
+  "datePublished": "2025-11-26"
 }
 
   </script><script>

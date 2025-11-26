@@ -122,12 +122,12 @@
             More <i data-feather="chevron-down"></i>
           </button>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+<li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li>
+<li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
 <li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li>
 <li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li>
 <li><a class="dropdown-item" href="licensing.html">Software licensing</a></li>
 <li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
-<li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li>
-<li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
           </ul>
 </li>
       </ul>
@@ -308,7 +308,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-code-correctness.html">6. Code correctness</a>
+        <a href="06-code-correctness.html">6. Code correctness &amp; testing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -332,7 +332,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-open-collaboration.html">8. Open software management &amp; collaboration</a>
+        <a href="08-open-collaboration.html">8. Software management &amp; collaboration</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -377,12 +377,12 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="test-suite-exercise.html">Implementing a test suite</a></li>
+                      <li><a href="installation-instructions.html">Installation instructions</a></li>
+<li><a href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+<li><a href="test-suite-exercise.html">Implementing a test suite</a></li>
 <li><a href="ci-for-testing.html">Continuous Integration for automated testing</a></li>
 <li><a href="licensing.html">Software licensing</a></li>
 <li><a href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
-<li><a href="installation-instructions.html">Installation instructions</a></li>
-<li><a href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
                     </ul>
 </div>
                 </div>
@@ -416,18 +416,19 @@
 <hr class="half-width">
 <h3 id="01-introduction-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘JSON data file snippet showing EVA/spacewalk data including EVA ID, country, crew members, vehicle type, date of the spacewalk, duration, and purpose’</p>
-<figure><img src="fig/astronaut-data-json-snippet.png" alt="JSON data file snippet showing EVA/spacewalk data including EVA ID, country, crew members, vehicle type, date of the spacewalk, duration, and purpose" class="figure mx-auto d-block"><div class="figcaption">JSON data file snippet showing EVA/spacewalk
+<figure><img src="fig/astronaut-data-json-single-line-snippet.png" alt="JSON data file snippet showing EVA/spacewalk data including EVA ID, country, crew members, vehicle type, date of the spacewalk, duration, and purpose" class="figure mx-auto d-block"><div class="figcaption">JSON data file snippet showing EVA/spacewalk
 data including EVA ID, country, crew members, vehicle type, date of the
 spacewalk, duration, and purpose</div>
 </figure><hr>
 <h3 id="01-introduction-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘The first few lines of a Python script used as example code for the episode’</p>
-<figure><img src="fig/astronaut-analysis-bad-code-screenshot.png" alt="The first few lines of a Python script used as example code for the episode" class="figure mx-auto d-block"><div class="figcaption">The first few lines of a Python script</div>
+<figure><img src="fig/astronaut-analysis-original-code-screenshot.png" alt="The first few lines of a Python script used as example code for the episode" class="figure mx-auto d-block"><div class="figcaption">The first few lines of a Python script</div>
 </figure><hr></section><section id="02-better-start-version-control"><h2 class="section-heading"><a href="02-better-start-version-control.html">Better start with a software project</a></h2>
 <hr class="half-width">
 <h3 id="02-better-start-version-control-figure-1">Figure 1</h3>
-<p aria-hidden="true">Image 1 of 1: ‘Software development lifecycle with Git diagram showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository’</p>
-<figure><img src="fig/ep02_fig05-git-lifecycle.svg" alt="Software development lifecycle with Git diagram showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository" class="figure mx-auto d-block"><div class="figcaption">Software development lifecycle with Git</div>
+<p aria-hidden="true">Image 1 of 1: ‘Diagram for foundational software development workflow with Git showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository’</p>
+<figure><img src="fig/git-tracking-changes-lifecycle.svg" alt="Diagram for foundational software development workflow with Git showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository" class="figure mx-auto d-block"><div class="figcaption">Foundational software development workflow with
+Git</div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Two developers can use Git in combination with a remote repository, usually accessed via the internet. By pushing and pulling changes to and from the remote repository, they are each able to synchronise their local copy of the project with the changes the other developer has committed.’</p>
@@ -436,20 +437,20 @@ from W3Docs (freely available)</div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-3">Figure 3</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Selecting the 'New repository' option from GitHub's dropdown menu labelled '+'’</p>
-<figure><img src="fig/ep02_fig01-create_new_repo.png" class="image-with-shadow figure mx-auto d-block" alt="Selecting the 'New repository' option from GitHub's dropdown menu labelled '+'"><div class="figcaption"><em>Creating a new GitHub repository</em></div>
+<figure><img src="fig/github-create-new-repo.png" class="image-with-shadow figure mx-auto d-block" alt="Selecting the 'New repository' option from GitHub's dropdown menu labelled '+'"><div class="figcaption"><em>Creating a new GitHub repository</em></div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-4">Figure 4</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Setting the name of the repository on GitHub through the 'Repository Name' text field’</p>
-<figure><img src="fig/ep02_fig02-repository_name.png" class="image-with-shadow figure mx-auto d-block" alt="Setting the name of the repository on GitHub through the 'Repository Name' text field"><div class="figcaption"><em>Naming the GitHub repository</em></div>
+<figure><img src="fig/github-repository-name.png" class="image-with-shadow figure mx-auto d-block" alt="Setting the name of the repository on GitHub through the 'Repository Name' text field"><div class="figcaption"><em>Naming the GitHub repository</em></div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-5">Figure 5</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Completing the creation of the GitHub repository by clicking on the 'Create repository' button’</p>
-<figure><img src="fig/ep02_fig03-create_repository.png" class="image-with-shadow figure mx-auto d-block" alt="Completing the creation of the GitHub repository by clicking on the 'Create repository' button"><div class="figcaption"><em>Complete GitHub repository
+<figure><img src="fig/github-create-repository.png" class="image-with-shadow figure mx-auto d-block" alt="Completing the creation of the GitHub repository by clicking on the 'Create repository' button"><div class="figcaption"><em>Complete GitHub repository
 creation</em></div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-6">Figure 6</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Copying the commands to sync the local and remote repositories from the remote repository's home page on GitHub’</p>
-<figure><img src="fig/ep02_fig04-copy_commands.png" class="image-with-shadow figure mx-auto d-block" alt="Copying the commands to sync the local and remote repositories from the remote repository's home page on GitHub"><div class="figcaption"><em>Copy the commands to sync the local and
+<figure><img src="fig/github-copy-commands.png" class="image-with-shadow figure mx-auto d-block" alt="Copying the commands to sync the local and remote repositories from the remote repository's home page on GitHub"><div class="figcaption"><em>Copy the commands to sync the local and
 remote repositories</em></div>
 </figure><hr>
 <h3 id="02-better-start-version-control-figure-7">Figure 7</h3>
@@ -465,11 +466,20 @@ remote repositories</em></div>
 <p aria-hidden="true">Image 1 of 1: ‘A single system might contain multiple virtual environments, each containing a different version of Python and the set of third-party libraries it needs (dependencies) e.g. NumPy, Pandas or Matplotlib. Each environment contains its own complete copy of the required version of each dependency.’</p>
 <figure><img src="fig/virtual-env.png" alt="A single system might contain multiple virtual environments, each containing a different version of Python and the set of third-party libraries it needs (dependencies) e.g. NumPy, Pandas or Matplotlib. Each environment contains its own complete copy of the required version of each dependency." class="figure mx-auto d-block"><div class="figcaption">Diagram to depict different Python environments
 containing different packages on the same machine</div>
-</figure><hr></section><section id="04-code-readability"><h2 class="section-heading"><a href="04-code-readability.html">Code readability</a></h2>
+</figure><hr>
+<h3 id="03-reproducible-dev-environment-figure-2">Figure 2</h3>
+<p aria-hidden="true">Image 1 of 1: ‘Select python interpreter in VS Code’</p>
+<figure><img src="fig/vscode-select-interpreter.png" class="image-with-shadow figure mx-auto d-block" alt="Select python interpreter in VS Code" width="800"></figure><hr>
+<h3 id="03-reproducible-dev-environment-figure-3">Figure 3</h3>
+<p aria-hidden="true">Image 1 of 1: ‘Set interpreter path in VS Code’</p>
+<figure><img src="fig/vscode-interpreter-path.png" class="image-with-shadow figure mx-auto d-block" alt="Set interpreter path in VS Code" width="800"></figure><hr>
+<h3 id="03-reproducible-dev-environment-figure-4">Figure 4</h3>
+<p aria-hidden="true">Image 1 of 1: ‘Showing interpreter status in VS Code status bar’</p>
+<figure><img src="fig/vscode-interpreter-venv.png" class="image-with-shadow figure mx-auto d-block" alt="Showing interpreter status in VS Code status bar" width="800"></figure><hr></section><section id="04-code-readability"><h2 class="section-heading"><a href="04-code-readability.html">Code readability</a></h2>
 <hr class="half-width"></section><section id="05-code-structure"><h2 class="section-heading"><a href="05-code-structure.html">Code structure</a></h2>
-<hr class="half-width"></section><section id="06-code-correctness"><h2 class="section-heading"><a href="06-code-correctness.html">Code correctness</a></h2>
+<hr class="half-width"></section><section id="06-code-correctness"><h2 class="section-heading"><a href="06-code-correctness.html">Code correctness &amp; testing</a></h2>
 <hr class="half-width"></section><section id="07-software-documentation"><h2 class="section-heading"><a href="07-software-documentation.html">Software documentation</a></h2>
-<hr class="half-width"></section><section id="08-open-collaboration"><h2 class="section-heading"><a href="08-open-collaboration.html">Open software management &amp; collaboration</a></h2>
+<hr class="half-width"></section><section id="08-open-collaboration"><h2 class="section-heading"><a href="08-open-collaboration.html">Software management &amp; collaboration</a></h2>
 <hr class="half-width">
 <h3 id="08-open-collaboration-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘styled button linking to the Zenodo entry for this lesson’</p>
@@ -542,8 +552,8 @@ under CC BY 4.0</div>
   "url": "https://carpentries-incubator.github.io/better-research-software-r/images.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/images.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-11-25",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-26",
+  "datePublished": "2025-11-26"
 }
 
   </script><script>

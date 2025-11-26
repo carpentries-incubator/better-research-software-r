@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -264,7 +264,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-code-correctness.html">6. Code correctness</a>
+        <a href="06-code-correctness.html">6. Code correctness &amp; testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -282,7 +282,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-open-collaboration.html">8. Open software management &amp; collaboration</a>
+        <a href="08-open-collaboration.html">8. Software management &amp; collaboration</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -319,7 +319,7 @@
                       <li>
                         <a href="../instructor/images.html">Extract All Images</a>
                       </li>
-                      <hr><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li>
+                      <hr><li><a class="dropdown-item" href="installation-instructions.html">Installation instructions</a></li><li><a class="dropdown-item" href="reproducible-research-discussion.html">Reproducible Research Discussion</a></li><li><a class="dropdown-item" href="test-suite-exercise.html">Implementing a test suite</a></li><li><a class="dropdown-item" href="ci-for-testing.html">Continuous Integration for automated testing</a></li><li><a class="dropdown-item" href="licensing.html">Software licensing</a></li><li><a class="dropdown-item" href="ethical-environmental-considerations.html">Ethical &amp; environmental considerations around research software</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -389,15 +389,23 @@ required software</a> installed before attending this course.</p>
 </section><section><h2 class="section-heading" id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a></h2>
 <hr class="half-width"><p>After attending this training, you <strong>will be able</strong>
 to:</p>
-<ul><li>List challenges typically faced by researchers developing software
-and managing data for modern computational, reproducible research,
-including those commensurate with the FAIR (Findable, Accessible,
-Interoperable, Reusable) principles.</li>
-<li>Build on top of your existing knowledge of Python, Git and command
-line computing to enhance your research software development workflow
-with some good open and reproducible research software practices around
-structuring, writing, documenting, testing, sharing and reusing code
-(including software licensing and citation).</li>
+<ul><li>Describe the principles of open and repoducible research and apply
+those principles to make a software development project more
+reproducible.</li>
+<li>Version control your software project with git and manage an open
+source project in GitHub</li>
+<li>Create and use reproducible virtual environments for software
+development projects</li>
+<li>Write or edit code based on coding best practices - using functions,
+informative variable names, existing packages, docstrings, etc.</li>
+<li>Refector code into functions, including a main function, to create
+more modular and re-usable code</li>
+<li>Write code to take arguments from the command line for improved
+flexiblity and reuse</li>
+<li>Write and run tests using a testing suite library</li>
+<li>Create automated documentation for code to enable use by others</li>
+<li>Manage an open source or other collaborative software projects
+(including publishing and licensing)</li>
 </ul></section><section><h2 class="section-heading" id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a></h2>
 <hr class="half-width"><p>This course was originally developed by the <a href="../https:/www.software.ac.uk">UK’s Software Sustainability
 Institute</a> and funded by the <a href="https://www.ukrn.org/" class="external-link">UK
@@ -428,7 +436,7 @@ software project</a>
 </td>
 <td>
 What is a version control system?<br>Why is version control essential
-to building good software<br>What does a standard version control
+to building good software?<br>What does a standard version control
 workflow look like?
 </td>
 </tr><tr><td>
@@ -471,7 +479,8 @@ research project?
 <span class="visually-hidden">Duration: </span>04h 50m
 </td>
 <td>
- 6. <a href="06-code-correctness.html">Code correctness</a>
+ 6. <a href="06-code-correctness.html">Code correctness &amp;
+testing</a>
 </td>
 <td>
 How can we verify that our code is correct?<br>How can we automate our
@@ -493,13 +502,14 @@ documentation needed?
 <span class="visually-hidden">Duration: </span>07h 50m
 </td>
 <td>
- 8. <a href="08-open-collaboration.html">Open software management &amp;
+ 8. <a href="08-open-collaboration.html">Software management &amp;
 collaboration</a>
 </td>
 <td>
-How do I ensure my code is citable?<br>How do we track issues with code
-in GitHub?<br>How can we ensure that multiple developers can work on
-the same files simultaneously?
+How do can we create unique identifiers for our code so others can cite
+it?<br>How do we archive our code for future preservation?<br>How do
+we track issues with code in GitHub?<br>How can we ensure that multiple
+developers can work on the same files simultaneously?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>09h 20m
@@ -529,8 +539,8 @@ any links that you are not going to use.
       </p>
       </section><section id="setup"><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
 <hr class="half-width"><p>To go through the course material on your own or at a workshop, you
-will need the following software installed and working correctly on your
-system:</p>
+will need the following accounts set up and software installed and
+working correctly on your system:</p>
 <ul><li>
 <a href="installation-instructions.html#command-line-tool">Command
 line terminal (shell)</a> (such as <strong>Bash</strong>,
@@ -542,11 +552,14 @@ version control tool</a></li>
 <li>
 <a href="installation-instructions.html#visual-studio-code">Visual
 Studio Code (VS Code)</a> integrated development environment (IDE)</li>
-</ul><p>You will also need to <a href="installation-instructions.html#github-account">create a GitHub
-account</a> if you do not have one already, make sure that you are able
-to log into it, and download the <a href="installation-instructions.html#spacewalks">Spacewalks data and
-analysis code</a> which we will be used for exercises in the course.</p>
-<p>Please follow the <a href="installation-instructions.html">installation instructions</a> to
+<li>
+<a href="installation-instructions.html#github-account">GitHub
+account</a>, and</li>
+<li>
+<a href="installation-instructions.html#spacewalks">Spacewalks data
+and analysis code</a> which we will be used for exercises in the
+course.</li>
+</ul><p>Please follow the <a href="installation-instructions.html">installation instructions</a> to
 install the above tools and set up for the course.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
@@ -601,8 +614,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/index.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/index.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-11-25",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-26",
+  "datePublished": "2025-11-26"
 }
 
   </script><script>
