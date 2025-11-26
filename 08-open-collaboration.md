@@ -1,5 +1,5 @@
 ---
-title: Open software management & collaboration
+title: Software management & collaboration
 teaching: 60
 exercises: 30
 ---
@@ -7,16 +7,17 @@ exercises: 30
 ::::::::::::::::::::::::::::::::::::: objectives
 After completing this episode, participants should be able to:
 
-- Archive code to Zenodo and create a digital object identifier (DOI) for a software project (and include that info in CITATION.cff).
-- Track issues with code in GitHub.
-- Use Git branches to work on code in parallel and merge code back using pull requests.
-- Apply issue tracking, branching and pull requests together to fix bugs while allowing other developers to work on the same code.
+- Create a digital object identifier (DOI) for a software project and archive it on Zenodo.
+- Track the work needed to be done on code (such as bugs and new features) using issues in GitHub.
+- Use Git branches to work on code in parallel with other team members.
+- Merge code changes from separate development branches into the main branch using pull requests.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do I ensure my code is citable?
+- How do can we create unique identifiers for our code so others can cite it?
+- How do we archive our code for future preservation?
 - How do we track issues with code in GitHub?
 - How can we ensure that multiple developers can work on the same files simultaneously?
 
@@ -55,10 +56,11 @@ $ source venv_spacewalks/Scripts/activate # Windows
 
 ### Making the code public
 
-By default repositories created on GitHub are private and only their creator can see them. 
-Since we added an open source license to our repository we probably want to make sure people can actually access it. 
+By default repositories created on GitHub are private and only their creator can see them.
+This prevents sensitive information from being unintentionally made public.
+In our case - we added an open source license to our repository and want to make sure people can actually access and use it. 
 
-To make your repository public, if it is not public already:
+To make your repository public (if it is not public already):
 
 1. Go to your repository on GitHub and click on the `Settings` link near the top right corner. 
 2. Scroll down to the bottom of the page and the "Danger Zone" settings. 
@@ -69,19 +71,30 @@ As a security measure, you will then have to put in your GitHub password.
 
 ### Transferring to an organisation
 
-Currently our repository is under the GitHub "namespace" of our individual user. 
-This is OK for individual projects where we are the sole or at least the main code author, but for bigger and more complex projects it is common to use a GitHub organisation named after our project. 
-If we are a member of an organisation and have the appropriate permissions then we can transfer a repository from our personal namespace to the organisation's. 
-This can be done with another option in the "Danger Zone" settings, the "Transfer ownership" button. 
-Pressing this will then prompt us as to which organisation we want to transfer the repository to. 
+At the moment, our repository sits under an individual GitHub user account. 
+This is fine for smaller projects where one person is the main contributor. 
+However, larger or more complex projects are typically hosted under a dedicated GitHub organisation. 
+A GitHub organisation can group multiple repositories, manage contributor access through GitHub teams, and keep all project-related work in one place.
+You can create a GitHub organisation to centrally manage all repositories for a single organisation or a multi-institution project."
 
-### Archiving code to Zenodo and obtaining a DOI
+If we are a member of a GitHub organisation and have the appropriate permissions then we can transfer a repository from our personal namespace to the organisation's. 
+This can be done with another option in the "Danger Zone" settings - the "Transfer ownership" button. 
+Pressing this will then prompt us as to which organisation we want to transfer the repository to (if we have access to multiple GitHub organisations). 
 
-[Zenodo][zenodo] is a data archive run by CERN. 
-Anybody can upload datasets up to 50GB to it and receive a Digital Object Identifier (DOI). 
-Zenodo's definition of a dataset is quite broad and can include code - which gives us a way to obtain a DOI for our software. 
+### Getting an identifier and archiving code
 
-Let us now look into how we can archive a GitHub repository to Zenodo. 
+Putting code on GitHub or GitLab (or any similar code hosting service) is good practice for code sharing, versioning and even code packaging, it is not enough for long-term software archiving. 
+This is because these are commercial services - if they change their policies, remove repositories (e.g. for inactivity, or security reasons), or even shut down (which has happened to code sharing platforms in the past), your code could disappear.
+Archival means long-term preservation independent of any one platform.
+
+Several archival solutions for research software are emerging.
+[Zenodo][zenodo] is a data archive run by CERN which allows anyone to upload data up to 50GB for free and receive a Digital Object Identifier (DOI).
+Zenodo's definition of "data" is quite broad and can include code - so it also supports DOI-backed software archiving linked to publications, ensuring persistent citation and access.
+
+DOIs provide globally unique, citable references for a data or a software artefact (both software as a whole and its different releases) that integrates with various academic and research systems. 
+Archival of and unique identifiers for software are important as they aid reproducibility, proper citation, and long-term accessibility of software.
+
+Let us now look into how we can archive a GitHub repository to Zenodo and get a DOI for our software project at the same time. 
 Note that, instead of using the real Zenodo website, we will practice using [Zenodo Sandbox](https://sandbox.zenodo.org/).
 
 ::: callout
@@ -95,7 +108,7 @@ It will also not create real DOIs for a number of test repositories we use for t
 
 ::::::::::: instructor
 
-#### Optional challenge: archive our GitHub repository to Zenodo
+#### Optional challenge: archive our GitHub repository to Zenodo (5 min)
 
 You can choose to do the following as an exercise or by live coding based on what you think the learners would prefer.
 You can copy the detailed instructions below to give them it as an exercise.
@@ -125,7 +138,7 @@ This means that even if we delete it from GitHub or even if GitHub were ever to 
 Zenodo will allow people to download the entire repository (more accurately, its state at the time it was tagged for release) as a single `zip` file. 
 
 Zenodo will have actually created two DOIs for you. 
-One represents the latest version of the software and will always link to the latest (most recent) release if you make more releases. 
+One represents the identifier for your software as a whole and will always link to the latest (most recent) release if you make more releases. 
 The other is specific to the release you made and will always point to that version. 
 We can see both of these by clicking on the DOI link in the Zenodo page for the repository.
 
@@ -150,18 +163,20 @@ If this happens try disabling the extra privacy features/extensions or using ano
 
 :::
 
-### Adding a DOI and ORCID to the citation file
+### Adding a DOI to the citation file
 
-Now that we have our DOI it is good practice to include this information in our citation file.
-Earlier we created a `CITATION.cff` file with information about how to cite our code.
-There are a few fields we can add now which are related to the DOI; one of these is the `version` file which covers the version number of the software.
+Now that we have our DOI it is good practice to include this information in our software's citation file.
+Earlier we created a `CITATION.cff` file with information about how to cite our software.
+A DOI can be added to the `CITATION.cff` file using the dedicated `doi` key or by including it as an entry in the `identifiers:` array. 
+Both methods are valid according to the CFF specification.
+We can also add the `version` field to `CITATION.cff`, which corresponds to the version number of the software related to the DOI we are adding.
 
 ::::::::::: instructor
 
-#### Optional challenge: add a DOI and ORCID to the citation file
+#### Optional challenge: add a DOI and software version to the citation file (5 min)
 
 You can choose to do the following as an exercise or by live coding based on what you think the learners would prefer.
-You can copy the the detailed instructions below to give them it as an exercise.
+You can copy the the detailed instructions below to give it as an exercise.
 
 ::::::::::::::::::::::
 
@@ -220,24 +235,29 @@ They also allow us to track problems with that code, for multiple developers to 
 
 ### Tracking issues with code
 
-As we discussed earlier, a key feature of GitHub (as opposed to Git itself) is the issue tracker. 
-This provides us with a place to keep track of any problems or bugs in the code and to discuss them with other developers. 
-Sometimes advanced users will also use issue trackers of public projects to report problems they are having 
-(and sometimes this is understandably misused by users seeking help using documented features of the program). 
+As [mentioned before in episode on version control systems](./02-better-start-version-control.html#keeping-track-of-issues-and-planned-work-in-github), a key feature of GitHub (as opposed to Git itself) is the issue tracker. 
+
+GitHub issues is a place for keeping track of any problems or bugs in the code, feature requests, and lists of future work. 
+They provide a record of all the problems with the code, and improvements that could be made, along with solutions and discussions around them.
+This helps the team to keep track of what they are working on now or need to work on later, and reduces the chance of receiving redundant reports of issues you already know about.
+Sometimes advanced users will also use issue trackers of public projects to report problems they are having (and sometimes this is understandably misused by users seeking help using documented features of the program). 
 
 To practice making an issue, we will file a "feature request", where we describe new functionality that may improve the codebase.
-Let's go ahead and create a new issue in our GitHub repository for a feature request to create a table of total EVA/spacewalk time for each astronaut.
-We can find the issue tracker on the "Issues" tab in the top left of the GitHub page for the repository. 
+Let's say we want to implement additional functionality in our code to create a summary table for the total/cumulative EVA/spacewalk time for each astronaut.
+
+Before we start working on the implementation - we will create a new issue in our GitHub repository for this feature request track the work on it.
+Recall that we can find the issue tracker on the "Issues" tab in the top left of the GitHub home page for the repository. 
 Click on this and then click on the green "New Issue" button on the right hand side of the screen. 
 We can then enter a title and description of our issue.
 
-A feature request should include a short title, the key features of the new feature, and a more detailed description of the feature.
-  - Title: Add summary table of EVA time by astronaut
-  - Description: A summary table split by astronaut would be helpful for individual level analysis.
+An issue should include a short title, e.g. the key features of the new code, and a more detailed description of the feature, e.g.:
+
+  - Title: Add a summary table of total EVA time by astronaut
+  - Description: A summary table of total EVA time split by astronaut would be helpful for individual level analysis.
 
 <!--- SCREENSHOT NEEDED: of example feature request -->
 
-After the issue is created it will be assigned a sequential ID number.
+After the issue is created it will be assigned a sequential ID number - because we have already created one issue on our repository, for this issue it should be `02`.
 
 
 ### Discussing an issue
@@ -251,17 +271,18 @@ This is sometimes used to identify related issues or if an issue is a duplicate.
 ### Working in parallel with Git branches
 
 Next, we will learn how to suggest this change back to the repository.
-So far, we've been working on our own making changes in main.
-However, when we start to have collaborators, we may need to adopt a workflow such as [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow) that facilitates simultaneous editing on the project and quality control on the changes made.
+So far, we've been working on our own making changes and directly committing to the main branch.
+When we start to have collaborators, we may want to adopt a development workflow such as [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow) (aka feature branch workflow) that facilitates simultaneous editing on the project and quality control on the changes made.
 
 Branching is a feature of Git that allows two or more parallel streams of work. 
 Commits can be made to one branch without interfering with another. 
 Branches are commonly used as a way for one developer to work on a new feature or a bug fix while other developers work on other features.
-When those new features or bug fixes are complete, the branch will be merged back with the `main` (sometimes called the `master`) branch.
+When those new features or bug fixes are complete, the branch will be merged back with the `main` branch.
 
 #### Creating a new branch
 
-New Git branches are created with the `git branch` command. This should be followed by the name of the branch to create. 
+New Git branches are created with the `git branch` command. 
+This should be followed by the name of the branch to create. 
 It is common practice when the bug we are fixing or feature we are adding has a corresponding issue to name the branch after the issue number and name. 
 For example, we might call the branch `02-sum-by-astro-feat` instead of something less descriptive like `feature-request` or `bugfix`. 
 
@@ -293,12 +314,8 @@ use the `git switch` or `git checkout` command followed by the branch name. For 
 ```
 
 To create a branch and change to it in a single command we can use `git switch` with the `-c` option 
-(or `git checkout` with the `-b` option). 
+(or `git checkout` with the `-b` option) - e.g. `git switch -c switch 02-sum-by-astro-feat`. 
 Note that `git switch` command is only available in more recent versions of Git.
-
-```bash
-(venv_spacewalks) $ git switch -c 03-summarize-categorical-bug
-```
 
 #### Committing to a branch
 
@@ -307,54 +324,266 @@ When we run a `git commit` command we will see the name of the
 branch we are committing to in the output of `git commit`.
 Let's add the following function to our code to implement the requested feature.
 
-Copy and paste this function to add it to your code
+Copy and paste this function to `eva_data_analysis.py`:
 
 ```python
-def sum_duration_by_astronaut(df, output_csv):
+def summary_duration_by_astronaut(df):
     """
-    Summarizes the duration data by each astronaut and saves resulting table to a CSV file
+    Summarise the duration data by each astronaut and saves resulting table to a CSV file
 
     Args: 
-        df (pd.DataFrame): The input dataframe to be summarized
-        output_csv (str): Path to save the output csv of the table generated
+        df (pd.DataFrame): Input dataframe to be summarised
 
     
     Returns:
-        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarized column 
+        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarised column 
     """
+    print(f'Calculating summary of total EVA time by astronaut')
     subset = df.loc[:,['crew', 'duration']] # subset to work with only relevant columns
-    subset = add_duration_hours_variable(subset) # need duration_hours for easier calcs
-    subset = subset.drop('duration', axis=1) # dropping extra duration file as those don't calculate correctly
+    subset = add_duration_hours(subset) # need duration_hours for easier calcs
+    subset = subset.drop('duration', axis=1) # dropping the extra 'duration' column as it contains string values not suitable for calulations
     subset = subset.groupby('crew').sum() 
-    print(f'Saving to CSV file {output_csv}')
-    subset.to_csv(output_csv) # writing new table to specified location
     return subset
 ```
 
-Then add the following to your main function, after the `eva_data` variable is created
+Then add the following line after the `graph_file` variable is created:
 
 ```python
-dur_by_astro = sum_duration_by_astronaut(eva_data, dur_by_astro_csv)
+duration_by_astronaut_output_file = 'results/duration_by_astronaut.csv'
 ```
 
-And we will add this line in our code to run if main, before or after we define the `graph_file` variable.
+Next, change the signature of the `main()` function to `main(input_file, output_file, duration_by_astronaut_output_file, graph_file)` and also its invocation (in order to pass the new CSV file as an argument):
+
 ```python
-dur_by_astro_csv = 'results/duration_by_astronaut.csv'
+main(input_file, output_file, duration_by_astronaut_output_file, graph_file)
 ```
+
+Finally, in the `main()` function, add the invocation of the new function (e.g. after converting and exporting original data to CSV file):
+
+```python
+# Calculate summary table for total EVA per astronaut
+duration_by_astronaut_df = summary_duration_by_astronaut(eva_data)
+# Save summary duration data by each astronaut to CSV file
+write_dataframe_to_csv(duration_by_astronaut_df, duration_by_astronaut_output_file)
+```
+
+Note how we reused our old `write_dataframe_to_csv` function to write the new data to a different CSV file and did not have to repeat that code again.
+
+Finally, our whole script `eva_data_analysis.py` may look like:
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+import sys
+import re
+
+
+def main(input_file, output_file, duration_by_astronaut_output_file, graph_file):
+    print("--START--")
+
+    # Read the data from JSON file
+    eva_data = read_json_to_dataframe(input_file)
+
+    # Convert and export data to CSV file
+    write_dataframe_to_csv(eva_data, output_file)
+
+    # Calculate summary table for total EVA per astronaut
+    duration_by_astronaut_df = summary_duration_by_astronaut(eva_data)
+    # Save summary duration data by each astronaut to CSV file
+    write_dataframe_to_csv(duration_by_astronaut_df, duration_by_astronaut_output_file)
+
+    # Sort dataframe by date ready to be plotted (date values are on x-axis)
+    eva_data.sort_values('date', inplace=True)
+
+    # Plot cumulative time spent in space over years
+    plot_cumulative_time_in_space(eva_data, graph_file)
+
+    print("--END--")
+
+
+def read_json_to_dataframe(input_file):
+    """
+    Read the data from a JSON file into a Pandas dataframe.
+    Clean the data by removing any rows where the 'duration' value is missing.
+
+    Args:
+        input_file (file or str): The file object or path to the JSON file.
+
+    Returns:
+         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
+    """
+    print(f'Reading JSON file {input_file}')
+    # Read the data from a JSON file into a Pandas dataframe
+    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
+    eva_df['eva'] = eva_df['eva'].astype(float)
+    # Clean the data by removing any rows where duration is missing
+    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
+    return eva_df
+
+
+def write_dataframe_to_csv(df, output_file):
+    """
+    Write the dataframe to a CSV file.
+
+    Args:
+        df (pd.DataFrame): The input dataframe.
+        output_file (file or str): The file object or path to the output CSV file.
+
+    Returns:
+        None
+    """
+    print(f'Saving to CSV file {output_file}')
+    # Save dataframe to CSV file for later analysis
+    df.to_csv(output_file, index=False, encoding='utf-8')
+
+
+def plot_cumulative_time_in_space(df, graph_file):
+    """
+    Plot the cumulative time spent in space over years.
+
+    Convert the duration column from strings to number of hours
+    Calculate cumulative sum of durations
+    Generate a plot of cumulative time spent in space over years and
+    save it to the specified location
+
+    Args:
+        df (pd.DataFrame): The input dataframe.
+        graph_file (file or str): The file object or path to the output graph file.
+
+    Returns:
+        None
+    """
+    print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+    df = add_duration_hours(df)
+    df['cumulative_time'] = df['duration_hours'].cumsum()
+    plt.plot(df['date'], df['cumulative_time'], 'ko-')
+    plt.xlabel('Year')
+    plt.ylabel('Total time spent in space to date (hours)')
+    plt.tight_layout()
+    plt.savefig(graph_file)
+    plt.show()
+
+
+def text_to_duration(duration):
+    """
+    Convert a text format duration "HH:MM" to duration in hours
+
+    Args:
+        duration (str): The text format duration
+
+    Returns:
+        duration_hours (float): The duration in hours
+    """
+    hours, minutes = duration.split(":")
+    duration_hours = int(hours) + int(minutes)/60
+    return duration_hours
+
+
+def add_duration_hours(df):
+    """
+    Add duration in hours (duration_hours) variable to the dataset
+
+    Args:
+        df (pd.DataFrame): The input dataframe.
+
+    Returns:
+        df_copy (pd.DataFrame): A copy of df with the new duration_hours variable added
+    """
+    df_copy = df.copy()
+    df_copy["duration_hours"] = df_copy["duration"].apply(
+        text_to_duration
+    )
+    return df_copy
+
+
+def calculate_crew_size(crew):
+    """
+    Calculate the size of the crew for a single crew entry
+
+    Args:
+        crew (str): The text entry in the crew column containing a list of crew member names
+
+    Returns:
+        (int): The crew size
+    """
+    if crew.split() == []:
+        return None
+    else:
+        return len(re.split(r';', crew))-1
+
+def add_crew_size_column(df):
+    """
+    Add crew_size column to the dataset containing the value of the crew size
+
+    Args:
+        df (pd.DataFrame): The input data frame.
+
+    Returns:
+        df_copy (pd.DataFrame): A copy of the dataframe df with the new crew_size variable added
+    """
+    print('Adding crew size variable (crew_size) to dataset')
+    df_copy = df.copy()
+    df_copy["crew_size"] = df_copy["crew"].apply(
+        calculate_crew_size
+    )
+    return df_copy
+
+
+def summary_duration_by_astronaut(df):
+    """
+    Summarise the duration data by each astronaut and saves resulting table to a CSV file
+
+    Args: 
+        df (pd.DataFrame): Input dataframe to be summarised
+
+    
+    Returns:
+        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarised column 
+    """
+    print(f'Calculating summary of total EVA time by astronaut')
+    subset = df.loc[:,['crew', 'duration']] # subset to work with only relevant columns
+    subset = add_duration_hours(subset) # need duration_hours for easier calcs
+    subset = subset.drop('duration', axis=1) # dropping the extra 'duration' column as it contains string values not suitable for calulations
+    subset = subset.groupby('crew').sum() 
+    return subset
+
+
+if __name__ == "__main__":
+
+    if len(sys.argv) < 3:
+        input_file = 'data/eva-data.json'
+        output_file = 'results/eva-data.csv'
+        print(f'Using default input and output filenames')
+    else:
+        input_file = sys.argv[1]
+        output_file = sys.argv[2]
+        print('Using custom input and output filenames')
+
+    graph_file = 'results/cumulative_eva_graph.png'
+    duration_by_astronaut_output_file = 'results/duration_by_astronaut.csv'
+
+    main(input_file, output_file, duration_by_astronaut_output_file, graph_file)
+```
+
 
 Now, let's test run our script, to make sure we do not get any errors.
+
 ```bash
 (venv_spacewalks) $ python3 eva_data_analysis.py
 ```
 
 If we do:
+```bash
+(venv_spacewalks) $ ls results
 ```
-venv_spacewalks) $ ls results
-```
-we can see the new result CSV file listed.
+we should see the new result CSV file with EVA durations summary listed.
 
 Let's add and commit the new version of the code to our `02-sum-by-astro-feat` branch.
 First we will check that we are on the right branch using either `git branch` or `git status`.
+
+```bash
+(venv_spacewalks) $ git status
+```
 
 ### Closing an issue
 
@@ -364,13 +593,13 @@ This can be done either by pressing the "Close" button in the GitHub web interfa
 ```bash
 (venv_spacewalks) $ git branch
 (venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "added duration by astronaut functionality, closes #2"
+(venv_spacewalks) $ git commit -m "Add duration by astronaut functionality. Fixes #2."
 ```
 
-In the output of `git commit -m` the first part of the output line will show the name of the branch we just made the commit to.
+In the output of `git commit -m` command - the first part of the output line will show the name of the branch we just made the commit to.
 
 ```output
-[02-sum-by-astro-feat 330a2b1] added duration by astronaut functionality, closes #2
+[02-sum-by-astro-feat 330a2b1] Add duration by astronaut functionality. Fixes #2.
 ```
 
 If we now switch back to the `main` branch our new commit will no longer be there in the source file or the output of `git log`.
@@ -385,22 +614,21 @@ And if we go back to the `02-sum-by-astro-feat` branch it will re-appear.
 (venv_spacewalks) $ git switch 02-sum-by-astro-feat
 ```
 
-If we want to push our changes to a remote such as GitHub we have to tell the `git push` command which branch to push to. If the branch doesn't exist on the remote (as it currently won't)
-then it will be created. 
+If we want to push our changes to a remote such as GitHub we have to tell the `git push` command which branch to push to. 
+If the branch doesn't exist on the remote (as it currently won't) then it will be created. 
+We need to use the `-u` switch to the `git push` command to tell GitHub to create the enw remote branch for us (which will be also linked to our local branch).
+The `-u` switch is only needed the first time we push to a new remote branch that is being created - next time we just do a normal `git push`.
 
 ```bash
-(venv_spacewalks) $ git push origin 02-sum-by-astro-feat
+(venv_spacewalks) $ git push -u origin 02-sum-by-astro-feat
 ```
 
-If we now refresh the GitHub webpage for this repository we should see the `02-sum-by-astro-feat` branch has appeared in the list of branches.
-
+If we now refresh the GitHub home page for our repository we should see the `02-sum-by-astro-feat` branch appear in the list of branches.
 
 ::: spoiler 
 
 #### How to pull changes from a remote branch 
-If we needed to pull changes from a branch on a remote 
-(for example if we have made changes on another computer or via GitHub's web based editor), 
-then we can specify a branch on a `git pull` command.
+If we needed to pull changes from a branch on a remote (for example if we have made changes on another computer or via GitHub's web based editor), then we can specify a branch on a `git pull` command.
 
 ```bash
 git pull origin 02-sum-by-astro-feat
@@ -478,9 +706,10 @@ Using this we can request that the changes on our fork are incorporated by the u
 
 :::  challenge
 
-### Practice with Issues and PRs (Pull Requests)
+### Practice with Issues and PRs (20 min)
 
-We have a bug in our code!  If we look at the results in `results/duration_by_astronaut.csv`, the crew column has groups of crew and we wanted to calculate this per astronaut. 
+We have a bug in our code! 
+If we look at the results in `results/duration_by_astronaut.csv`, the crew column has groups of crew and we wanted to calculate this per astronaut. 
 
 1. Create an issue in GitHub to report this bug. A good issue description for a bug should include:
 
@@ -495,36 +724,33 @@ We might also reference the previous issue in the description, to provide even m
 
 2. Create a pull request fix the code. You can try to create the code yourself or copy the test code below.
     - Hint: Do not forget to make a new branch from the `main` branch, not your `02-sum-by-astro-feat` branch.
-3. (optional) Have a partner review your pull request.
+3. (Optionally) Have a partner review your pull request.
 3. Merge your pull request
 4. Switch your local computer back to the `main` branch and pull the latest changes from the remote/origin `main` branch.
-5. (Bonus/Optional) Delete your merged branches from your local computer and in GitHub.
+5. (Bonus/optional) Delete your merged branches from your local computer and in GitHub.
 
 :::::: spoiler
 
 #### Updated function to copy-paste
 
 ```python
-def sum_duration_by_astronaut(df, output_csv):
+def summary_duration_by_astronaut(df):
     """
-    Summarize the duration data by each astronaut and saves resulting table to a CSV file
+    Summarise the duration data by each astronaut and saves resulting table to a CSV file
 
     Args: 
-        df (pd.DataFrame): The input dataframe to be summarized
-        output_csv (str): Path to save the output csv of the table generated
+        df (pd.DataFrame): Input dataframe to be summarised
 
     
     Returns:
-        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarized column 
+        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarised column 
     """
     subset = df.loc[:,['crew', 'duration']] # subset to work with only relevant columns
     subset.crew = subset.crew.str.split(';').apply(lambda x: [i for i in x if i.strip()]) # splitting the crew into individuals and removing blank string splits from ending ;
     subset = subset.explode('crew') # separating lists of crew into individual rows
-    subset = add_duration_hours_variable(subset) # need duration_hours for easier calcs
-    subset = subset.drop('duration', axis=1) # dropping extra duration file as those don't calculate correctly
+    subset = add_duration_hours(subset) # need duration_hours for easier calcs
+    subset = subset.drop('duration', axis=1) # dropping the extra 'duration' column as it contains string values not suitable for calulations
     subset = subset.groupby('crew').sum() 
-    print(f'Saving to CSV file {output_csv}')
-    subset.to_csv(output_csv) # writing new table to specified location
     return subset
 ```
 

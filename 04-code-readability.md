@@ -16,8 +16,9 @@ exercises: 30
 
 After completing this episode, participants should be able to:
 
-- Organise code into reusable functions that achieve a singular purpose
+- Import third-party libraries at the top of a script
 - Choose function and variable names that help explain the purpose of the function or variable
+- Organise code into reusable functions that achieve a singular purpose
 - Write informative comments and docstrings to provide more detail about what the code is doing
 
 :::
@@ -28,8 +29,7 @@ scientific software and empower collaboration between researchers.
 While all developers hope their code will be stable long term, software often has to change due to changes in the real world.
 As requirements change, so must the relevant code.
 When code needs to be changed, the developer that created it or more likely a different developer needs to understand that code before they can implement the new requirements.
-Readable code facilitates the reading and understanding of the abstraction phases and, as a result, facilitates the 
-evolution of the codebase.
+Readable code facilitates the reading and understanding of the abstraction phases and, as a result, facilitates the evolution of the codebase.
 Readable code saves future developers' time and effort.
 
 In order to develop readable code, we should ask ourselves: "If I re-read this piece of code in fifteen days or one 
@@ -90,7 +90,7 @@ fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Pu
 
 data=[]
 
-for i in range(374):
+for i in range(375):
     line=data_f.readline()
     print(line)
     data.append(json.loads(line[1:-1]))
@@ -174,38 +174,10 @@ if you assign a variable with the same name and no longer be able to access the 
 opting for something like `input_data` would be preferable. Note that this behaviour may be explicitly disallowed in other 
 programming languages but is not in Python.
 
-:::::: challenge
-
-### Give a descriptive name to a variable
-
-Below we have a variable called `var` being set the value of 9.81.
-`var` is not a very descriptive name here as it doesn't tell us what 9.81 means, yet it is a very common constant in physics!
-Go online and find out which constant 9.81 relates to and suggest a new name for this variable.
-
-Hint: the units are *metres per second squared*!
-
-```python
-var = 9.81
-```
-
-::: solution
-
-### Solution
-
-$$ 9.81 m/s^2 $$ is the [gravitational force exerted by the Earth](https://en.wikipedia.org/wiki/Gravity_of_Earth).
-It is often referred to as "little g" to distinguish it from "big G" which is the [Gravitational Constant](https://en.wikipedia.org/wiki/Gravitational_constant).
-A more descriptive name for this variable therefore might be:
-
-```python
-g_earth = 9.81
-```
-
-:::
-::::::
 
 :::::: challenge
 
-### Rename our variables to be more descriptive
+### Rename our variables to be more descriptive (5 min)
 
 Let's apply this to `eva_data_analysis.py`.
 
@@ -217,45 +189,46 @@ a. Edit the code as follows to use descriptive (and consistent) variable names:
 
     *Be sure to change all the occurrences of each variable name.*
 b. What other variable names in our code would benefit from renaming? 
+Rename these too. 
+Hint: variables `w`, `t`, `tt` and `ttt` could also be renamed to be more descriptive.
 c. Commit your changes to your repository. Remember to use an informative commit message.
 
 
 ::: solution
 
-a.
-    Updated code:
+a. 
+Updated code after renaming `data_f`, `data_t` and `g_file`:
 
-    ```python
-    import json
-    import csv
-    import datetime as dt
-    import matplotlib.pyplot as plt
+```python
+import json
+import csv
+import datetime as dt
+import matplotlib.pyplot as plt
     
-    # https://data.nasa.gov/resource/eva.json (with modifications)
-    input_file = open('./eva-data.json', 'r', encoding='ascii')
-    output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-    graph_file = './cumulative_eva_graph.png'
+# https://data.nasa.gov/resource/eva.json (with modifications)
+input_file = open('./eva-data.json', 'r', encoding='ascii')
+output_file = open('./eva-data.csv', 'w', encoding='utf-8')
+graph_file = './cumulative_eva_graph.png'
+        
+fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
     
+data=[]
     
-    fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+for i in range(375):
+    line=input_file.readline()
+    print(line)
+    data.append(json.loads(line[1:-1]))
+#data.pop(0)
+## Comment out this bit if you don't want the spreadsheet
     
-    data=[]
+w=csv.writer(output_file)
     
-    for i in range(374):
-        line=input_file.readline()
-        print(line)
-        data.append(json.loads(line[1:-1]))
-    #data.pop(0)
-    ## Comment out this bit if you don't want the spreadsheet
+time = []
+date =[]
     
-    w=csv.writer(output_file)
-    
-    time = []
-    date =[]
-    
-    j=0
-    for i in data:
-        print(data[j])
+j=0
+for i in data:
+    print(data[j])
         # and this bit
         w.writerow(data[j].values())
         if 'duration' in data[j].keys():
@@ -275,33 +248,104 @@ a.
                     time.pop(0)
         j+=1
     
-    t=[0]
-    for i in time:
-        t.append(t[-1]+i)
+t=[0]
+for i in time:
+    t.append(t[-1]+i)
     
-    date,time = zip(*sorted(zip(date, time)))
+date,time = zip(*sorted(zip(date, time)))
     
-    plt.plot(date,t[1:], 'ko-')
-    plt.xlabel('Year')
-    plt.ylabel('Total time spent in space to date (hours)')
-    plt.tight_layout()
-    plt.savefig(graph_file)
-    plt.show()
-    ```
+plt.plot(date,t[1:], 'ko-')
+plt.xlabel('Year')
+plt.ylabel('Total time spent in space to date (hours)')
+plt.tight_layout()
+plt.savefig(graph_file)
+plt.show()
+```
 b. 
-    Variables `w`, `t`, `ttt` could also be renamed to be more descriptive. Though, we won't do so now.
-c. 
-    Commit changes:
+Variables `w`, `t`, `tt` and `ttt` could also be renamed to be more descriptive. We could, for example: 
+      
+- **Change `w` to `csv_writer`**: makes it clear this variable is a CSV writer object. Using "w" alone would more likely be interpreted as "width" or "weight".
+- **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
+- **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
+- **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
+    
+Updated code after renaming `w`, `t`, `tt` and `ttt`:
+      
+```python
+import json
+import csv
+import datetime as dt
+import matplotlib.pyplot as plt
 
-    ```bash
-    (venv_spacewalks) $ git add eva_data_analysis.py
-    (venv_spacewalks) $ git commit -m "Use descriptive variable names"
-    ```
+# https://data.nasa.gov/resource/eva.json (with modifications)
+input_file = open('./eva-data.json', 'r', encoding='ascii')
+output_file = open('./eva-data.csv', 'w', encoding='utf-8')
+graph_file = './cumulative_eva_graph.png'
+
+
+fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+
+data=[]
+
+for i in range(375):
+    line=input_file.readline()
+    print(line)
+    data.append(json.loads(line[1:-1]))
+#data.pop(0)
+## Comment out this bit if you don't want the spreadsheet
+
+csv_writer=csv.writer(output_file)
+
+time = []
+date =[]
+
+j=0
+for i in data:
+    print(data[j])
+    # and this bit
+    csv_writer.writerow(data[j].values())
+    if 'duration' in data[j].keys():
+        duration_str=data[j]['duration']
+        if duration_str == '':
+            pass
+        else:
+            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
+            duration_hours = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
+            print(duration_dt,duration_hours)
+            time.append(duration_hours)
+            if 'date' in data[j].keys():
+                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+                #date.append(data[j]['date'][0:10])
+
+            else:
+                time.pop(0)
+    j+=1
+
+duration_dt=[0]
+for i in time:
+    duration_dt.append(duration_dt[-1]+i)
+
+date,time = zip(*sorted(zip(date, time)))
+
+plt.plot(date,duration_dt[1:], 'ko-')
+plt.xlabel('Year')
+plt.ylabel('Total time spent in space to date (hours)')
+plt.tight_layout()
+plt.savefig(graph_file)
+plt.show()
+```
+c. Let's commit our latest changes:
+
+```bash
+(venv_spacewalks) $ git add eva_data_analysis.py
+(venv_spacewalks) $ git commit -m "Use descriptive variable names"
+(venv_spacewalks) $ git push origin main
+```
 
 :::
 ::::::
 
-Imagine that we've now updated all the variable names to be more descriptive, we can now go and close the issue on GitHub we created earlier.
+As we have now updated all the variable names to be more descriptive, we can now go and close the issue on GitHub we created earlier.
 To do so, we open our repository in GitHub, switch to the Issues tab, find the issue to "improve variable names" we created earlier.
 There are more automated ways to close issues based on a commit/pull request that we will learn later, for now we will click the "Close issue" button at the bottom of the discussion.
 
@@ -314,7 +358,7 @@ making them especially tricky to detect and fix. Over time, this makes the codeb
 
 :::::: challenge
 
-### Remove an unused variable
+### Remove an unused variable (2 min)
 
 Find and remove an unused variable in our code. Then, commit the updated code to the git repo.
 
@@ -338,14 +382,14 @@ graph_file = './cumulative_eva_graph.png'
 
 data=[]
 
-for i in range(374):
+for i in range(375):
     line=input_file.readline()
     print(line)
     data.append(json.loads(line[1:-1]))
 #data.pop(0)
 ## Comment out this bit if you don't want the spreadsheet
 
-w=csv.writer(output_file)
+csv_writer=csv.writer(output_file)
 
 time = []
 date =[]
@@ -354,16 +398,16 @@ j=0
 for i in data:
     print(data[j])
     # and this bit
-    w.writerow(data[j].values())
+    csv_writer.writerow(data[j].values())
     if 'duration' in data[j].keys():
-        tt=data[j]['duration']
-        if tt == '':
+        duration_str=data[j]['duration']
+        if duration_str == '':
             pass
         else:
-            t=dt.datetime.strptime(tt,'%H:%M')
-            ttt = dt.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second).total_seconds()/(60*60)
-            print(t,ttt)
-            time.append(ttt)
+            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
+            duration_hours = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
+            print(duration_dt,duration_hours)
+            time.append(duration_hours)
             if 'date' in data[j].keys():
                 date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
                 #date.append(data[j]['date'][0:10])
@@ -372,18 +416,19 @@ for i in data:
                 time.pop(0)
     j+=1
 
-t=[0]
+duration_dt=[0]
 for i in time:
-    t.append(t[-1]+i)
+    duration_dt.append(duration_dt[-1]+i)
 
 date,time = zip(*sorted(zip(date, time)))
 
-plt.plot(date,t[1:], 'ko-')
+plt.plot(date,duration_dt[1:], 'ko-')
 plt.xlabel('Year')
 plt.ylabel('Total time spent in space to date (hours)')
 plt.tight_layout()
 plt.savefig(graph_file)
 plt.show()
+
 ```
 
 Commit changes:
@@ -391,30 +436,54 @@ Commit changes:
 ```bash
 (venv_spacewalks) $ git add eva_data_analysis.py
 (venv_spacewalks) $ git commit -m "Remove unused variable fieldname"
+(venv_spacewalks) $ git push origin main
 ```
 
 :::
 ::::::
 
-## Use third-party libraries where possible
+:::::::::::::::::::::::::::::::: callout
 
-Our script currently reads the data line-by-line from the JSON data file and uses custom code to manipulate
-the data.
-Variables of interest are stored in lists but there are more suitable data structures (e.g. data frames)
-to store data in our case.
-By choosing custom code over popular and well-tested libraries, we are making our code less readable and understandable
-and more error-prone.
+[Linters](https://glosario.carpentries.org/en/#linter) (static analysis tools) can be very helpful with tasks like this.
+Linters identify unused variables and unused imports among other useful tasks for formatting and making your code readable.
 
-The main functionality of our code can be rewritten as follows using the `pandas` library to load and manipulate the 
-data in data frames.
+Some common linters for Python include PyLint, Black, Ruff and Flake8.
 
-First, we need to install this dependency into our virtual environment (which should be active at this point).
+::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::: callout
+
+IDEs can significantly help developers enhance code readability.
+They use built-in linters that automatically identify and flag issues in real-time as you write code. 
+This process improves readability in several ways:
+
+- **enforcing coding standards**: check for consistent style, formatting, and conventions, e.g. flagging inconsistent indentation, incorrect naming conventions, and excessive line length violations, which helps ensure a consistent look and feel across the entire codebase, making it easier for any developer to read and understand.
+- **syntax highlighting and error detection**: use different colors and font styles for different parts of the code (keywords, variables, comments, etc.), providing visual cues that make the code easier to parse and read. 
+For example, flagging syntax errors (e.g., missing brackets, semicolons, or misspelled keywords) with visual indicators like wavy red underlines ("squigglies"), allowing for immediate correction and preventing errors from becoming entrenched.
+- **highlighting "code smells" and inefficiencies**: beyond simple syntax, advanced IDEs and their extensions can identify "code smells" and potential inefficiencies, such as unused variables, overly complex functions, or duplicate code blocks. 
+This encourages developers to refactor the code into smaller, more meaningful functions and classes, which improves clarity and maintainability.
+- **providing contextual guidance**: many IDEs provide rich, contextual help and suggestions on how to fix an issue and why it is a problem, helping developers learn and apply best practices for writing high-quality, readable code.
+- **facilitating code navigation and refactoring**: features like intelligent code completion, symbol resolution, and automated refactoring support (e.g., renaming variables or extracting methods) allow developers to restructure code to be more efficient and readable without changing its core functionality. 
+The IDE understands the underlying structure of the code, which makes these complex operations simple and safe.
+::::::::::::::::::::::::::::::::::::::::
+
+
+## Use third-party libraries
+
+Our script currently reads the data line-by-line from the JSON data file and uses custom code to manipulate the data.
+Variables of interest are stored in lists but there are more suitable data structures (e.g. `pandas`' dataframe) to store data in our case.
+By choosing custom code over popular and well-tested libraries, we are making our code less readable and understandable and more error-prone.
+
+The main functionality of our code can be rewritten as follows using the `pandas` library to load and manipulate the data in data frames.
+
+First, we need to install this dependency into our virtual environment.
 
 ```bash
 (venv_spacewalks) $ python3 -m pip install pandas
 ```
 
-Then we will edit the code to use pandas. For the sake of time in the workshop, we will give you the updated code.
+Then we will edit the code to use `pandas`.
+For the sake of time in the workshop, we will give you the updated code.
 The code should now look like:
 
 ```python
@@ -426,12 +495,13 @@ input_file = open('./eva-data.json', 'r', encoding='ascii')
 output_file = open('./eva-data.csv', 'w', encoding='utf-8')
 graph_file = './cumulative_eva_graph.png'
 
-eva_df = pd.read_json(input_file, convert_dates=['date'])
+eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
 eva_df['eva'] = eva_df['eva'].astype(float)
-eva_df.dropna(axis=0, inplace=True)
-eva_df.sort_values('date', inplace=True)
+eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
 
-eva_df.to_csv(output_file, index=False)
+eva_df.to_csv(output_file, index=False, encoding='utf-8')
+
+eva_df.sort_values('date', inplace=True)
 
 eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
 eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
@@ -444,24 +514,21 @@ plt.show()
 
 ```
 
-Once we have replaced the  code in our Python script `eva_data_analysis.py` with the above code, we need to commit the
-changes. Remember to use an informative commit message.
-
-```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "Refactor code to use standard libraries"
-```
-
-Make sure to capture the changes to your virtual development environment too.
+Once we have replaced the  code in our Python script `eva_data_analysis.py` with the above code, we need to make sure that we capture the changes in our virtual development environment too.
 
 ```bash
 (venv_spacewalks) $ python3 -m pip freeze > requirements.txt
-(venv_spacewalks) $ git add requirements.txt
-(venv_spacewalks) $ git commit -m "Added Pandas library."
+```
+
+Now, we need to commit the changes we have made. We can add multiple files to the same commit by listing all of them. Remember to use an informative commit message.
+
+```bash
+(venv_spacewalks) $ git add eva_data_analysis.py requirements.txt
+(venv_spacewalks) $ git commit -m "Refactor code and add Pandas to venv"
 (venv_spacewalks) $ git push origin main
 ```
 
-Note, in practice we may have wanted to commit the code and the environment changes together since they are related.
+We have committed the code and the environment changes together since they are related and form one logical unit of change.
 
 ## Use comments to explain functionality
 
@@ -498,13 +565,10 @@ in Python.
 Here are a few things to keep in mind when commenting your code:
 
 - Focus on the **why** and the **how** of your code - avoid using comments to explain **what** your code does. 
-If your code is too complex for other programmers to understand, consider rewriting it for clarity rather than adding 
-comments to explain it.
-- Make sure you are not reiterating something that your code already conveys on its own. Comments should not echo your 
-code.
+If your code is too complex for other programmers to understand, consider rewriting it for clarity rather than adding comments to explain it.
+- Make sure you are not reiterating something that your code already conveys on its own. Comments should not echo your code.
 - Keep comments short and concise. Large blocks of text quickly become unreadable and difficult to maintain.
-- Comments that contradict the code are worse than no comments. Always make a priority of keeping comments up-to-date 
-when code changes.
+- Comments that contradict the code are worse than no comments. Always make a priority of keeping comments up-to-date when code changes.
 
 ### Examples of unhelpful comments
 
@@ -524,13 +588,12 @@ citytax = 1.01  # City sales tax rate is 1% through Jan. 1
 specialtax = 1.01  # Special sales tax rate is 1% through Jan. 1
 ```
 
-In this case, it might not be immediately obvious what each variable represents, so the comments offer helpful, 
-real-world context.
+In this case, it might not be immediately obvious what each variable represents, so the comments offer helpful, real-world context.
 The date in the comment also indicates when the code might need to be updated.
 
 ::: challenge
 
-### Add comments to our code
+### Add comments to our code (10 min)
 
 a. Examine `eva_data_analysis.py`.
 Add as many comments as you think is required to help yourself and others understand what that code is doing.
@@ -555,18 +618,20 @@ graph_file = './cumulative_eva_graph.png'
 print("--START--")
 print(f'Reading JSON file {input_file}')
 # Read the data from a JSON file into a Pandas dataframe
-eva_df = pd.read_json(input_file, convert_dates=['date'])
+eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
 eva_df['eva'] = eva_df['eva'].astype(float)
-# Clean the data by removing any incomplete rows and sort by date
-eva_df.dropna(axis=0, inplace=True)
-eva_df.sort_values('date', inplace=True)
+# Clean the data by removing any rows where duration is missing
+eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
 
 print(f'Saving to CSV file {output_file}')
 # Save dataframe to CSV file for later analysis
-eva_df.to_csv(output_file, index=False)
+eva_df.to_csv(output_file, index=False, encoding='utf-8')
 
-print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+# Sort dataframe by date ready to be plotted (date values are on x-axis)
+eva_df.sort_values('date', inplace=True)
+
 # Plot cumulative time spent in space over years
+print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
 eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
 eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
 plt.plot(eva_df['date'], eva_df['cumulative_time'], 'ko-')
@@ -578,11 +643,14 @@ plt.show()
 print("--END--")
 ```
 
+Note that we have also added some useful print statements, to let us know what stage the analysis is in.
+
 Commit changes:
 
 ```bash
 (venv_spacewalks) $ git add eva_data_analysis.py
 (venv_spacewalks) $ git commit -m "Add inline comments to the code"
+(venv_spacewalks) $ git push origin main
 ```
 
 :::
@@ -618,11 +686,17 @@ Looking at our code, you may notice it contains different pieces of functionalit
 3. processing/cleaning the data and preparing it for analysis 
 4. data analysis and visualising the results
 
-Let's refactor our code so that reading the data in JSON format into a dataframe (step 1.) and converting it and saving 
-to the CSV format (step 2.) are extracted into separate functions.
+Let's refactor our code so that reading the data in JSON format into a dataframe (step 1) and converting it and saving 
+to the CSV format (step 2) are extracted into separate functions.
 Let's name those functions `read_json_to_dataframe` and `write_dataframe_to_csv` respectively. 
 The main part of the script should then be simplified to invoke these new functions, while the functions themselves 
-contain the complexity of each of these two steps. We will continue to work on steps 3. and 4. above later on.
+contain the complexity of each of these two steps. We will continue to work on steps 3 and 4 above later on.
+
+:::::::::: instructor
+
+You will need to share the code below with the learners via copy-and-paste either in shared notes or chat in a virtual training. Then you can highlight and describe the changes.
+
+:::::::::::::::::::::
 
 After the initial refactoring, our code may look something like the following.
 
@@ -633,18 +707,17 @@ import pandas as pd
 def read_json_to_dataframe(input_file):
     print(f'Reading JSON file {input_file}')
     # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'])
+    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
     eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any incomplete rows and sort by date
-    eva_df.dropna(axis=0, inplace=True)
-    eva_df.sort_values('date', inplace=True)
+    # Clean the data by removing any rows where duration is missing
+    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
     return eva_df
 
 
 def write_dataframe_to_csv(df, output_file):
     print(f'Saving to CSV file {output_file}')
     # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False)
+    df.to_csv(output_file, index=False, encoding='utf-8')
 
 
 # Main code
@@ -661,8 +734,11 @@ eva_data = read_json_to_dataframe(input_file)
 # Convert and export data to CSV file
 write_dataframe_to_csv(eva_data, output_file)
 
-print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+# Sort dataframe by date ready to be plotted (date values are on x-axis)
+eva_data.sort_values('date', inplace=True)
+
 # Plot cumulative time spent in space over years
+print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
 eva_data['duration_hours'] = eva_data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
 eva_data['cumulative_time'] = eva_data['duration_hours'].cumsum()
 plt.plot(eva_data['date'], eva_data['cumulative_time'], 'ko-')
@@ -675,12 +751,84 @@ plt.show()
 print("--END--")
 ```
 
-We have chosen to create functions for reading in and writing out data files since this is a very common task within 
-research software.
-While these functions do not contain that many lines of code due to using the `pandas` in-built methods that do all the 
-complex data reading, converting and writing operations, 
-it can be useful to package these steps together into reusable functions if you need to read in or write out a lot of 
-similarly structured files and process them in the same way.
+We have chosen to create functions for reading in and writing out data files since this is a very common task within research software.
+While these functions do not contain that many lines of code due to using the `pandas` in-built methods that do all the complex data reading, converting and writing operations, it can be useful to package these steps together into reusable functions if you need to read in or write out a lot of similarly structured files and process them in the same way.
+
+We can further simplify the main part of our code by extracting the code to plot a graph into a separate function `plot_cumulative_time_in_space`.
+Let's do that as an exercise.
+
+::: challenge
+
+### Extract functionality into a function (5 min)
+
+Extract the code to plot a graph into a separate function `plot_cumulative_time_in_space(df, graph_file)`.
+The function should take the following two arguments: 
+
+1. a dataframe `df`, and 
+2. a file object or a file path string `graph_file` where to save the plot.
+
+Make sure to commit and push your changes.
+
+::: solution
+
+After extracting the code to plot a graph into a separate function, our code may look something like the following:
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def read_json_to_dataframe(input_file):
+    print(f'Reading JSON file {input_file}')
+    # Read the data from a JSON file into a Pandas dataframe
+    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
+    eva_df['eva'] = eva_df['eva'].astype(float)
+    # Clean the data by removing any rows where duration is missing
+    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
+    return eva_df
+
+
+def write_dataframe_to_csv(df, output_file):
+    print(f'Saving to CSV file {output_file}')
+    # Save dataframe to CSV file for later analysis
+    df.to_csv(output_file, index=False, encoding='utf-8')
+
+
+def plot_cumulative_time_in_space(df, graph_file):
+    print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+    df['cumulative_time'] = df['duration_hours'].cumsum()
+    plt.plot(df['date'], df['cumulative_time'], 'ko-')
+    plt.xlabel('Year')
+    plt.ylabel('Total time spent in space to date (hours)')
+    plt.tight_layout()
+    plt.savefig(graph_file)
+    plt.show()
+
+# Main code
+
+print("--START--")
+
+input_file = open('./eva-data.json', 'r', encoding='ascii')
+output_file = open('./eva-data.csv', 'w', encoding='utf-8')
+graph_file = './cumulative_eva_graph.png'
+
+# Read the data from JSON file
+eva_data = read_json_to_dataframe(input_file)
+
+# Convert and export data to CSV file
+write_dataframe_to_csv(eva_data, output_file)
+
+# Sort dataframe by date ready to be plotted (date values are on x-axis)
+eva_data.sort_values('date', inplace=True)
+
+# Plot cumulative time spent in space over years
+plot_cumulative_time_in_space(eva_data, graph_file)
+
+print("--END--")
+```
+:::
+
+:::
 
 ## Use docstrings to document functions
 
@@ -736,9 +884,7 @@ for code style.
 
 As your code grows and becomes more complex, the docstrings can form the content of a reference guide allowing 
 developers to quickly look up how to use the APIs, functions, and classes defined in your codebase.
-Hence, it is common to find tools that will automatically extract docstrings from your code and generate a 
-website where people can learn about your code without downloading/installing and reading the code files - 
-such as [MkDocs][mkdocs-org].
+Hence, it is common to find tools that will automatically extract docstrings from your code and generate a website where people can learn about your code without downloading/installing and reading the code files - such as [MkDocs][mkdocs-org].
 
 Let's write a docstring for the function `read_json_to_dataframe` we introduced in the previous exercise using the 
 [Google Style Python Docstrings Convention][google-doc-string]. 
@@ -755,29 +901,28 @@ Our `read_json_to_dataframe` function fully described by a docstring may look li
 def read_json_to_dataframe(input_file):
     """
     Read the data from a JSON file into a Pandas dataframe.
-    Clean the data by removing any incomplete rows and sort by date
+    Clean the data by removing any rows where the 'duration' value is missing.
 
     Args:
-        input_file (str): The path to the JSON file.
+        input_file (file or str): The file object or path to the JSON file.
 
     Returns:
          eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
     """
     print(f'Reading JSON file {input_file}')
     # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'])
+    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
     eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any incomplete rows and sort by date
-    eva_df.dropna(axis=0, inplace=True)
-    eva_df.sort_values('date', inplace=True)
+    # Clean the data by removing any rows where duration is missing
+    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
     return eva_df
 ```
 
 :::::: challenge
 
-### Writing docstrings
+### Writing docstrings (5 min)
 
-Write a docstring for the function `write_dataframe_to_csv` we introduced earlier.
+Write docstrings for the functions `write_dataframe_to_csv` and `plot_cumulative_time_in_space` we introduced earlier.
 
 ::: solution
 
@@ -792,14 +937,43 @@ def write_dataframe_to_csv(df, output_file):
 
     Args:
         df (pd.DataFrame): The input dataframe.
-        output_file (str): The path to the output CSV file.
+        output_file (file or str): The file object or path to the output CSV file.
 
     Returns:
         None
     """
     print(f'Saving to CSV file {output_file}')
     # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False)
+    df.to_csv(output_file, index=False, encoding='utf-8')
+```
+
+Our `plot_cumulative_time_in_space` function fully described by a docstring may look like:
+
+```python
+def plot_cumulative_time_in_space(df, graph_file):
+    """
+    Plot the cumulative time spent in space over years.
+
+    Convert the duration column from strings to number of hours
+    Calculate cumulative sum of durations
+    Generate a plot of cumulative time spent in space over years and
+    save it to the specified location
+
+    Args:
+        df (pd.DataFrame): The input dataframe.
+        graph_file (file or str): The file object or path to the output graph file.
+
+    Returns:
+        None
+    """
+    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+    df['cumulative_time'] = df['duration_hours'].cumsum()
+    plt.plot(df['date'], df['cumulative_time'], 'ko-')
+    plt.xlabel('Year')
+    plt.ylabel('Total time spent in space to date (hours)')
+    plt.tight_layout()
+    plt.savefig(graph_file)
+    plt.show()
 ```
 
 :::
@@ -812,25 +986,23 @@ Finally, our code may look something like the following:
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 def read_json_to_dataframe(input_file):
     """
     Read the data from a JSON file into a Pandas dataframe.
-    Clean the data by removing any incomplete rows and sort by date
+    Clean the data by removing any rows where the 'duration' value is missing.
 
     Args:
-        input_file (str): The path to the JSON file.
+        input_file (file or str): The file object or path to the JSON file.
 
     Returns:
          eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
     """
     print(f'Reading JSON file {input_file}')
     # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'])
+    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
     eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any incomplete rows and sort by date
-    eva_df.dropna(axis=0, inplace=True)
-    eva_df.sort_values('date', inplace=True)
+    # Clean the data by removing any rows where duration is missing
+    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
     return eva_df
 
 
@@ -840,15 +1012,40 @@ def write_dataframe_to_csv(df, output_file):
 
     Args:
         df (pd.DataFrame): The input dataframe.
-        output_file (str): The path to the output CSV file.
+        output_file (file or str): The file object or path to the output CSV file.
 
     Returns:
         None
     """
     print(f'Saving to CSV file {output_file}')
     # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False)
+    df.to_csv(output_file, index=False, encoding='utf-8')
 
+def plot_cumulative_time_in_space(df, graph_file):
+    """
+    Plot the cumulative time spent in space over years.
+
+    Convert the duration column from strings to number of hours
+    Calculate cumulative sum of durations
+    Generate a plot of cumulative time spent in space over years and
+    save it to the specified location
+
+    Args:
+        df (pd.DataFrame): The input dataframe.
+        graph_file (file or str): The file object or path to the output graph file.
+
+    Returns:
+        None
+    """
+    print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+    df['cumulative_time'] = df['duration_hours'].cumsum()
+    plt.plot(df['date'], df['cumulative_time'], 'ko-')
+    plt.xlabel('Year')
+    plt.ylabel('Total time spent in space to date (hours)')
+    plt.tight_layout()
+    plt.savefig(graph_file)
+    plt.show()
 
 # Main code
 
@@ -864,16 +1061,11 @@ eva_data = read_json_to_dataframe(input_file)
 # Convert and export data to CSV file
 write_dataframe_to_csv(eva_data, output_file)
 
-print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
+# Sort dataframe by date ready to be plotted (date values are on x-axis)
+eva_data.sort_values('date', inplace=True)
+
 # Plot cumulative time spent in space over years
-eva_data['duration_hours'] = eva_data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-eva_data['cumulative_time'] = eva_data['duration_hours'].cumsum()
-plt.plot(eva_data['date'], eva_data['cumulative_time'], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
+plot_cumulative_time_in_space(eva_data, graph_file)
 
 print("--END--")
 ```
@@ -888,10 +1080,14 @@ Do not forget to commit any uncommitted changes you may have and then push your 
 
 ## Summary
 
-Good code readability brings many benefits to software development. It makes code easier to understand, maintain, and 
-debug. This benefits collaborators and future developers as well as the original author. Readable code reduces the 
-risk of errors, speeds up onboarding of new team members, and simplifies code reviews. It also supports long-term 
-sustainability, as clear code is more adaptable and easier to extend or refactor over time.
+Good code readability brings many benefits to software development. 
+It makes code easier to understand, maintain, and debug. 
+This benefits collaborators and future developers as well as the original author. 
+Readable code reduces the risk of errors, speeds up onboarding of new team members, and simplifies code reviews. 
+It also supports long-term sustainability, as clear code is more adaptable and easier to extend or refactor over time.
+
+Integrated Development Environments (IDEs) significantly enhance code readability by using built-in static analysis tools (linters) that automatically identify and flag issues in real-time as you write code.
+This proactive approach allows developers to identify and fix many issues as they write code, rather than later in the development cycle.
 
 :::::: spoiler
 

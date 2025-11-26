@@ -52,23 +52,19 @@ If you run into problems not mentioned here, please open an [issue in the lesson
 
 If we have a look at our script, we may notice a few `import` lines such as: `import json`, `import csv`, 
 `import datetime as dt` and `import matplotlib.pyplot as plt` throughout the code.
-This means that our code depends on or requires several **external libraries**
-(also called third-party packages or **dependencies**) to function - namely `json`, `csv`, `datetime` and `matplotlib`.
+This means that our code depends on or requires several **libraries** to function - namely `json`, `csv`, `datetime` and `matplotlib`.
 
-Python applications often use external libraries that do not come as part of the standard Python distribution.
+`json`, `csv`, `datetime` are **standard Python libraries** - this means that they come included in a Python distribution and they will be provided for you to import out of the box.
+If you are using some much older Python distributions for any reason, they may not include these libraries out of the box and you may still need to install them manually.
+
+Python applications also use external libraries that do not come as part of the standard Python distribution - such as `matplotlib` or `pandas`.
 This means that you will have to use a **package manager** tool to install them on your system.
-Applications will also sometimes need a
-specific version of an external library
-(e.g. because they were written to work with feature, class,
-or function that may have been updated in more recent versions),
-or a specific version of Python interpreter.
-This means that each Python application you work with may require a different setup
-and a set of dependencies so it is useful to be able to keep these configurations
-separate to avoid confusion between projects.
-The solution for this problem is to create a self-contained
-**virtual environment** per project,
-which contains a particular version of Python installation
-plus a number of additional external libraries.
+Applications will also sometimes need a specific version of an external library (e.g. because they were written to work with feature, class, or function that may have been updated in more recent versions), or a specific version of Python interpreter.
+This means that each Python application you work with may require a different setup and a set of dependencies so it is useful to be able to keep these configurations separate to avoid confusion between projects.
+
+The solution for this problem is to create a self-contained **virtual environment** per project, which contains a particular version of Python installation plus a number of additional external libraries.
+This is also the reason why we did not want to solve the `ModuleNotFoundError: No module named 'matplotlib'` (in the case you had it) from the previous episode there and then as it would mean installing `matplotlib` system-wide (i.e. globally on your machine).
+It is much better to install libraries in virtual environments only for projects that need them.
 
 ## What are virtual software environments?
 
@@ -144,12 +140,6 @@ This will create the target directory for the virtual environment.
 
 For our project let's create a virtual environment called "venv_spacewalks" from our project's root directory.
 
-Firstly, ensure you are located within the project's root directory:
-
-```bash
-$ cd /path/to/spacewalks
-```
-
 ```bash
 $ python3 -m venv venv_spacewalks
 ```
@@ -169,16 +159,11 @@ drwxr-xr-x   3 alex  staff   96  5 Oct 11:47 lib
 -rw-r--r--   1 alex  staff   90  5 Oct 11:47 pyvenv.cfg
 ```
 
-So, running the `python3 -m venv venv_spacewalks` command created the target directory called "venv_spacewalks"
-containing:
+So, running the `python3 -m venv venv_spacewalks` command created the target directory called "venv_spacewalks" containing:
 
-- `pyvenv.cfg` configuration file
-  with a home key pointing to the Python installation from which the command was run,
-- `bin` subdirectory (called `Scripts` on Windows)
-  containing a symlink of the Python interpreter binary used to create the environment
-  and the standard Python library,
-- `lib/pythonX.Y/site-packages` subdirectory (called `Lib\site-packages` on Windows)
-  to contain its own independent set of installed Python packages isolated from other projects, and
+- `pyvenv.cfg` configuration file with a home key pointing to the Python installation from which the command was run,
+- `bin` subdirectory (called `Scripts` on Windows) containing a symlink of the Python interpreter binary used to create the environment and the standard Python library,
+- `lib/pythonX.Y/site-packages` subdirectory (called `Lib\site-packages` on Windows) to contain its own independent set of installed Python packages isolated from other projects, and
 - various other configuration and supporting files and subdirectories.
 
 Once you’ve created a virtual environment, you will need to activate it.
@@ -190,22 +175,17 @@ $ source venv_spacewalks/bin/activate
 (venv_spacewalks) $
 ```
 
-On Windows, recall that we have `Scripts` directory instead of `bin`
-and activating a virtual environment is done as:
+On Windows, recall that we have `Scripts` directory instead of `bin` and activating a virtual environment is done as:
 
 ```bash
 $ source venv_spacewalks/Scripts/activate
 (venv_spacewalks) $
 ```
 
-Activating the virtual environment will change your command line’s prompt
-to show what virtual environment you are currently using
-(indicated by its name in round brackets at the start of the prompt),
-and modify the environment so that running Python will get you
-the particular version of Python configured in your virtual environment.
+Activating the virtual environment will change your command line’s prompt to show what virtual environment you are currently using (indicated by its name in round brackets at the start of the prompt).
+It will also modify the environment so that running Python will get you the particular version of Python configured in your virtual environment.
 
-You can verify you are using your virtual environment's version of Python
-by checking the path using the command `which`:
+You can verify you are using your virtual environment's version of Python by checking the path using the command `which`:
 
 ```bash
 (venv_spacewalks) $ which python3
@@ -225,23 +205,76 @@ $ python3 -m venv ./venv_spacewalks
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+### Adding a Python Interpreter in VS Code
+
+We can create a new or activate an existing virtual environment for our project to work in. 
+Since we have already created a virtual environment, we just need to activate it within a terminal environment in VS Code.
+However, each time we open a new terminal - we would need to activate the virtual environment again.
+
+It is also a good idea to check and set the Python interpreter manually in VS Code to make sure things are configured correctly for your VS Code project.
+This way, VS Code will remember which Python interpreter we want to use and invoke it in the future.
+
+You can do that as follows:
+
+- Navigate to the location of the Python interpreter binary within the virtual environment using the file browser.
+The Python binary will be located in `venv_spacewalks/bin/python3` (Linux, macOS) or `venv_spacewalks/Scripts/python3` (Windows) within our project directory.
+
+![](fig/vscode-select-interpreter.png){alt='Select python interpreter in VS Code' .image-with-shadow width="800px"}
+
+- Right-click on the binary and select "Copy Path".
+- Use the keyboard shortcut `CTRL-SHIFT-P` (Windows, Linux) or `CMD-SHIFT-P` (macOS) or to bring up the VS Code **Command Palette**, then search for `Python: Select Interpreter`.
+- Click `Enter interpreter path...`, and paste the path you copied followed by Enter.
+
+![](fig/vscode-interpreter-path.png){alt='Set interpreter path in VS Code' .image-with-shadow width="800px"}
+
+If everything is setup correctly, when you select a Python file in the file explorer in VS Code you should see the interpreter and virtual environment stated in the information bar at the bottom of VS Code.
+Any new terminal you open in VS Code from now on in will start with the activated virtual environment.
+And you can also run the code using the run (play) button from VS Code's UI - and it will use the same Python interpreter to run your code you have just configured.
+
+![](fig/vscode-interpreter-venv.png){alt='Showing interpreter status in VS Code status bar' .image-with-shadow width="800px"}
+
+:::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+### Naming Virtual Environments
+
+What is a good name to use for a virtual environment?
+
+Using `venv` or `.venv` as the name for an environment and storing it within the project's directory seems to be the standard practice - this way when you come across such a subdirectory within a software project, by convention you know it contains its virtual environment details.
+A slight downside to this is that all different virtual environments on your machine will use the same name and the current one is determined by the context of the path you are currently located in.
+Note that `.venv` is also a hidden directory and that may not be what you want to do.
+
+We used `venv_spacewalks` - this deviates a from the convention of calling them `venv` or `.venv`, but does give a clear project-specific prompt of `(venv_spacewalks)` and indicates clearly it is a virtual environment.
+
+Note that you can also set the command line prompt for the virtual environment:
+
+```bash
+python -m venv --prompt spacewalks venv
+```
+This will create a virtual environment in `venv` folder with a string "(spacewalks)" on the command line prompt.
+It gives a shorter, meaningful prompt and sticks to convention at the same time.
+
+In the future, you and your team decide what naming convention works best for you.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 When you’re done working on your project, you can exit the environment with:
 
 ```bash
 (venv_spacewalks) $ deactivate
 ```
 
-If you've just done the `deactivate`,
-ensure you reactivate the environment ready for the next part:
+If you've just done the `deactivate`, ensure you reactivate the environment ready for the next part:
 
 ```bash
 $ source venv_spacewalks/bin/activate
 (venv_spacewalks) $
 ```
 
-Note that, since our software project is being tracked by Git,
-the newly created virtual environment will show up in version control -
-we will see how to handle it using Git in one of the subsequent episodes.
+Note that, since our software project is being tracked by Git, the newly created virtual environment will show up in version control - we will see how to handle it using Git in one of the subsequent episodes.
 
 ### Installing external packages
 
@@ -250,35 +283,23 @@ We noticed earlier that our code depends on four **external packages/libraries**
 As of Python 3.5, Python comes with in-built JSON and CSV libraries - this means there is no need to install these
 additional packages (if you are using a fairly recent version of Python), but you still need to import them in any
 script that uses them.
-However, we still need to install packages `datetime` and `matplotlib` as they do not come as standard with
-Python distribution.
+However, we still need to install packages such as `matplotlib` and `pandas` as they do not come as standard with Python distribution.
 
-To install the latest version of packages `datetime` and `matplotlib` with `pip`
-you use pip's `install` command and specify the package’s name, e.g.:
+To install the latest version of `matplotlib` package with `pip` you use pip's `install` command and specify the package’s name, e.g.:
 
 ```bash
-(venv_spacewalks) $ python3 -m pip install datetime
 (venv_spacewalks) $ python3 -m pip install matplotlib
 ```
 
-or like this to install multiple packages at once for short:
+You can install multiple packages at once by listing them all at once.
 
-```bash
-(venv_spacewalks) $ python3 -m pip install datetime matplotlib
-```
+The above command has installed package `matplotlib` in our currently active `venv_spacewalks` environment and will not affect any other Python projects we may have on our machines.
 
-The above commands have installed packages `datetime` and `matplotlib` in our currently active `venv_spacewalks`
-environment and will not affect any other Python projects we may have on our machines.
+If you run the `python3 -m pip install` command on a package that is already installed, `pip` will notice this and do nothing.
 
-If you run the `python3 -m pip install` command on a package that is already installed,
-`pip` will notice this and do nothing.
+To install a specific version of a Python package give the package name followed by `==` and the version number, e.g. `python3 -m pip install matplotlib==3.5.3`.
 
-To install a specific version of a Python package
-give the package name followed by `==` and the version number,
-e.g. `python3 -m pip install matplotlib==3.5.3`.
-
-To specify a minimum version of a Python package,
-you can do `python3 -m pip install matplotlib>=3.5.1`.
+To specify a minimum version of a Python package, you can do `python3 -m pip install matplotlib>=3.5.1`.
 
 To upgrade a package to the latest version, e.g. `python3 -m pip install --upgrade matplotlib`.
 
@@ -312,37 +333,50 @@ To list all packages installed with `pip` (in your current virtual environment):
 ```output
 Package         Version
 --------------- -----------
-contourpy       1.2.1
+contourpy       1.3.3
 cycler          0.12.1
-DateTime        5.5
-fonttools       4.53.1
-kiwisolver      1.4.5
-matplotlib      3.9.2
-numpy           2.0.1
-packaging       24.1
-pillow          10.4.0
-pip             23.3.1
-pyparsing       3.1.2
+fonttools       4.60.1
+kiwisolver      1.4.9
+matplotlib      3.10.7
+numpy           2.3.5
+packaging       25.0
+pillow          12.0.0
+pip             25.2
+pyparsing       3.2.5
 python-dateutil 2.9.0.post0
-pytz            2024.1
-setuptools      69.0.2
-six             1.16.0
-zope.interface  7.0.1
+pytz            2025.2
+six             1.17.0
+tzdata          2025.2
 ```
 
 To uninstall a package installed in the virtual environment do: `python3 -m pip uninstall <package-name>`.
 You can also supply a list of packages to uninstall at the same time.
 
+
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+### Why not use `pip3 install <package-name>`?
+
+You may have seen or used the `pip3 install <package-name>` command in the past, which is shorter and perhaps more intuitive than `python3 -m pip install <package-name>`. 
+
+What is the difference?
+`python3 -m pip install` uses Python to run the Pip module that comes with the Python distribution using the Python interpreter.
+So `/usr/bin/python3.12 -m pip` means you are executing Pip for your Python interpreter located at `/usr/bin/python3.12`.
+
+`pip3 install` runs the Pip module as an executable program with the same name - it may pick up whatever `pip3` your PATH settings tell it to. 
+And it may not be for the same Python version your expect - especially if you have several Python distributions (and Pips) installed (which is very common).
+There are [edge cases](https://snarky.ca/why-you-should-use-python-m-pip/) when the two commands may produce different results, so be warned.
+
+The [official Pip documentation](https://pip.pypa.io/en/stable/user_guide/#running-pip) recommends `python3 -m pip install` and that is what we will be using too.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ### Sharing virtual environments
 
-You are collaborating on a project with a team so, naturally,
-you will want to share your environment with your collaborators
-so they can easily 'clone' your software project with all of its dependencies
-and everyone can replicate equivalent virtual environments on their machines.
+You are collaborating on a project with a team so, naturally, you will want to share your environment with your collaborators so they can easily 'clone' your software project with all of its dependencies and everyone can replicate equivalent virtual environments on their machines.
 `pip` has a handy way of exporting, saving and sharing virtual environments.
 
-To export your active environment -
-use `python3 -m pip freeze` command to produce a list of packages installed in the virtual environment.
+To export your active environment - use `python3 -m pip freeze` command to produce a list of packages installed in the virtual environment.
 A common convention is to put this list in a `requirements.txt` file in your project's root directory:
 
 ```bash
@@ -368,30 +402,36 @@ zope.interface==7.0.1
 ```
 
 The first of the above commands will create a `requirements.txt` file in your current directory.
-Yours may look a little different,
-depending on the version of the packages you have installed,
-as well as any differences in the packages that they themselves use.
+Yours may look a little different, depending on the version of the packages you have installed, as well as any differences in the packages that they themselves use.
 
-The `requirements.txt` file can then be committed to a version control system
-(we will see how to do this using Git in a moment)
-and get shipped as part of your software and shared with collaborators and/or users.
+The `requirements.txt` file can then be committed to a version control system (we will see how to do this using Git in a moment) and get shipped as part of your software and shared with collaborators and/or users.
 
-Note that you only need to share the small `requirements.txt` file with your collaborators - and not the entire
-`venv_spacewalks` directory with packages contained in your virtual environment.
-We need to tell Git to ignore that directory, so it is not tracked and shared - we do this by creating a file
-`.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
+### Ignoring files
+
+Note that you only need to share the small `requirements.txt` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
+We need to tell Git to ignore that directory, so it is not tracked and shared - we do this by creating a file `.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
 
 ```bash
 (venv_spacewalks) $ echo "venv_spacewalks/" >> .gitignore
+```
+Remember the `.DS_Store` hidden file which is also not necessary to share with our project?
+We can tell Git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
+That way it can safely reside in local projects of macOS users and can be ignored by the rest.
+
+Let's add and commit `.gitignore` to our repository (this file we do want to track and share).
+
+```bash
 (venv_spacewalks) $ git add .gitignore
-(venv_spacewalks) $ git commit -m "ignoring venv folder"
+(venv_spacewalks) $ git commit -m "Ignore venv folder and DS_Store file"
 ```
 
-Let's now put `requirements.txt` under version control and share it along with our code.
+The same method can be applied to ignore various other files that you do not want Git to track.
+
+Let's now put `requirements.txt` under version control too and share it along with our code.
 
 ```bash
 (venv_spacewalks) $ git add requirements.txt
-(venv_spacewalks) $ git commit -m "Initial commit of requirements.txt."
+(venv_spacewalks) $ git commit -m "Initial commit of requirements.txt"
 (venv_spacewalks) $ git push origin main
 ```
 
@@ -412,7 +452,7 @@ To recreate a virtual environment from `requirements.txt`, from the project root
 For people (including your future self) to be able to reproduce software environments described in this way, the listed dependencies need to remain available to download and possible to install on the user's system.
 These are reasonably safe assumptions for widely-used, actively maintained tools on commonly-used operating systems in the short- to medium-term.
 However, it becomes less likely that we will be able to recreate such environments as system architectures evolve over time and maintainers stop supporting older versions of software.
-To achieve this kind of long-term reproducibility, you will need to explore options to provide the actual environment -- with dependencies already included -- alongside your software e.g. via a [containerised environment](https://carpentries-incubator.github.io/docker-introduction/).
+To achieve this kind of long-term reproducibility, you will need to explore options to provide the actual environment -- with dependencies already included -- alongside your software, e.g. via a [containerised environment](https://carpentries-incubator.github.io/docker-introduction/).
 
 ::::::::::::::::::::::::::::::
 
@@ -505,12 +545,10 @@ Do not forget to commit any files that have been changed.
 
 ## Summary
 
-We have our code running in its own virtual environment.
+We now have our code running in its own virtual environment.
 
-Virtual development environments provide significant benefits for software development by allowing developers to isolate 
-project dependencies and configurations, preventing conflicts between projects.
-They support reproducibility, making it much easier to recreate the same setup across different machines or for other
-team members, which helps with collaboration and consistency.
+Virtual development environments provide significant benefits for software development by allowing developers to isolate project dependencies and configurations, preventing conflicts between projects.
+They support reproducibility, making it much easier to recreate the same setup across different machines or for other team members, which helps with collaboration and consistency.
 They allow us to share or deploy our environment setup easily, often as a single configuration file.
 They promote a "cleaner" way of working and avoid polluting the global system environment with project-specific tools and packages.
 

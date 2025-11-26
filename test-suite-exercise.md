@@ -17,8 +17,7 @@ After completing this episode, participants should be able to:
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-This extra episode provides additional exercises on writing tests and should be followed after the [episode 
-on code correctness](../episodes/06-code-correctness.md) and with [the starter code from the end of that episode](https://github.com/carpentries-incubator/astronaut-data-analysis-not-so-fair/blob/09-code-documentation/eva_data_analysis.py).
+This extra episode provides additional exercises on writing tests and could be followed after the [episode on code correctness](../episodes/06-code-correctness.md) and with [the starter code from the end of that episode](https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation).
 
 A member of our research team shares the following code with us to add to our existing codebase:
 
@@ -71,15 +70,10 @@ def main(input_file, output_file, graph_file):
     print("--START--")
 
     eva_data = read_json_to_dataframe(input_file)
-
     write_dataframe_to_csv(eva_data, output_file)
-
     eva_data = add_crew_size_column(eva_data)
-
     table_crew_size = summarise_categorical(eva_data, "crew_size") # new line added
-
     write_dataframe_to_csv(table_crew_size, "results/table_crew_size.csv")
-
     plot_cumulative_time_in_space(eva_data, graph_file)
 
     print("--END--")
@@ -95,10 +89,20 @@ function `assert_frame_equal` that we can use to compare two dataframes.
 ### Exercise 1 - typical inputs
 
 First, check that the function behaves as expected with typical input
-values. Fill in the gaps in the skeleton test below:
+values. Fill in the gaps in the skeleton test below,
+ensuring you also include the changes to the `import` statements at the top of the script:
 
 ```python
+import pandas as pd
 import pandas.testing as pdt
+
+from eva_data_analysis import (
+    text_to_duration,
+    calculate_crew_size,
+    summarise_categorical
+)
+
+...
 
 def test_summarise_categorical_typical():
     """
@@ -123,8 +127,6 @@ def test_summarise_categorical_typical():
 
 ::: solution
 ```python
-import pandas.testing as pdt
-
 def test_summarise_categorical():
     """
     Test that summarise_categorical correctly tabulates
@@ -151,14 +153,14 @@ def test_summarise_categorical():
 ::: challenge
 ### Exercise 2 - edge cases
 
-Now let's check that the function behaves as expected with edge cases.\
+Now let's check that the function behaves as expected with edge cases.
 Does the code behave as expected when the column of interest contains
 one or more missing values (pd.NA)? (write a new test).
 
 Fill in the gaps in the skeleton test below:
 
 ```python
-import pandas.testing as pdt
+import numpy as np
 
 def test_summarise_categorical_missvals():
     """
@@ -181,8 +183,6 @@ def test_summarise_categorical_missvals():
 
 ::: solution
 ```python
-import pandas.testing as pdt
-
 def test_summarise_categorical_missvals():
     """
     Test that summarise_categorical correctly tabulates
