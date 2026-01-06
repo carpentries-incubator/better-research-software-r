@@ -445,39 +445,50 @@ version control steps with the command line interface only.</p>
 <h3 id="03-reproducible-dev-environment-headingInstructor1">
 <a href="03-reproducible-dev-environment.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#03-reproducible-dev-environment-headingInstructor1"></a>
 </h3>
-<p>Some learners may encounter various issues when creating and managing
-virtual development environments or configuring the Python interpreter
-path, depending on their specific system setup.</p>
-<p>To assist with troubleshooting during workshops, we have compiled a
-list of common issues that instructors have observed in the past.</p>
-<ul>
-<li>learners sometimes forget to activate the virtual environment -
-instructors should remind the learners about this at the start of each
-episode and also check for this during episodes, e.g. each time a new
-command line terminal window is started.</li>
-<li>adding a Python installation to the beginning of the environment
-variable PATH, causes it to override Python from the virtual environment
-- always check for this with <code>which python3</code> and
-<code>python3 --version</code>.</li>
-<li>some learners have other environment variables set that can
-influence the Python interpreter and modules being loaded and used -
-e.g. <code>PYTHONHOME</code> (changes the location of the standard
-Python libraries), <code>PYTHONPATH</code> (augments the default search
-path for Python module files) or <code>PYTHONSTARTUP</code> (points to a
-Python script that is run before starting Python interactive mode for
-various enhancements like preloading modules, setting colors, etc.).
-Make sure they are unset before activating the environment,
-e.g. with:</li>
-</ul>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> unset PYTHONHOME PYTHONPATH PYTHONSTARTUP</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> venv ./venv_spacewalks</span></code></pre>
-</div>
+<p>Some learners may encounter issues when installing packages or trying
+to restore recorded environments. To assist with troubleshooting during
+workshops, we have compiled a list of common issues that instructors
+have observed in the past.</p>
 <p>If you run into problems not mentioned here, please open an <a href="https://github.com/carpentries-incubator/better-research-software/issues/" class="external-link">issue
 in the lesson repository</a> so we can track them and update the lesson
 material accordingly.</p>
+<div class="section level4">
+<h4 id="troubleshooting-package-installation-issues">Troubleshooting package installation issues<a class="anchor" aria-label="anchor" href="#troubleshooting-package-installation-issues"></a>
+</h4>
+<ul>
+<li><p>Try using
+<code>install.packages('some.pkg', dependencies = TRUE)</code></p></li>
+<li><p>Use <code>.libPaths()</code> and verify that it includes at least
+one folder for which the user has write permisisons. If that’s not the
+case, try setting <code>R_LIBS_USER="some/writable/path"</code> via
+either <code>Sys.setenv()</code> or through an <code>.Renviron</code>
+file.</p></li>
+<li>
+<p><a href="https://github.com/r-lib/pak" class="external-link">{pak}</a> often does a
+better job of figuring out and installing (system) dependencies:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">install.packages</span><span class="op">(</span><span class="st">'pak'</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pkg_deps_tree</span><span class="op">(</span><span class="st">'some.pkg'</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pkg_sysreqs</span><span class="op">(</span><span class="st">'some.pkg'</span><span class="op">)</span></span></code></pre>
+</div>
+<p>You can tell {renv} to use {pak} by default by setting
+<code>RENV_CONFIG_PAK_ENABLED=TRUE</code></p>
+</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="general-recommendations-on-using-renv">General recommendations on using {renv}<a class="anchor" aria-label="anchor" href="#general-recommendations-on-using-renv"></a>
+</h4>
+<ul>
+<li>Often it’s easier to start with a fresh environment rather than
+trying to fix an existing one. You can do this by deleting the
+<code>renv</code> folder and <code>renv.lock</code> file, then calling
+<code>renv::init()</code> again.</li>
+</ul>
+</div>
 <hr>
 <br></section><section id="04-code-readability"><h2 class="section-heading"><a href="04-code-readability.html">Code readability</a></h2>
 <hr class="half-width">

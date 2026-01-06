@@ -237,7 +237,7 @@
       <div class="accordion-body">
         <ul><li><a href="#software-dependencies">Software dependencies</a></li>
 <li><a href="#what-are-virtual-software-environments">What are virtual software environments?</a></li>
-<li><a href="#managing-virtual-environments">Managing virtual environments</a></li>
+<li><a href="#managing-virtual-environments-r-style">Managing virtual environments R-style</a></li>
 <li><a href="#running-the-code-and-reproducing-results">Running the code and reproducing results</a></li>
 <li><a href="#summary">Summary</a></li>
 <li><a href="#further-reading">Further reading</a></li>
@@ -359,7 +359,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reproducible software environments</h1>
-        <p>Last updated on 2025-11-26 |
+        <p>Last updated on 2026-01-06 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/03-reproducible-dev-environment.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -382,8 +382,8 @@
 <h3 class="card-title">Questions</h3>
 <ul><li>What are virtual environments in software development and why use
 them?</li>
-<li>How can we manage Python virtual coding environments and external
-(third-party) libraries on our machines?</li>
+<li>How are virtual environments implemented in R? What packages are
+required?</li>
 </ul></div>
 </div>
 </div>
@@ -391,8 +391,8 @@ them?</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Set up a Python virtual coding environment for a software project
-using <code>venv</code> and <code>pip</code>.</li>
+<ul><li>Set up the infrastructure to run R code in a self-contained
+execution environment using {renv}.</li>
 </ul></div>
 </div>
 </div>
@@ -406,8 +406,9 @@ contribute to it. We now want to start developing the code further.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
+<!-- TODO: This reference must be updated to R-version of project: #20 -->
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/03-reproducible-dev-environment" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/03-reproducible-dev-environment</a></p>
 </div>
@@ -419,110 +420,118 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
-<p>Some learners may encounter various issues when creating and managing
-virtual development environments or configuring the Python interpreter
-path, depending on their specific system setup.</p>
-<p>To assist with troubleshooting during workshops, we have compiled a
-list of common issues that instructors have observed in the past.</p>
-<ul><li>learners sometimes forget to activate the virtual environment -
-instructors should remind the learners about this at the start of each
-episode and also check for this during episodes, e.g. each time a new
-command line terminal window is started.</li>
-<li>adding a Python installation to the beginning of the environment
-variable PATH, causes it to override Python from the virtual environment
-- always check for this with <code>which python3</code> and
-<code>python3 --version</code>.</li>
-<li>some learners have other environment variables set that can
-influence the Python interpreter and modules being loaded and used -
-e.g. <code>PYTHONHOME</code> (changes the location of the standard
-Python libraries), <code>PYTHONPATH</code> (augments the default search
-path for Python module files) or <code>PYTHONSTARTUP</code> (points to a
-Python script that is run before starting Python interactive mode for
-various enhancements like preloading modules, setting colors, etc.).
-Make sure they are unset before activating the environment,
-e.g. with:</li>
-</ul><div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> unset PYTHONHOME PYTHONPATH PYTHONSTARTUP</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> venv ./venv_spacewalks</span></code></pre>
-</div>
+<p>Some learners may encounter issues when installing packages or trying
+to restore recorded environments. To assist with troubleshooting during
+workshops, we have compiled a list of common issues that instructors
+have observed in the past.</p>
 <p>If you run into problems not mentioned here, please open an <a href="https://github.com/carpentries-incubator/better-research-software/issues/" class="external-link">issue
 in the lesson repository</a> so we can track them and update the lesson
 material accordingly.</p>
+<div class="section level4">
+<h4 id="troubleshooting-package-installation-issues">Troubleshooting package installation issues<a class="anchor" aria-label="anchor" href="#troubleshooting-package-installation-issues"></a></h4>
+<ul><li><p>Try using
+<code>install.packages('some.pkg', dependencies = TRUE)</code></p></li>
+<li><p>Use <code>.libPaths()</code> and verify that it includes at least
+one folder for which the user has write permisisons. If that’s not the
+case, try setting <code>R_LIBS_USER="some/writable/path"</code> via
+either <code>Sys.setenv()</code> or through an <code>.Renviron</code>
+file.</p></li>
+<li>
+<p><a href="https://github.com/r-lib/pak" class="external-link">{pak}</a> often does a
+better job of figuring out and installing (system) dependencies:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">install.packages</span><span class="op">(</span><span class="st">'pak'</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pkg_deps_tree</span><span class="op">(</span><span class="st">'some.pkg'</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pkg_sysreqs</span><span class="op">(</span><span class="st">'some.pkg'</span><span class="op">)</span></span></code></pre>
+</div>
+<p>You can tell {renv} to use {pak} by default by setting
+<code>RENV_CONFIG_PAK_ENABLED=TRUE</code></p>
+</li>
+</ul></div>
+<div class="section level4">
+<h4 id="general-recommendations-on-using-renv">General recommendations on using {renv}<a class="anchor" aria-label="anchor" href="#general-recommendations-on-using-renv"></a></h4>
+<ul><li>Often it’s easier to start with a fresh environment rather than
+trying to fix an existing one. You can do this by deleting the
+<code>renv</code> folder and <code>renv.lock</code> file, then calling
+<code>renv::init()</code> again.</li>
+</ul></div>
 </div>
 </div>
 </div>
 </div>
 <section><h2 class="section-heading" id="software-dependencies">Software dependencies<a class="anchor" aria-label="anchor" href="#software-dependencies"></a></h2>
-<hr class="half-width"><p>If we have a look at our script, we may notice a few
-<code>import</code> lines such as: <code>import json</code>,
-<code>import csv</code>, <code>import datetime as dt</code> and
-<code>import matplotlib.pyplot as plt</code> throughout the code. This
-means that our code depends on or requires several
-<strong>libraries</strong> to function - namely <code>json</code>,
-<code>csv</code>, <code>datetime</code> and <code>matplotlib</code>.</p>
-<p><code>json</code>, <code>csv</code>, <code>datetime</code> are
-<strong>standard Python libraries</strong> - this means that they come
-included in a Python distribution and they will be provided for you to
-import out of the box. If you are using some much older Python
-distributions for any reason, they may not include these libraries out
-of the box and you may still need to install them manually.</p>
-<p>Python applications also use external libraries that do not come as
-part of the standard Python distribution - such as
-<code>matplotlib</code> or <code>pandas</code>. This means that you will
-have to use a <strong>package manager</strong> tool to install them on
-your system. Applications will also sometimes need a specific version of
-an external library (e.g. because they were written to work with
-feature, class, or function that may have been updated in more recent
-versions), or a specific version of Python interpreter. This means that
-each Python application you work with may require a different setup and
-a set of dependencies so it is useful to be able to keep these
-configurations separate to avoid confusion between projects.</p>
-<p>The solution for this problem is to create a self-contained
-<strong>virtual environment</strong> per project, which contains a
-particular version of Python installation plus a number of additional
-external libraries. This is also the reason why we did not want to solve
-the <code>ModuleNotFoundError: No module named 'matplotlib'</code> (in
-the case you had it) from the previous episode there and then as it
-would mean installing <code>matplotlib</code> system-wide (i.e. globally
-on your machine). It is much better to install libraries in virtual
-environments only for projects that need them.</p>
+<hr class="half-width"><p>If we have a look at our script, we may notice a few library calls
+such as <code><a href="https://tidyverse.tidyverse.org" class="external-link">library("tidyverse")</a></code> throughout the code.</p>
+<p>This means that our code depends on or requires several <strong>non
+base R packages.</strong> (also called third-party libraries or
+<strong>dependencies</strong>) to function - namely
+<code>read_csv()</code>, <code>hour()</code>, <code>as_date()</code> and
+<code>ggplot2</code>.</p>
+<p>R code often relies on packages that are not part of the base R
+distribution. This means you’ll need to use a package management tool
+such as <code>install.packages()</code> or a dependency manager like
+{renv} to install and manage them.</p>
+<p>Many R projects also depend on specific <em>versions</em> of external
+packages (for example, because the code was written to use a function or
+behavior that has since changed), or even a specific version of the R
+interpreter itself. As a result, each R project you work on may require
+a different setup and set of dependencies.</p>
+<p>To prevent conflicts and maintain reproducibility across projects,
+it’s helpful to keep these configurations isolated. The typical solution
+is to create a project-specific environment using tools like {renv},
+which maintains its own library of packages and records exact versions
+in a lockfile—ensuring that the project always runs with the same
+package set it was developed with.</p>
 </section><section><h2 class="section-heading" id="what-are-virtual-software-environments">What are virtual software environments?<a class="anchor" aria-label="anchor" href="#what-are-virtual-software-environments"></a></h2>
 <hr class="half-width"><p>So what exactly are virtual software environments, and why use
 them?</p>
-<p>A Python virtual environment helps us create an <strong>isolated
-working copy</strong> of a software project that uses a specific version
-of Python interpreter together with specific versions of a number of
-external libraries installed into that virtual environment. Python
-virtual environments are implemented as directories with a particular
-structure within software projects, containing links to specified
-dependencies allowing isolation from other software projects on your
-machine that may require different versions of Python or external
-libraries.</p>
-<p>It is recommended to create a separate virtual environment for each
-project. Then you do not have to worry about changes to the environment
-of the current project you are working on affecting other projects - you
-can use different Python versions and different versions of the same
-third party dependency by different projects on your machine
-independently from one another.</p>
-<p>We can visualise the use of virtual environments for different Python
-projects on the same machine as follows:</p>
-<figure><img src="../fig/virtual-env.png" alt="A single system might contain multiple virtual environments, each containing a different version of Python and the set of third-party libraries it needs (dependencies) e.g. NumPy, Pandas or Matplotlib. Each environment contains its own complete copy of the required version of each dependency." class="figure mx-auto d-block"><div class="figcaption">Diagram to depict different Python environments
-containing different packages on the same machine</div>
-</figure><p>Another big motivator for using virtual environments is that they
-make sharing your code with others much easier - as we will see shortly
-you can record your virtual environment in a special file and share it
-with your collaborators who can then recreate the same development
-environment on their machines.</p>
-<p>You do not have to worry too much about specific versions of external
-libraries that your project depends on most of the time. Virtual
-environments also enable you to always use the latest available version
-without specifying it explicitly. They also enable you to use a specific
-older version of a package for your project, should you need to.</p>
-<div id="truly-reproducible-environments-are-difficult-to-attain" class="callout">
+<p>A virtual environment is a self-contained execution context that
+isolates a program’s dependencies (libraries, configurations, and
+sometimes even interpreters) from the rest of the system. A virtual
+environment provides:</p>
+<ol style="list-style-type: decimal"><li>Isolation — Your project uses its own set of libraries without
+conflicting with global or other project dependencies.<br></li>
+<li>Reproducibility — You can recreate the same environment later (on
+another machine, by another user, or at another time).<br></li>
+<li>Portability — The environment can travel with your project, ensuring
+the code runs the same way anywhere.<br></li>
+<li>Control — You decide exactly which versions of dependencies are
+used.</li>
+</ol><p>You can think of it as a sandbox for your code’s ecosystem: the code
+inside the environment “sees” only the libraries and settings that
+belong to it.</p>
+<p>R doesn’t have Python-style “venvs” baked into the interpreter.
+Instead, isolation is done by per-project library trees plus a lockfile,
+most commonly via the {renv} package. Under the hood it’s mostly library
+path manipulation.</p>
+<p>We can still implement this concept, even if implemented differently
+than Python’s venv or Conda. This is how</p>
+<table class="table"><caption>How virtual environments get implemented in R</caption>
+<colgroup><col width="50%"><col width="50%"></colgroup><thead><tr class="header"><th>Abstract Concept</th>
+<th>R implementation</th>
+</tr></thead><tbody><tr class="odd"><td>Isolated dependency space</td>
+<td>A project-specific library path (e.g. <code>renv/library</code>)
+that overrides global <code>.libPaths()</code>
+</td>
+</tr><tr class="even"><td>Environment definition</td>
+<td>A lockfile (<code>renv.lock</code>) describing exact package version
+and sources.</td>
+</tr><tr class="odd"><td>Reproducibility</td>
+<td>Functions like <code>renv::snapshot()</code> and
+<code>renv::restore()</code> that captures and regenerates the
+environment</td>
+</tr><tr class="even"><td>Environment activation</td>
+<td>Automatically handled by an autoload script <code>.Rprofile</code>
+when the project opens</td>
+</tr><tr class="odd"><td>Interpreter scope</td>
+<td>Typically the same R executable, but you can use containerization
+(Docker, Podman, Apptainer) to isolate R binaries and OS layers.</td>
+</tr></tbody></table><div id="truly-reproducible-environments-are-difficult-to-attain" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -536,7 +545,7 @@ projects and sharing descriptions of those environments alongside the
 relevant code is a great way to make your software and analyses much
 more reproducible. However, “true” computational reproducibility is very
 difficult to achieve. For example, the tools we will use in this lesson
-only track the dependencies of our software, remaining unanware of other
+only track the dependencies of our software, remaining unaware of other
 aspects of the software’s environment such as the operating system and
 hardware of the system it is running on. These properties of the
 environment can influence the running of the software and the results it
@@ -551,225 +560,173 @@ doing nothing.</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="managing-virtual-environments">Managing virtual environments<a class="anchor" aria-label="anchor" href="#managing-virtual-environments"></a></h2>
-<hr class="half-width"><p>There are several command line tools used for managing Python virtual
-environments - we will use <code>venv</code>, available by default from
-the standard <code>Python</code> distribution since
-<code>Python 3.3</code>.</p>
-<p>Part of managing your (virtual) working environment involves
-installing, updating and removing external packages on your system. The
-Python package manager tool <code>pip</code> is most commonly used for
-this - it interacts and obtains the packages from the central repository
-called <a href="https://pypi.org/" class="external-link">Python Package Index (PyPI)</a>.</p>
-<p>So, we will use <code>venv</code> and <code>pip</code> in combination
-to help us create and share our virtual development environments.</p>
+</section><section><h2 class="section-heading" id="managing-virtual-environments-r-style">Managing virtual environments R-style<a class="anchor" aria-label="anchor" href="#managing-virtual-environments-r-style"></a></h2>
+<hr class="half-width"><p>Instantiating virtual environments in R is multi-step, multi-tool
+process. The first step is to rely on RStudio’s R Project feature, which
+begins the process of creating an isolated dependency space. In order to
+use a package in an RScript, we have to make sure the package code is
+available locally. By default, packages downloaded from the web via
+<code>install.packages("my_package")</code> are installed in a platform
+specific predefined location, e.g:</p>
+<ul><li>macOS / Linux: ~/Library/R/x.y/library or ~/R/x.y/library</li>
+<li>Windows: C:/Users/<username>/Documents/R/win-library/x.y/</username></li>
+</ul><p>The specific paths in your machine can be found by running
+<code>.libPaths()</code> in an R console. R will attempt to install to
+and load packages from these directories (in order). If you point that
+vector to a project-specific library, you have effectively created an
+“environment”.</p>
+<p>To have a <em>reproducible</em> environment, we need to be able to
+recreate the library later. We can do this by by keeping a detailed
+record (a <em>lock file</em>) of the specific package versions we
+installed.</p>
+<p>{renv} is an R package designed to take care of the complete process
+- creating a project-specific library (<code>renv::init</code>), keeping
+track of the packages installed in it (<code>renv::snapshot</code>), and
+restoring environments from a recorded lock file
+(<code>renv::restore</code>). Calling <code>renv::init()</code> captures
+packages and dependencies inside an RStudio project and lists them in a
+file called <code>renv.lock</code>. A point of information relevant to
+using <code>renv</code> effectively, after <code>renv::init()</code>,
+installing additional packages should be done with
+<code>renv::install()</code> rather than
+<code>install.packages()</code>. Doing so will update the lock file with
+the relevant package dependencies.</p>
 <div class="section level3">
 <h3 id="creating-virtual-environments">Creating virtual environments<a class="anchor" aria-label="anchor" href="#creating-virtual-environments"></a></h3>
-<p>Creating a virtual environment with <code>venv</code> is done by
-executing the following command:</p>
+<p>To create a new R virtual environment for our project, make sure that
+the {renv} package is installed and the current Rstudio project is
+active. Then run:</p>
 <div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> venv /path/to/new/virtual/environment</span></code></pre>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">init</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
-<p>where <code>/path/to/new/virtual/environment</code> is a path to a
-directory where you want to place it - conventionally within your
-software project so they are co-located. This will create the target
-directory for the virtual environment.</p>
-<p>For our project let’s create a virtual environment called
-“venv_spacewalks” from our project’s root directory.</p>
+<p>If you list the contents of the project directory, you should see
+something like:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> venv venv_spacewalks</span></code></pre>
-</div>
-<p>If you list the contents of the newly created directory
-“venv_spacewalks”, on a Mac or Linux system (slightly different on
-Windows as explained below) you should see something like:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> venv_spacewalks</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> tree <span class="at">-a</span> <span class="at">-L</span> 5</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>total 8
-drwxr-xr-x  12 alex  staff  384  5 Oct 11:47 bin
-drwxr-xr-x   2 alex  staff   64  5 Oct 11:47 include
-drwxr-xr-x   3 alex  staff   96  5 Oct 11:47 lib
--rw-r--r--   1 alex  staff   90  5 Oct 11:47 pyvenv.cfg</code></pre>
+<pre class="output" tabindex="0"><code>.
+├── .Rprofile
+├── renv
+│   ├── .gitignore
+│   ├── activate.R
+│   ├── library
+│   │   └── PLATFORM
+│   │       └── R-X.Y
+│   |           └── ARCHITECTURE
+│   └── settings.json
+└── renv.lock</code></pre>
 </div>
-<p>So, running the <code>python3 -m venv venv_spacewalks</code> command
-created the target directory called “venv_spacewalks” containing:</p>
+<p>The <code>renv::init()</code> command should have created a few files
+and directories:</p>
 <ul><li>
-<code>pyvenv.cfg</code> configuration file with a home key pointing
-to the Python installation from which the command was run,</li>
+<code>.Rprofile</code> is a file that executes when R is started in
+the project directory (e.g. when you open the RStudio project), and
+should now have a call to <code>source("renv/activate.R")</code> (see
+below)</li>
 <li>
-<code>bin</code> subdirectory (called <code>Scripts</code> on
-Windows) containing a symlink of the Python interpreter binary used to
-create the environment and the standard Python library,</li>
+<code>renv/.gitignore</code> tells Git to ignore the
+<code>library</code> subdirectory (it can get quite large, and can
+always be recreated from the lock file)</li>
 <li>
-<code>lib/pythonX.Y/site-packages</code> subdirectory (called
-<code>Lib\site-packages</code> on Windows) to contain its own
-independent set of installed Python packages isolated from other
-projects, and</li>
-<li>various other configuration and supporting files and
-subdirectories.</li>
-</ul><p>Once you’ve created a virtual environment, you will need to activate
-it.</p>
-<p>On Mac or Linux, it is done as:</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> source venv_spacewalks/bin/activate</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span></span></code></pre>
-</div>
-<p>On Windows, recall that we have <code>Scripts</code> directory
-instead of <code>bin</code> and activating a virtual environment is done
-as:</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> source venv_spacewalks/Scripts/activate</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span></span></code></pre>
-</div>
-<p>Activating the virtual environment will change your command line’s
-prompt to show what virtual environment you are currently using
-(indicated by its name in round brackets at the start of the prompt). It
-will also modify the environment so that running Python will get you the
-particular version of Python configured in your virtual environment.</p>
-<p>You can verify you are using your virtual environment’s version of
-Python by checking the path using the command <code>which</code>:</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> which python3</span></code></pre>
-</div>
-<div id="environment-variables" class="callout caution">
-<div class="callout-square">
-<i class="callout-icon" data-feather="alert-triangle"></i>
-</div>
-<span class="callout-header">Caution</span>
-<div id="environment-variables" class="callout-inner">
-<h3 class="callout-title">Environment Variables</h3>
-<div class="callout-content">
-<p>Some learners encounter problems at this stage, where system-level
-packages are still used by Python instead of the versions installed into
-the virtual environment. Previous participants solved the problem by
-unsetting the <code>PYTHONHOME</code>, <code>PYTHONPATH</code> and
-<code>PYTHONSTARTUP</code> environment variables before creating the
-virtual environment for the project:</p>
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">$</span> unset PYTHONHOME PYTHONPATH PYTHONSTARTUP</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> venv ./venv_spacewalks</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="adding-a-python-interpreter-in-vs-code" class="callout">
+<code>renv/activate.R</code> script that sets up the project to use
+the virtual environment (sets <code>.libPaths()</code> to use the
+project-specific library)</li>
+<li>
+<code>library/PLATFORM/X.Y/ARCHITECTURE</code> subdirectory with
+(hard-links to) the installed packages.</li>
+<li>
+<code>renv/settings.json</code> configuration settings for {renv}
+(see the caution box below for some important settings to consider)</li>
+<li>
+<code>renv.lock</code> lock file that records the exact package
+versions and sources for the environment</li>
+</ul><p>Note that, since our software project is being tracked by Git, most
+of these files will show up in version control - we will see how to
+handle them using Git in one of the subsequent episodes.</p>
+<div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="adding-a-python-interpreter-in-vs-code" class="callout-inner">
-<h3 class="callout-title">Adding a Python Interpreter in VS Code</h3>
+<div class="callout-inner">
 <div class="callout-content">
-<p>We can create a new or activate an existing virtual environment for
-our project to work in. Since we have already created a virtual
-environment, we just need to activate it within a terminal environment
-in VS Code. However, each time we open a new terminal - we would need to
-activate the virtual environment again.</p>
-<p>It is also a good idea to check and set the Python interpreter
-manually in VS Code to make sure things are configured correctly for
-your VS Code project. This way, VS Code will remember which Python
-interpreter we want to use and invoke it in the future.</p>
-<p>You can do that as follows:</p>
-<ul><li>Navigate to the location of the Python interpreter binary within the
-virtual environment using the file browser. The Python binary will be
-located in <code>venv_spacewalks/bin/python3</code> (Linux, macOS) or
-<code>venv_spacewalks/Scripts/python3</code> (Windows) within our
-project directory.</li>
-</ul><figure><img src="../fig/vscode-select-interpreter.png" class="image-with-shadow figure mx-auto d-block" alt="Select python interpreter in VS Code" width="800"></figure><ul><li>Right-click on the binary and select “Copy Path”.</li>
-<li>Use the keyboard shortcut <code>CTRL-SHIFT-P</code> (Windows, Linux)
-or <code>CMD-SHIFT-P</code> (macOS) or to bring up the VS Code
-<strong>Command Palette</strong>, then search for
-<code>Python: Select Interpreter</code>.</li>
-<li>Click <code>Enter interpreter path...</code>, and paste the path you
-copied followed by Enter.</li>
-</ul><figure><img src="../fig/vscode-interpreter-path.png" class="image-with-shadow figure mx-auto d-block" alt="Set interpreter path in VS Code" width="800"></figure><p>If everything is setup correctly, when you select a Python file in
-the file explorer in VS Code you should see the interpreter and virtual
-environment stated in the information bar at the bottom of VS Code. Any
-new terminal you open in VS Code from now on in will start with the
-activated virtual environment. And you can also run the code using the
-run (play) button from VS Code’s UI - and it will use the same Python
-interpreter to run your code you have just configured.</p>
-<figure><img src="../fig/vscode-interpreter-venv.png" class="image-with-shadow figure mx-auto d-block" alt="Showing interpreter status in VS Code status bar" width="800"></figure></div>
+<ol style="list-style-type: decimal"><li><p>Make sure to use <code>renv::init(bioconductor=TRUE)</code> if
+using any packges from {Bioconductor}.</p></li>
+<li><p><strong>{renv} will track, but not control, the R
+version</strong> used in the project. That means that if you open the
+project with a different R version than the one used to create it,
+{renv} will throw a warning, but still try to use the package versions
+in the lock file, which may not be compatible with the R version in
+use.</p></li>
+</ol><p>There are a few ways to handle this:</p>
+<ul><li><p>Install multiple R versions on your machine and switch between
+them as needed. In Rstudio, you can set the R version for a project via
+<code>Tools -&gt; Project Options... -&gt; General -&gt; R version</code>.
+You might also want to look at the <a href="https://github.com/r-lib/rig" class="external-link">{rig}</a> package.</p></li>
+<li><p>Specify the R version in the <code>renv.lock</code> file
+manually. Minor version variations will usually not be a problem when
+trying to restore an environment, but they will be a headache when
+working on a collaborative version-controlled project, as everyone’s
+<code>renv.lock</code> file will look slightly different. Agree-on and
+set a shared <code>"r.version": "X.Y.Z"</code> in the
+<code>renv/settings.json</code> file.</p></li>
+<li><p>If you are working on a package, or want to specify a
+hand-curated list of “looser” dependencies, you can set
+<code>"snapshot.type"="explicit"))</code>. This allows you to define
+dependencies in a <a href="https://r-pkgs.org/description.html" class="external-link"><code>DESCRIPTION</code></a>
+file, which can improve cross-platform / cross-version
+compatibility.</p></li>
+</ul></div>
 </div>
 </div>
-<div id="naming-virtual-environments" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="naming-virtual-environments" class="callout-inner">
-<h3 class="callout-title">Naming Virtual Environments</h3>
-<div class="callout-content">
-<p>What is a good name to use for a virtual environment?</p>
-<p>Using <code>venv</code> or <code>.venv</code> as the name for an
-environment and storing it within the project’s directory seems to be
-the standard practice - this way when you come across such a
-subdirectory within a software project, by convention you know it
-contains its virtual environment details. A slight downside to this is
-that all different virtual environments on your machine will use the
-same name and the current one is determined by the context of the path
-you are currently located in. Note that <code>.venv</code> is also a
-hidden directory and that may not be what you want to do.</p>
-<p>We used <code>venv_spacewalks</code> - this deviates a from the
-convention of calling them <code>venv</code> or <code>.venv</code>, but
-does give a clear project-specific prompt of
-<code>(venv_spacewalks)</code> and indicates clearly it is a virtual
-environment.</p>
-<p>Note that you can also set the command line prompt for the virtual
-environment:</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv <span class="at">--prompt</span> spacewalks venv</span></code></pre>
-</div>
-<p>This will create a virtual environment in <code>venv</code> folder
-with a string “(spacewalks)” on the command line prompt. It gives a
-shorter, meaningful prompt and sticks to convention at the same
-time.</p>
-<p>In the future, you and your team decide what naming convention works
-best for you.</p>
-</div>
-</div>
-</div>
-<p>When you’re done working on your project, you can exit the
-environment with:</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> deactivate</span></code></pre>
-</div>
-<p>If you’ve just done the <code>deactivate</code>, ensure you
-reactivate the environment ready for the next part:</p>
-<div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">$</span> source venv_spacewalks/bin/activate</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span></span></code></pre>
-</div>
-<p>Note that, since our software project is being tracked by Git, the
-newly created virtual environment will show up in version control - we
-will see how to handle it using Git in one of the subsequent
-episodes.</p>
 </div>
 <div class="section level3">
-<h3 id="installing-external-packages">Installing external packages<a class="anchor" aria-label="anchor" href="#installing-external-packages"></a></h3>
+<h3 id="activating-and-deactivating-virtual-environments">Activating and deactivating virtual environments<a class="anchor" aria-label="anchor" href="#activating-and-deactivating-virtual-environments"></a></h3>
+<p>You will have to restart the R session (in Rstudio: Session -&gt;
+Restart R) to activate the virtual environment created by {renv}. To
+verify that the environment is active, you can run:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">status</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<p>Ideally, you should see:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>No issues found -- the project is in a consistent state.</code></pre>
+</div>
+<p>If, for any reason, you want to deactivate the virtual environment
+and go back to using the global R library paths, you can run:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">deactivate</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<p>This will remove the <code>source("renv/activate.R")</code> line from
+<code>.Rprofile</code>, but leave the rest of the environment intact, so
+you can reactivate it later with <code>renv::activate()</code>. Make
+sure to restart the R session after deactivating or activating the
+environment.</p>
+</div>
+<div class="section level3">
+<h3 id="installing-new-packages">Installing new packages<a class="anchor" aria-label="anchor" href="#installing-new-packages"></a></h3>
+<p>A point of information relevant to using {renv} effectively, after
+<code>renv::init()</code>, installing additional packages should be done
+with <code>renv::install()</code> rather than
+<code>install.packages()</code>. Doing so will update the lock file with
+the relevant package dependencies.</p>
+<!-- Got this far -->
 <p>We noticed earlier that our code depends on four <strong>external
 packages/libraries</strong> - <code>json</code>, <code>csv</code>,
 <code>datetime</code> and <code>matplotlib</code>. As of Python 3.5,
@@ -782,10 +739,10 @@ as standard with Python distribution.</p>
 <p>To install the latest version of <code>matplotlib</code> package with
 <code>pip</code> you use pip’s <code>install</code> command and specify
 the package’s name, e.g.:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install matplotlib</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install matplotlib</span></code></pre>
 </div>
 <p>You can install multiple packages at once by listing them all at
 once.</p>
@@ -803,10 +760,10 @@ e.g. <code>python3 -m pip install matplotlib==3.5.3</code>.</p>
 <p>To upgrade a package to the latest version,
 e.g. <code>python3 -m pip install --upgrade matplotlib</code>.</p>
 <p>To display information about a particular installed package do:</p>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip show matplotlib</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip show matplotlib</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -826,10 +783,10 @@ Required-by:</code></pre>
 </div>
 <p>To list all packages installed with <code>pip</code> (in your current
 virtual environment):</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip list</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip list</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -898,11 +855,11 @@ sharing virtual environments.</p>
 installed in the virtual environment. A common convention is to put this
 list in a <code>requirements.txt</code> file in your project’s root
 directory:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> cat requirements.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip freeze <span class="op">&gt;</span> requirements.txt</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> cat requirements.txt</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -941,10 +898,10 @@ your virtual environment. We need to tell Git to ignore that directory,
 so it is not tracked and shared - we do this by creating a file
 <code>.gitignore</code> in the root directory of our project and adding
 a line <code>venv_spacewalks</code> to it.</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> echo <span class="st">"venv_spacewalks/"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> echo <span class="st">"venv_spacewalks/"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre>
 </div>
 <p>Remember the <code>.DS_Store</code> hidden file which is also not
 necessary to share with our project? We can tell Git to ignore it by
@@ -954,22 +911,22 @@ our project). That way it can safely reside in local projects of macOS
 users and can be ignored by the rest.</p>
 <p>Let’s add and commit <code>.gitignore</code> to our repository (this
 file we do want to track and share).</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add .gitignore</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Ignore venv folder and DS_Store file"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add .gitignore</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Ignore venv folder and DS_Store file"</span></span></code></pre>
 </div>
 <p>The same method can be applied to ignore various other files that you
 do not want Git to track.</p>
 <p>Let’s now put <code>requirements.txt</code> under version control too
 and share it along with our code.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add requirements.txt</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Initial commit of requirements.txt"</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add requirements.txt</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Initial commit of requirements.txt"</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 <p>Your collaborators or users of your software can now download your
 software’s source code and replicate the same virtual software
@@ -978,10 +935,10 @@ environment for running your code on their machines using
 packages.</p>
 <p>To recreate a virtual environment from <code>requirements.txt</code>,
 from the project root one can do the following:</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre>
 </div>
 <div id="another-challenge-in-long-term-reproducibility" class="callout">
 <div class="callout-square">
@@ -1054,24 +1011,24 @@ you well to troubleshoot problems if and when they arise.</p>
 </section><section><h2 class="section-heading" id="running-the-code-and-reproducing-results">Running the code and reproducing results<a class="anchor" aria-label="anchor" href="#running-the-code-and-reproducing-results"></a></h2>
 <hr class="half-width"><p>We are now setup to run our code from the newly created virtual
 environment:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 eva_data_analysis.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> python3 eva_data_analysis.py</span></code></pre>
 </div>
 <p>You should get a pop up window with a graph. However, some (but not
 all) Windows users will not. You might instead see an error like:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="ex">Traceback</span> <span class="er">(</span><span class="ex">most</span> recent call last<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">"C:\Users\Toaster\Desktop\spacewalks\eva_data_analysis.py"</span>, line 30, in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    <span class="ex">w.writerow</span><span class="er">(</span><span class="va">data</span><span class="op">[</span>j<span class="op">]</span><span class="fu">.values()</span><span class="kw">)</span></span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">"C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2544.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py"</span>, line 19, in encode</span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">codecs.charmap_encode</span><span class="er">(</span><span class="ex">input,self.errors,encoding_table</span><span class="kw">)</span><span class="ex">[0]</span></span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>           <span class="ex">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="ex">UnicodeEncodeError:</span> <span class="st">'charmap'</span> codec can<span class="st">'t encode character '</span><span class="dt">\x</span>92<span class="st">' in position 101: character maps to &lt;undefined&gt;</span></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="st">(spacewalks) (spacewalks)</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">Traceback</span> <span class="er">(</span><span class="ex">most</span> recent call last<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">"C:\Users\Toaster\Desktop\spacewalks\eva_data_analysis.py"</span>, line 30, in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    <span class="ex">w.writerow</span><span class="er">(</span><span class="va">data</span><span class="op">[</span>j<span class="op">]</span><span class="fu">.values()</span><span class="kw">)</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="ex">File</span> <span class="st">"C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2544.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py"</span>, line 19, in encode</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">codecs.charmap_encode</span><span class="er">(</span><span class="ex">input,self.errors,encoding_table</span><span class="kw">)</span><span class="ex">[0]</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>           <span class="ex">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="ex">UnicodeEncodeError:</span> <span class="st">'charmap'</span> codec can<span class="st">'t encode character '</span><span class="dt">\x</span>92<span class="st">' in position 101: character maps to &lt;undefined&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="st">(spacewalks) (spacewalks)</span></span></code></pre>
 </div>
 <p>This is not what we were expecting! The problem is <em>character
 encoding</em>. ‘Standard’ Latin characters are encoded using ASCII, but
@@ -1093,21 +1050,21 @@ when reading and writing our files (and you should do this even if you
 have not had the encoding error when running the code - it is good
 practice and otherwise it may catch you the next time you run the code
 on a different platform):</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>...</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>data_f <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>data_t <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>,<span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>...</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>...</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>data_f <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'ascii'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>data_t <span class="op">=</span> <span class="bu">open</span>(<span class="st">'./eva-data.csv'</span>,<span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>...</span></code></pre>
 </div>
 <p>Remember to commit these latest changes.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Specify data encoding"</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.py</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Specify data encoding"</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 <p>Do not forget to commit any files that have been changed.</p>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
@@ -1128,7 +1085,7 @@ see how we can improve it further.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability</a></p>
@@ -1227,7 +1184,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/03-reproducible-dev-environment.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/03-reproducible-dev-environment.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-11-26",
+  "dateModified": "2026-01-06",
   "datePublished": "2026-01-06"
 }
 
