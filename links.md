@@ -15,6 +15,8 @@ any links that you are not going to use.
 [automated-assessment-fairrs]: https://zenodo.org/records/11096498
 [awesome-rs-registries]: https://github.com/NLeSC/awesome-research-software-registries
 
+[bbrs-py]: https://carpentries-incubator.github.io/better-research-software
+[bbrs-py-repo]: https://github.com/carpentries-incubator/better-research-software
 [beginner-guide-reproducible-research]: https://esajournals.onlinelibrary.wiley.com/doi/10.1002/bes2.1801
 [biotools]: https://biotools.us/
 [bitbucket]: https://bitbucket.org/
