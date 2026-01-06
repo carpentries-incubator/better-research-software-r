@@ -36,11 +36,12 @@ and start tracking changes to it with version control.
 
 In the previous episode you have unzipped `spacewalks.zip` into a directory `spacewalks` in your home directory.
 
-Within the RStudio the files contained within `spacewalks` should appear within the **`Files`** Tab located in the bottom-right quadrant by default.
+Within the RStudio the files contained within `spacewalks` should appear within the **`Files`** Tab located in the bottom-right pane by default.
 
-You can also access files and work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
+You can also access files and work within a unix shell Terminal in the terminal tab (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
+If your terminal tab does not appear to be GitBash, please refer to the [installation instructions](https://carpentries-incubator.github.io/better-research-software-r/installation-instructions.html)
 
-Within the Shell terminal, if you are not already inside the `spacewalks` directory, you can navigate into it and list its contents. The symbol **`~`** reprensents your user's home directory, and the **`-F`** flag places a forward slash **`/`** if the item listed is a directory. The **`-a`** flag will request to show all files, including hidden files with a name starting with a dot. 
+Within the terminal tab, if you are not already inside the `spacewalks` directory, you can navigate into it and list its contents. The symbol **`~`** reprensents your user's home directory, and the **`-F`** flag places a forward slash **`/`** if the item listed is a directory. The **`-a`** flag will request to show all files, including hidden files with a name starting with a dot. 
 
 ```bash
 cd ~/spacewalks
@@ -49,20 +50,20 @@ ls -laF
 
 ```output
 total 280
-drwxr-xr-x@   8 jsgro  staff     256 Oct 30 18:19 ./
-drwx------@ 727 jsgro  staff   23264 Oct 30 18:18 ../
-drwxr-xr-x    4 jsgro  staff     128 Oct 30 18:19 .Rproj.user/
-drwxr-xr-x@   4 jsgro  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
--rw-r--r--@   1 jsgro  staff  132981 Oct 14 09:58 data.json
--rw-r--r--@   1 jsgro  staff    1762 Oct 14 09:35 my code v2.R
--rw-r--r--    1 jsgro  staff     205 Oct 30 18:19 spacewalks.Rproj
+drwxr-xr-x@   8 username  staff     256 Oct 30 18:19 ./
+drwx------@ 727 username  staff   23264 Oct 30 18:18 ../
+drwxr-xr-x    4 username  staff     128 Oct 30 18:19 .Rproj.user/
+drwxr-xr-x@   4 username  staff     128 Oct 14 10:06 astronaut-data-analysis-old/
+-rw-r--r--@   1 username  staff  132981 Oct 14 09:58 data.json
+-rw-r--r--@   1 username  staff    1762 Oct 14 09:35 my code v2.R
+-rw-r--r--    1 username  staff     205 Oct 30 18:19 spacewalks.Rproj
 ```
 
-(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`.
+(Note: The **`@`** sign within the first column is only shown for macOS users. This is a special macOS code signifying that extended attributes exist, which can be seen with `attr filename`.)
 
 The directory `.Rproj.user/` was created by RStudio when the project was created in the previous section. Its presence is revealed by the `-a` option to show hidden files. 
 In some cases some other files may appear depending on your OS or other factors: 
-afile named `.DS_Store` might be seen by Mac users and can be ignore for the moment and a file named `.Rhistory` might appear. It is very possible that you do not see these files at the time.
+a file named `.DS_Store` might be seen by Mac users and can be ignored for the moment and a file named `.Rhistory` might appear as well and can be ignored for now.
 
 Over the rest of the course, we will transform a collection of these files into a well-structured software project that follows established good practices in research software engineering.
 
