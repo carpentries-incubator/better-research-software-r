@@ -38,7 +38,7 @@ In the previous episode you have unzipped `spacewalks.zip` into a directory `spa
 
 Within the RStudio the files contained within `spacewalks` should appear within the **`Files`** Tab located in the bottom-right quadrant by default.
 
-However, it is useful to access files and work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
+You can also access files and work within a shell Terminal (Windows users need to make sure that the terminal is "GitBash"; not "PowerShell" or "cmd"). 
 
 Within the Shell terminal, if you are not already inside the `spacewalks` directory, you can navigate into it and list its contents. The symbol **`~`** reprensents your user's home directory, and the **`-F`** flag places a forward slash **`/`** if the item listed is a directory. The **`-a`** flag will request to show all files, including hidden files with a name starting with a dot. 
 
