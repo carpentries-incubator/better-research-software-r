@@ -17,7 +17,7 @@ exercises: 0
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-So far we have created a local Git repository to track changes in our software project and pushed it to GitHub
+So far we have created a local git repository to track changes in our software project and pushed it to GitHub
 to enable others to see and contribute to it. We now want to start developing the code further.
 
 :::::: spoiler
@@ -89,7 +89,7 @@ A virtual environment provides:
 You can think of it as a sandbox for your code’s ecosystem: the code inside the environment “sees” only the libraries and settings that belong to it.
 
 R doesn’t have Python-style “venvs” baked into the interpreter.
-Instead, isolation is done by per-project library trees plus a lockfile, most commonly via the {renv} package.
+Instead, isolation is done by a per-project library tree plus a lockfile, most commonly via the {renv} package.
 Under the hood it’s mostly library path manipulation.
 
 We can still implement this concept, even if implemented differently than Python’s venv or Conda.
@@ -114,7 +114,7 @@ However, "true" computational reproducibility is very difficult to achieve.
 For example, the tools we will use in this lesson only track the dependencies of our software, remaining unaware of other aspects of the software's environment such as the operating system and hardware of the system it is running on.
 These properties of the environment can influence the running of the software and the results it produces and should be accounted for if a workflow is to be truly reproducible.
 
-Although there is more that we can do to maximise the reproducibility of our software/workflows, the steps described in this episode are an excellent place to start.
+Although there is more that we can do to maximize the reproducibility of our software/workflows, the steps described in this episode are an excellent place to start.
 We should not let the difficulty of attaining "perfect" reproducibility prevent us from implementing "good enough" practices that make our lives easier and are _much_ better than doing nothing.
 
 ::::::::::::::::::::::::::::::
@@ -122,6 +122,9 @@ We should not let the difficulty of attaining "perfect" reproducibility prevent 
 ## Managing virtual environments R-style
 
 Instantiating virtual environments in R is multi-step, multi-tool process.
+
+### 1. RStudio's Projects to isolate code and 
+
 The first step is to rely on RStudio's R Project feature, which begins the process of creating an isolated dependency space.
 In order to use a package in an RScript, we have to make sure the package code is available locally.
 By default, packages downloaded from the web via `install.packages("my_package")` are installed in a platform specific predefined location, e.g:
@@ -136,12 +139,12 @@ If you point that vector to a project-specific library, you have effectively cre
 To have a _reproducible_ environment, we need to be able to recreate the library later. We can do this by
 by keeping a detailed record (a _lock file_) of the specific package versions we installed.
 
-{renv} is an R package designed to take care of the complete process - creating a project-specific library (`renv::init`), keeping track of the packages installed in it (`renv::snapshot`), and restoring environments from a recorded lock file (`renv::restore`).
+### 2. `renv` to manage dependencies 
+
+{renv} is an R package designed to take care of the complete process - creating a project-specific library (`renv::init`), installing new dependencies (`renv::install`), keeping track of the packages installed in it (`renv::snapshot`), and restoring environments from a recorded lock file (`renv::restore`).
+
 Calling `renv::init()` captures packages and dependencies inside an RStudio project and lists them in a file called `renv.lock`.
-A point of information relevant to using `renv` effectively, after `renv::init()`, installing additional packages should be done with `renv::install()` rather than `install.packages()`.
-Doing so will update the lock file with the relevant package dependencies.
-
-
+To use renv effectively, once you’ve run `renv::init()`, install additional packages using `renv::install()` instead of `install.packages()`. Doing so will update the lock file with the relevant package dependencies.
 
 
 ### Creating virtual environments
@@ -175,18 +178,18 @@ $ tree -a -L 5
 The `renv::init()` command should have created a few files and directories:
 
 - `.Rprofile` is a file that executes when R is started in the project directory (e.g. when you open the RStudio project), and should now have a call to `source("renv/activate.R")` (see below)
-- `renv/.gitignore` tells Git to ignore the `library` subdirectory (it can get quite large, and can always be recreated from the lock file)
+- `renv/.gitignore` tells git to ignore the `library` subdirectory (it can get quite large, and can always be recreated from the lock file)
 - `renv/activate.R` script that sets up the project to use the virtual environment (sets `.libPaths()` to use the project-specific library)
 - `library/PLATFORM/X.Y/ARCHITECTURE` subdirectory with (hard-links to) the installed packages.
 - `renv/settings.json` configuration settings for {renv} (see the caution box below for some important settings to consider)
 - `renv.lock` lock file that records the exact package versions and sources for the environment
 
-Note that, since our software project is being tracked by Git, most of these files will show up in version control - we will see how to handle them using Git in one of the subsequent episodes.
+Note that, since our software project is being tracked by git, most of these files will show up in version control - we will see how to handle them using git in one of the subsequent episodes.
 
 
 :::::::::::::::::::::::::::::::::::::::::: callout
 
-1. Make sure to use `renv::init(bioconductor=TRUE)` if using any packges from {Bioconductor}.
+1. Make sure to use `renv::init(bioconductor=TRUE)` if using any packages from {Bioconductor}.
 
 2. **{renv} will track, but not control, the R version** used in the project. That means that if you open the project with a different R version than the one used to create it, {renv} will throw a warning, but still try to use the package versions in the lock file, which may not be compatible with the R version in use.
 
@@ -227,151 +230,29 @@ This will remove the `source("renv/activate.R")` line from `.Rprofile`, but leav
 
 ### Installing new packages
 
-A point of information relevant to using {renv} effectively, after `renv::init()`, installing additional packages should be done with `renv::install()` rather than `install.packages()`.
-Doing so will update the lock file with the relevant package dependencies.
+If you want to install a new package `my_package`, make sure this new package is tracked by `renv`. The easiest way to do so is by running 
 
-
-<!-- Got this far -->
-
-
-We noticed earlier that our code depends on four **external packages/libraries** -
-`json`, `csv`, `datetime` and `matplotlib`.
-As of Python 3.5, Python comes with in-built JSON and CSV libraries - this means there is no need to install these
-additional packages (if you are using a fairly recent version of Python), but you still need to import them in any
-script that uses them.
-However, we still need to install packages such as `matplotlib` and `pandas` as they do not come as standard with Python distribution.
-
-To install the latest version of `matplotlib` package with `pip` you use pip's `install` command and specify the package’s name, e.g.:
-
-```bash
-(venv_spacewalks) $ python3 -m pip install matplotlib
+```r
+renv::install("my_package")
 ```
 
-You can install multiple packages at once by listing them all at once.
+My can also install packages in any of the usual ways, i.e., `install.packages()` or `pak::pkg_install("ggplot2")`, but you'll have to complete an additional step to update the `lock` file enumerating packages and dependencies. A call to `renv::snapsjot()` should suffice. 
 
-The above command has installed package `matplotlib` in our currently active `venv_spacewalks` environment and will not affect any other Python projects we may have on our machines.
-
-If you run the `python3 -m pip install` command on a package that is already installed, `pip` will notice this and do nothing.
-
-To install a specific version of a Python package give the package name followed by `==` and the version number, e.g. `python3 -m pip install matplotlib==3.5.3`.
-
-To specify a minimum version of a Python package, you can do `python3 -m pip install matplotlib>=3.5.1`.
-
-To upgrade a package to the latest version, e.g. `python3 -m pip install --upgrade matplotlib`.
-
-To display information about a particular installed package do:
-
-```bash
-(venv_spacewalks) $ python3 -m pip show matplotlib
-```
-
-```output
-Name: matplotlib
-Version: 3.9.0
-Summary: Python plotting package
-Home-page:
-Author: John D. Hunter, Michael Droettboom
-Author-email: Unknown <matplotlib-users@python.org>
-License: License agreement for matplotlib versions 1.3.0 and later
-=========================================================
-...
-Location: /opt/homebrew/lib/python3.11/site-packages
-Requires: contourpy, cycler, fonttools, kiwisolver, numpy, packaging, pillow, pyparsing, python-dateutil
-Required-by:
-```
-
-To list all packages installed with `pip` (in your current virtual environment):
-
-```bash
-(venv_spacewalks) $ python3 -m pip list
-```
-
-```output
-Package         Version
---------------- -----------
-contourpy       1.3.3
-cycler          0.12.1
-fonttools       4.60.1
-kiwisolver      1.4.9
-matplotlib      3.10.7
-numpy           2.3.5
-packaging       25.0
-pillow          12.0.0
-pip             25.2
-pyparsing       3.2.5
-python-dateutil 2.9.0.post0
-pytz            2025.2
-six             1.17.0
-tzdata          2025.2
-```
-
-To uninstall a package installed in the virtual environment do: `python3 -m pip uninstall <package-name>`.
-You can also supply a list of packages to uninstall at the same time.
-
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-### Why not use `pip3 install <package-name>`?
-
-You may have seen or used the `pip3 install <package-name>` command in the past, which is shorter and perhaps more intuitive than `python3 -m pip install <package-name>`. 
-
-What is the difference?
-`python3 -m pip install` uses Python to run the Pip module that comes with the Python distribution using the Python interpreter.
-So `/usr/bin/python3.12 -m pip` means you are executing Pip for your Python interpreter located at `/usr/bin/python3.12`.
-
-`pip3 install` runs the Pip module as an executable program with the same name - it may pick up whatever `pip3` your PATH settings tell it to. 
-And it may not be for the same Python version your expect - especially if you have several Python distributions (and Pips) installed (which is very common).
-There are [edge cases](https://snarky.ca/why-you-should-use-python-m-pip/) when the two commands may produce different results, so be warned.
-
-The [official Pip documentation](https://pip.pypa.io/en/stable/user_guide/#running-pip) recommends `python3 -m pip install` and that is what we will be using too.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### Sharing virtual environments
 
-You are collaborating on a project with a team so, naturally, you will want to share your environment with your collaborators so they can easily 'clone' your software project with all of its dependencies and everyone can replicate equivalent virtual environments on their machines.
-`pip` has a handy way of exporting, saving and sharing virtual environments.
 
-To export your active environment - use `python3 -m pip freeze` command to produce a list of packages installed in the virtual environment.
-A common convention is to put this list in a `requirements.txt` file in your project's root directory:
-
-```bash
-(venv_spacewalks) $ python3 -m pip freeze > requirements.txt
-(venv_spacewalks) $ cat requirements.txt
-```
-
-```output
-contourpy==1.2.1
-cycler==0.12.1
-DateTime==5.5
-fonttools==4.53.1
-kiwisolver==1.4.5
-matplotlib==3.9.2
-numpy==2.0.1
-packaging==24.1
-pillow==10.4.0
-pyparsing==3.1.2
-python-dateutil==2.9.0.post0
-pytz==2024.1
-six==1.16.0
-zope.interface==7.0.1
-```
-
-The first of the above commands will create a `requirements.txt` file in your current directory.
-Yours may look a little different, depending on the version of the packages you have installed, as well as any differences in the packages that they themselves use.
-
-The `requirements.txt` file can then be committed to a version control system (we will see how to do this using Git in a moment) and get shipped as part of your software and shared with collaborators and/or users.
 
 ### Ignoring files
 
 Note that you only need to share the small `requirements.txt` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
-We need to tell Git to ignore that directory, so it is not tracked and shared - we do this by creating a file `.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
+We need to tell git to ignore that directory, so it is not tracked and shared - we do this by creating a file `.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
 
 ```bash
 (venv_spacewalks) $ echo "venv_spacewalks/" >> .gitignore
 ```
 Remember the `.DS_Store` hidden file which is also not necessary to share with our project?
-We can tell Git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
+We can tell git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
 That way it can safely reside in local projects of macOS users and can be ignored by the rest.
 
 Let's add and commit `.gitignore` to our repository (this file we do want to track and share).
@@ -381,7 +262,7 @@ Let's add and commit `.gitignore` to our repository (this file we do want to tra
 (venv_spacewalks) $ git commit -m "Ignore venv folder and DS_Store file"
 ```
 
-The same method can be applied to ignore various other files that you do not want Git to track.
+The same method can be applied to ignore various other files that you do not want git to track.
 
 Let's now put `requirements.txt` under version control too and share it along with our code.
 
