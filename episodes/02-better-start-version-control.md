@@ -67,12 +67,8 @@ a file named `.DS_Store` might be seen by Mac users and can be ignored for the m
 
 Over the rest of the course, we will transform a collection of these files into a well-structured software project that follows established good practices in research software engineering.
 
-The first thing you may notice that our software project contains folder `astronaut-data-analysis-old` which presumably tries to keep track of older versions of the code. There is a better way to do that using version control tool, such as Git, and we can delete this folder so it does not cause confusion:
-
-```bash
-rm -r astronaut-data-analysis-old
-```
-As a reminder, be careful with this *recursive remove* command as there is no undo possibility.
+The first thing you may notice that our software project contains folder `astronaut-data-analysis-old` which presumably tries to keep track of older versions of the code. There is a better way to do that using version control tool, such as Git, and we can delete this folder but will wait until after we set up our version control with git.
+This way we can keep that version in our history and can delete it so it isn't currently in our folder.
 
 ## Version control
 
@@ -194,7 +190,7 @@ $ ls -laF
 A new line will be visible in the output:
 
 ```output
-drwxr-xr-x    9 jsgro  staff     288 Oct 30 18:21 .git/
+drwxr-xr-x    9 username  staff     288 Oct 30 18:21 .git/
 ```
 
 We can see that its name is **`.git`** and the trailing slash confirms that it is a directory into which the Git software will write.
@@ -212,8 +208,10 @@ No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
+  
 	.Rproj.user/
-	data.json
+	astronaut-data-analysis-old/
+  data.json
 	my code v2.R
 	spacewalks.Rproj
 
@@ -222,7 +220,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 This tells us that Git has noticed two files in our directory, but unlike Dropbox or OneDrive, it does not *automatically* track them. We need to tell Git explicitly which files we want it to track.
 This is not a handicap, but rather helpful, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
-
+This is not a problem, but rather a helpful feature, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
 Before we commit this initial version, we should try to run it. This is often the first thing you might do upon receiving someone's code.
 
 There are multiple ways to run R code:
@@ -234,13 +232,16 @@ Option 1: within RStudio
 
 Option 2: from the Shell window
 
-- An R script can be run within the shell with command **`RSCRIPT`** which is part of any R installation.
+- An R script can be run within the shell with command **`Rscript`** which is part of any R installation.
 - The command is all uppercase and blank spaces in the file name have to be escaped by a backslash as shown:
 
 ```bash
-$ RSCRIPT my\ code\ v2.R 
+$ Rscript my\ code\ v2.R 
 ```
-Regardless of which option you use to run the code, the file "`my code v2.R`" will produce an error:
+Option 2: from the Shell window
+
+- An R script can be run within the shell with command **`Rscript`** plus the path to the R file we want to run. which is part of any R installation. For example:
+
 
 ```output
 Error in open.connection(con, "rb") : cannot open the connection
@@ -267,6 +268,52 @@ $ git status
 
 From this point we are going to start tracking files with Git.
 We can tell Git to track a file using `git add`. 
+
+First lets make a commit with our old analysis files and then we can delete them
+
+```bash
+git add astronaut-data-analysis-old/*
+git commit -m "adding old analysis files"
+```
+
+Then we can delete the old analysis folder.
+To delete the file on our filesystem and in the git repo at the same time we can use `git rm`
+
+```bash
+git rm -r astronaut-data-analysis-old/
+```
+
+Note: we had to use the `-r` flag to delete the whole folder.
+Be careful when deleting whole folders.
+Though we can be fairly confident in this deletion since we know it is also already version controlled with git and we could get it back if needed.
+
+Let's look at what the status of the deletion is and be sure we aren't deleting any extra files.
+```bash
+git status
+```
+
+```output
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    astronaut-data-analysis-old/code.R
+  deleted:    astronaut-data-analysis-old/Extra-vehicular_Activity__EVA__-_US_and_Russia_20240126.csv
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+  
+	.Rproj.user/
+  data.json
+	my code v2.R
+	spacewalks.Rproj
+```
+
+Now we will commit the deletion
+```bash
+git commit -m "deleted previous analysis files"
+```
+
+Next we can add our current workings scripts and data.
 We also add the project file `spacewalks.Rproj`.
 
 ```bash
@@ -563,7 +610,7 @@ git commit -m "Implement informative file names and script editing"
 The code failed because the file name paths did not match as it was hard-coded to a specific user.
 We just updated the file name paths with the hope that the code will work as . But is it?
 
-Try to run the code now as before, either with RStudio or with the `RSCRIPT` command on the shell terminal:
+Try to run the code now as before, either with RStudio or with the `Rscript` command on the shell terminal:
 
 RStudio: click the "source" button as in Option 1 above.
 
@@ -599,7 +646,7 @@ While this should work, it may be judicious to place the `library` command at th
 
 Let's edit the file again: place `library(lubridate)` one line above `date = Date()`
 
-Then run the code with either RStudio or `RSCRIPT`. The code should now run its course without error.
+Then run the code with either RStudio or `Rscript`. The code should now run its course without error.
 
 :::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::
@@ -609,7 +656,7 @@ Then run the code with either RStudio or `RSCRIPT`. The code should now run its 
 
 We can now better understand the purpose of the code which is to create a plot using the provided data. The result is both a PNG file saved in the current directory, and the display of the same plot within the Rstudio panel "Plots" tab in the botton right panel.
 
-If you ran the `RSCRIPT` command, the display is automatically converted into a PDF file called `Rplots.pdf`. In both cases the file `cumulative_eva_graph.png` is also saved. 
+If you ran the `Rscript` command, the display is automatically converted into a PDF file called `Rplots.pdf`. In both cases the file `cumulative_eva_graph.png` is also saved. 
 
 ```bash
 $ ls -aF
