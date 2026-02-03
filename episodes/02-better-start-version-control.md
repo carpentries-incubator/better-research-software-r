@@ -654,7 +654,7 @@ Then run the code with either RStudio or `Rscript`. The code should now run its 
 
 We can now better understand the purpose of the code which is to create a plot using the provided data. The result is both a PNG file saved in the current directory, and the display of the same plot within the Rstudio panel "Plots" tab in the botton right panel.
 
-If you ran the `Rscript` command, the display is automatically converted into a PDF file called `Rplots.pdf`. In both cases the file `cumulative_eva_graph.png` is also saved. 
+If you ran the `Rscript` command, the display is automatically converted into a PDF file called `Rplots.pdf` because the default plotting device is a pdf instead of the plotting viewer as above. In both cases the file `cumulative_eva_graph.png` is also saved. 
 
 ```bash
 $ ls -aF
