@@ -157,12 +157,10 @@ and the most common commands used to work with one.
 
 ::: instructor
 
-CHANGE TBD
-
-Open up VS Code, and launch a **Git Bash** terminal.
+Open up Rstudio, and open terminal tab.
 Call out how your prompt looks,
 and make sure that Windows users are not accidentally using PowerShell.
-[Refer back to the setup section on configuring VS Code if anyone needs help.](https://carpentries-incubator.github.io/better-research-software/instructor/installation-instructions.html#visual-studio-code)
+[Refer back to the setup section on configuring RStudio to use Git Bash if anyone needs help.](https://carpentries-incubator.github.io/better-research-software/instructor/installation-instructions.html)
 
 :::
 
@@ -225,12 +223,12 @@ Before we commit this initial version, we should try to run it. This is often th
 
 There are multiple ways to run R code:
 
-Option 1: within RStudio 
+Option 1: within R console
 
 - Click once on the file `my code v2.R` within the Files Tab. This will open the file in the top left quadrant.
 - Then click on the **"Source"** icon located at the top right of the opened file. Note, there are two options - "Source", which is equivalent to running `source('my code v2.R')` and "Source with Echo", which is equivalent to running the script line by line. Be aware, if you have objects in your environment, this may effect how your script runs.
 
-Option 2: from the Shell window
+Option 2: from the Terminal tab
 
 - An R script can be run within the shell with command **`Rscript`** which is part of any R installation.
 - The command is all uppercase and blank spaces in the file name have to be escaped by a backslash as shown:
