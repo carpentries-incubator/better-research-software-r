@@ -228,7 +228,7 @@ There are multiple ways to run R code:
 Option 1: within RStudio 
 
 - Click once on the file `my code v2.R` within the Files Tab. This will open the file in the top left quadrant.
-- Then click on the **"Source"** icon located at the top right of the opened file
+- Then click on the **"Source"** icon located at the top right of the opened file. Note, there are two options - "Source", which is equivalent to running `source('my code v2.R')` and "Source with Echo", which is equivalent to running the script line by line. Be aware, if you have objects in your environment, this may effect how your script runs.
 
 Option 2: from the Shell window
 
