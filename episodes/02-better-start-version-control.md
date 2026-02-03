@@ -460,7 +460,7 @@ On branch main
 nothing to commit, working tree clean
 ```
 
-This is the procedure we'll continue to follow, alterning `add` and `commit` commands and checking things with `status`.
+This is the procedure we'll continue to follow: make changes, then`add` to move the changes to staging, then `commit` to save this version of our repo, then `status` to check everything is in the state we expect.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
