@@ -241,11 +241,18 @@ My can also install packages in any of the usual ways, i.e., `install.packages()
 
 ### Sharing virtual environments
 
+Once you have a `renv.lock` file, sharing that file with a collaborator would allow said collaborator to reconstruct the package library and its dependencies. For a closer reproduction of the environment, keep in mind that `renv` does not manage the R version. 
 
+To restore the libraries captured in `renv.lock`, at some moment the person hoping to reproduce the environment should run
+
+```r
+# from inside the project
+renv::restore("path/renv.lock")
+```
 
 ### Ignoring files
 
-Note that you only need to share the small `requirements.txt` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
+Note that you only need to share the small `renv.txt. file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
 We need to tell git to ignore that directory, so it is not tracked and shared - we do this by creating a file `.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
 
 ```bash
@@ -264,23 +271,6 @@ Let's add and commit `.gitignore` to our repository (this file we do want to tra
 
 The same method can be applied to ignore various other files that you do not want git to track.
 
-Let's now put `requirements.txt` under version control too and share it along with our code.
-
-```bash
-(venv_spacewalks) $ git add requirements.txt
-(venv_spacewalks) $ git commit -m "Initial commit of requirements.txt"
-(venv_spacewalks) $ git push origin main
-```
-
-Your collaborators or users of your software can now download your software's source code and replicate the same
-virtual software environment for running your code on their machines using `requirements.txt` to install all
-the necessary depending packages.
-
-To recreate a virtual environment from `requirements.txt`, from the project root one can do the following:
-
-```bash
-(venv_spacewalks) $ python3 -m pip install -r requirements.txt
-```
 
 :::::::::::::::::::::: callout
 
@@ -301,16 +291,15 @@ As your project grows - you may need to update your environment for a variety of
 (adding a new and removing an old dependency).
 
 What you need to do in this case (apart from installing the new and removing the packages that are no longer needed
-from your virtual environment) is update the contents of the `requirements.txt` file accordingly
-by re-issuing `pip freeze` command and propagate the updated `requirements.txt` file to your collaborators
+from your virtual environment) is update the contents of the `renv.lock` file accordingly
+by rerunning `renv::snapshot()` command and share the updated `renv.lock` file to your collaborators
 via your code sharing platform.
 
 :::::::::::::::::::::: callout
 
 ### Environment management can be troublesome
 
-Software environment management is a difficult thing to get right, which is one reason why [the Python community has come up with so many different ways of doing it over the years](https://xkcd.com/1987). 
-(That webcomic is several years old at the time of writing and the Python environment management ecosystem has only become _more_ complicated since.)
+Software environment management is a difficult thing to get right, which one reason why new tools and strategies continue to evolve and replace existing ones. 
 Unfortunately, even if you try to follow good practices and keep your environments isolated it is possible -- perhaps even likely -- that you will face difficulties with installing and updating dependencies on your projects in the coming years.
 Such issues are particularly likely to appear when you upgrade your computer hardware, operating system, and/or interpreter/compiler.
 As before, this is not a reason to avoid managing your software environments altogether -- or to avoid upgrading your hardware, operating system, etc! 
@@ -321,25 +310,20 @@ Furthermore, your expertise will develop as you get more practice with managing 
 
 ## Running the code and reproducing results
 
-We are now setup to run our code from the newly created virtual environment:
+We are now setup to run our code from the newly created R project 
 
 ```bash
-(venv_spacewalks) $ python3 eva_data_analysis.py
+
+(venv_spacewalks) $ **Rscript eva_data_analysis.R**
+
 ```
 
-You should get a pop up window with a graph.
-However, some (but not all) Windows users will not.
-You might instead see an error like:
+You should get a pop up window with a graph. However, some (but not all) Windows users will not. You might instead see an error like:
 
 ```bash
-Traceback (most recent call last):
-  File "C:\Users\Toaster\Desktop\spacewalks\eva_data_analysis.py", line 30, in <module>
-    w.writerow(data[j].values())
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2544.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode character '\x92' in position 101: character maps to <undefined>
-(spacewalks) (spacewalks)
+Error in file(con, "r") : cannot open the connection
+In addition: Warning message:
+In file(con, "r") : cannot open file 'eva-data.json': No such file or directory
 ```
 
 This is not what we were expecting!
@@ -348,32 +332,33 @@ The problem is _character encoding_.
 but the expanded Unicode character set covers many more.
 In this case, the data contains Unicode characters that are represented in the ASCII input file with shortcuts (`Â` as `\u00c2` and `’` as `\u0092`).
 
-When we read the file, Python converts those into the Unicode characters.
-Then by default Windows tries to write out `eva-data.csv` using UTF-7.
+When we read the file, R converts those into the Unicode characters.
+Then by default Windows tries to write out eva-data.csv using a system-dependent default encoding (often a Windows code page such as CP1252), unless you specify otherwise.
 This saves space compared to the standard UTF-8,
-but it doesn't include all of the characters.
-It automatically converts `\u0092` into the shorter `\x92`,
-then discovers that doesn't exist in UTF-7.
+but it doesn’t include all of the characters.
+It automatically converts \u0092 into the shorter \x92,
+then discovers that doesn’t exist in the target encoding.
 
 The fact that different systems have different defaults,
 which can change or even break your code's behaviour,
 shows why it is so important to make our code's requirements explicit!
 
-We can fix this by explicitly telling Python what encoding to use when reading and writing our files 
-(and you should do this even if you have not had the encoding error when running the code - it is good practice 
+We can fix this by explicitly telling R what encoding to use when reading and writing our files
+(and you should do this even if you have not had the encoding error when running the code - it is good practice
 and otherwise it may catch you the next time you run the code on a different platform):
 
-```python
+```r
 ...
-data_f = open('./eva-data.json', 'r', encoding='ascii')
-data_t = open('./eva-data.csv','w', encoding='utf-8')
+data <- jsonlite::fromJSON("./eva-data.json", encoding = "UTF-8")
+readLines("./eva-data.json", encoding = "UTF-8")  # (alternative when you need raw text control)
+write.csv(data, "./eva-data.csv", fileEncoding = "UTF-8", row.names = FALSE)
 ...
 ```
 
 Remember to commit these latest changes.
 
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
+(venv_spacewalks) $ git add eva_data_analysis.R
 (venv_spacewalks) $ git commit -m "Specify data encoding"
 (venv_spacewalks) $ git push origin main
 ```
@@ -382,12 +367,12 @@ Do not forget to commit any files that have been changed.
 
 ## Summary
 
-We now have our code running in its own virtual environment.
+We now have our code running in its own project-local R environment (typically managed with renv).
 
-Virtual development environments provide significant benefits for software development by allowing developers to isolate project dependencies and configurations, preventing conflicts between projects.
+Project-local R environments provide significant benefits for software development by allowing developers to isolate project dependencies and configurations, preventing conflicts between projects.
 They support reproducibility, making it much easier to recreate the same setup across different machines or for other team members, which helps with collaboration and consistency.
-They allow us to share or deploy our environment setup easily, often as a single configuration file.
-They promote a "cleaner" way of working and avoid polluting the global system environment with project-specific tools and packages.
+They allow us to share or deploy our environment setup easily, often as a single configuration file (e.g., renv.lock).
+They promote a “cleaner” way of working and avoid polluting the global system environment with project-specific tools and packages (by keeping package versions scoped to the project library rather than your user/system library).
 
 In the next episode we will inspect our software in more detail and see how we can improve it further.
 
@@ -396,7 +381,7 @@ In the next episode we will inspect our software in more detail and see how we c
 ### Code state
 
 At this point, the code in your local software project's directory should be as in:
-<https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability>
+<https://github.com/carpentries-incubator/better-research-software-r/tree/04-code-readability>
 
 ::::::
 
@@ -404,16 +389,15 @@ At this point, the code in your local software project's directory should be as 
 
 We recommend the following resources for some additional reading on the topic of this episode:
 
-- [Official Python Documentation: Virtual Environments and Packages](https://docs.python.org/3/tutorial/venv.html)
+- [R renv Documentation: Introduction / Getting Started](https://rstudio.github.io/renv/)
+- [CRAN: renv package reference](https://cran.r-project.org/package=renv)
+- [Posit (RStudio) article: Reproducible Environments with renv](https://posit.co/blog/renv-project-environments/)
 
-Also check the [full reference set](learners/reference.md#litref) for the course.
 
 :::::: keypoints
 
-- Virtual environments keep Python versions and dependencies required by different projects separate.
-- A Python virtual environment is itself a directory structure.
-- You can use `venv` to create and manage Python virtual environments, and `pip` to install and manage external dependencies your code relies on.
-- By convention, you can save and export your Python virtual environment in `requirements.txt` file in your project's root
-directory, which can then be shared with collaborators/users and used to replicate your virtual environment elsewhere.
-
+- Virtual environments keep R package versions and dependencies required by different projects separate (without needing separate R installations in most workflows).
+- An R project environment is itself a project directory plus a project-local package library (folder) and a lockfile.
+- You can use renv to create and manage R project environments, and install packages with install.packages() (or renv::install()) to manage external dependencies your code relies on.
+- By convention, you can save and export your R project environment in an renv.lock file in your project’s root directory, which can then be shared with collaborators/users and used to replicate your environment elsewhere.
 ::::::
