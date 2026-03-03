@@ -596,6 +596,15 @@ Changes not staged for commit:
 ```
 (Untracked files are omitted for clarity.)
 
+Note that we modified `eva_data_analysis.R` in addition to renameing it.
+We can add those changes to the stage as well as part of this commit or commit them separately.
+In this case, we will go ahead and stage them together.
+```bash
+git add eva_data_analysis.R
+```
+
+
+
 Finally, we can commit our changes:
 
 ```bash
