@@ -613,9 +613,9 @@ git commit -m "Implement informative file names and script editing"
 
 ```output
 [main 692b680] Implement informative file names and script editing
- 2 files changed, 0 insertions(+), 0 deletions(-)
+2 files changed, 3 insertions(+), 3 deletions(-)
  rename data.json => eva-data.json (100%)
- rename my_code_v2.R => eva_data_analysis.R (100%)
+ rename my_code_v2.R => eva_data_analysis.R (91%)
 ```
 :::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::
