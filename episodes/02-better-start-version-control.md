@@ -566,9 +566,9 @@ Try to make these changes yourself.
 Firstly, let's update the file names in our R script in RStudio:
 
 ```r
-data_f_file = './eva-data.json'
-data_t_file = './eva-data.csv'
-g_file = './cumulative_eva_graph.png'
+data_f_file = 'eva-data.json'
+data_t_file = 'eva-data.csv'
+g_file = 'cumulative_eva_graph.png'
 ```
 
 Save the file after changes are implemented.
