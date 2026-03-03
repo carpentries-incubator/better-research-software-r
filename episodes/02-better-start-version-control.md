@@ -411,13 +411,12 @@ nothing added to commit but untracked files present (use "git add" to track)
 ```
 
 You may see one or more hidden files or directries (starting with a dot) that are not tracked.
-To avoid seeing the "Untracked files" message every time we'll create a special text file called `.gitignore` to list these files. RStudio might create one automatically later, in which case you can see its content with command `cat .gitignore`. But let's learn how to do this now.
+To avoid seeing the "Untracked files" message every time we'll create a special text file called `.gitignore` to list these files. RStudio automatically creates one for you when you set up the project with git from the beginning, in which case you can see its content with command `cat .gitignore`. But let's learn how to do this now.
 
-The method that does not need any special editing software is via the shell, thanks the `echo` command and the power of redirection. The first command uses a single ">" to create the file. Note that if the `.gitignore` file already was present, this command would erase the content of the original. For the same reason the second command uses two `>>` to add (i.e. append) to the file without overwriting it. But we also need to add itself to the list
+The method that does not need any special editing software is via the shell, thanks the `echo` command and the power of redirection. We can use a single ">" to create the file. Note that if the `.gitignore` file already was present, this command would erase the content of the original. For the same reason any future additions with echo need two `>>` to add (i.e. append) to the file without overwriting it.
 
 ```bash
 $ echo ".Rproj.user" > .gitignore
-$ echo ".gitignore" >> .gitignore
 ```
 
 :::::::::::: spoiler
