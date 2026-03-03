@@ -359,7 +359,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Better start with a software project</h1>
-        <p>Last updated on 2026-02-03 |
+        <p>Last updated on 2026-03-03 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/02-better-start-version-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -875,22 +875,21 @@ nothing added to commit but untracked files present (use "git add" to track)</co
 <p>You may see one or more hidden files or directries (starting with a
 dot) that are not tracked. To avoid seeing the “Untracked files” message
 every time we’ll create a special text file called
-<code>.gitignore</code> to list these files. RStudio might create one
-automatically later, in which case you can see its content with command
+<code>.gitignore</code> to list these files. RStudio automatically
+creates one for you when you set up the project with git from the
+beginning, in which case you can see its content with command
 <code>cat .gitignore</code>. But let’s learn how to do this now.</p>
 <p>The method that does not need any special editing software is via the
 shell, thanks the <code>echo</code> command and the power of
-redirection. The first command uses a single “&gt;” to create the file.
-Note that if the <code>.gitignore</code> file already was present, this
-command would erase the content of the original. For the same reason the
-second command uses two <code>&gt;&gt;</code> to add (i.e. append) to
-the file without overwriting it. But we also need to add itself to the
-list</p>
+redirection. We can use a single “&gt;” to create the file. Note that if
+the <code>.gitignore</code> file already was present, this command would
+erase the content of the original. For the same reason any future
+additions with echo need two <code>&gt;&gt;</code> to add (i.e. append)
+to the file without overwriting it.</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">".Rproj.user"</span> <span class="op">&gt;</span> .gitignore</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">".gitignore"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">".Rproj.user"</span> <span class="op">&gt;</span> .gitignore</span></code></pre>
 </div>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
@@ -1091,9 +1090,9 @@ plot(<code>cumulative_eva_graph.png</code>).</li>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_f_file</span> <span class="op">=</span> <span class="st">'./eva-data.json'</span></span>
-<span><span class="va">data_t_file</span> <span class="op">=</span> <span class="st">'./eva-data.csv'</span></span>
-<span><span class="va">g_file</span> <span class="op">=</span> <span class="st">'./cumulative_eva_graph.png'</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">data_f_file</span> <span class="op">=</span> <span class="st">'eva-data.json'</span></span>
+<span><span class="va">data_t_file</span> <span class="op">=</span> <span class="st">'eva-data.csv'</span></span>
+<span><span class="va">g_file</span> <span class="op">=</span> <span class="st">'cumulative_eva_graph.png'</span></span></code></pre>
 </div>
 <p>Save the file after changes are implemented.</p>
 <p>Next, we need to rename the files on the file system using Git and
@@ -1123,19 +1122,28 @@ Changes not staged for commit:
 	modified:   eva_data_analysis.R</code></pre>
 </div>
 <p>(Untracked files are omitted for clarity.)</p>
-<p>Finally, we can commit our changes:</p>
+<p>Note that we modified <code>eva_data_analysis.R</code> in addition to
+renameing it. We can add those changes to the stage as well as part of
+this commit or commit them separately. In this case, we will go ahead
+and stage them together.</p>
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Implement informative file names and script editing"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">git</span> add eva_data_analysis.R</span></code></pre>
+</div>
+<p>Finally, we can commit our changes:</p>
+<div class="codewrapper sourceCode" id="cb43">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Implement informative file names and script editing"</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>[main 692b680] Implement informative file names and script editing
- 2 files changed, 0 insertions(+), 0 deletions(-)
+2 files changed, 3 insertions(+), 3 deletions(-)
  rename data.json =&gt; eva-data.json (100%)
- rename my_code_v2.R =&gt; eva_data_analysis.R (100%)</code></pre>
+ rename my_code_v2.R =&gt; eva_data_analysis.R (91%)</code></pre>
 </div>
 </div>
 </div>
@@ -1151,10 +1159,10 @@ the hope that the code will work as . But is it?</p>
 <code>Rscript</code> command on the shell terminal:</p>
 <p>RStudio: click the “source” button as in Option 1 above.</p>
 <p>Shell terminal: use the command</p>
-<div class="codewrapper sourceCode" id="cb44">
+<div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a> <span class="ex">Rscript</span> eva_data_analysis.R</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a> <span class="ex">Rscript</span> eva_data_analysis.R</span></code></pre>
 </div>
 <p>In both cases there will be another error:</p>
 <div class="codewrapper">
@@ -1219,10 +1227,10 @@ automatically converted into a PDF file called <code>Rplots.pdf</code>
 because the default plotting device is a pdf instead of the plotting
 viewer as above. In both cases the file
 <code>cumulative_eva_graph.png</code> is also saved.</p>
-<div class="codewrapper sourceCode" id="cb46">
+<div class="codewrapper sourceCode" id="cb47">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-aF</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-aF</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1234,36 +1242,35 @@ viewer as above. In both cases the file
 -rw-r--r--@ 1 username  staff  132981 Oct 14 09:58 eva-data.json</code></pre>
 </div>
 <p>We can therefore save the changes with Git as before:</p>
-<div class="codewrapper sourceCode" id="cb48">
+<div class="codewrapper sourceCode" id="cb49">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="ex">$</span> git status</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">$</span> git status</span></code></pre>
 </div>
 <p>Then add the new or modified files. Based in how you ran the code you
 might not have a PDF file. If you are on a Mac the file
 <code>.DS_Store</code> may have now appeared, so add it.</p>
-<div class="codewrapper sourceCode" id="cb49">
+<div class="codewrapper sourceCode" id="cb50">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="ex">$</span>  git add eva_data_analysis.R cumulative_eva_graph.png Rplots.pdf .DS_Store</span>
-<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a><span class="kw">```</span><span class="fu">bash</span></span>
-<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a><span class="kw">```</span>bash</span>
-<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"fixed code and saving output files"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="ex">$</span>  git add eva_data_analysis.R cumulative_eva_graph.png Rplots.pdf .DS_Store</span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="kw">```</span><span class="fu">bash</span></span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a><span class="kw">```</span>bash</span>
+<span id="cb50-5"><a href="#cb50-5" tabindex="-1"></a> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"fixed code and saving output files"</span></span></code></pre>
 </div>
 <pre class="outout"><code>[main 0e65c91] fixed code and saving output files
  4 files changed, 4 insertions(+), 4 deletions(-)
  create mode 100644 .DS_Store
  create mode 100644 Rplots.pdf
  create mode 100644 cumulative_eva_graph.png</code></pre>
-<div class="codewrapper sourceCode" id="cb51">
+<div class="codewrapper sourceCode" id="cb52">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="ex">$</span> git status</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="ex">$</span> git status</span></code></pre>
 </div>
 <pre class="outout"><code>On branch main
 nothing to commit, working tree clean</code></pre>
-<p>JYS: FOR NOW I DO NOT CHANGE ANYTHING BELOW FOR GITHUB</p>
 </div>
 </section><section><h2 class="section-heading" id="interacting-with-a-remote-git-server">Interacting with a remote Git server<a class="anchor" aria-label="anchor" href="#interacting-with-a-remote-git-server"></a></h2>
 <hr class="half-width"><p>Git is distributed version control system and lets us synchronise
@@ -1317,12 +1324,12 @@ how to do that for different scenarios. Change the toggle on the right
 side from “HTTPS” to “SSH”, then look at the heading “…or push an
 existing repository from the command line”. You should see instructions
 that look like this:</p>
-<div class="codewrapper sourceCode" id="cb53">
+<div class="codewrapper sourceCode" id="cb54">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com/<span class="op">&lt;</span>YOUR_GITHUB_HANDLE<span class="op">&gt;</span>/spacewalks.git</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com/<span class="op">&lt;</span>YOUR_GITHUB_HANDLE<span class="op">&gt;</span>/spacewalks.git</span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre>
 </div>
 <p><strong>It is very important you make sure you switch from “HTTPS” to
 “SSH”.</strong> In the setup, we configured our GitHub account and our
@@ -1340,10 +1347,10 @@ in the GitHub repository, matching what you have locally on your
 machine.</li>
 </ol><p>If you were wondering about what those commands did, here is the
 explanation.</p>
-<div class="codewrapper sourceCode" id="cb54">
+<div class="codewrapper sourceCode" id="cb55">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com/<span class="op">&lt;</span>YOUR_GITHUB_HANDLE<span class="op">&gt;</span>/spacewalks.git</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com/<span class="op">&lt;</span>YOUR_GITHUB_HANDLE<span class="op">&gt;</span>/spacewalks.git</span></code></pre>
 </div>
 <p>This command tells Git to create a <code>remote</code> called
 “origin” and link it to the URL of your GitHub repository. A
@@ -1354,20 +1361,20 @@ the remote repository. It could be called anything, but “origin” is a
 common convention for Git since it shows which is considered the “source
 of truth”. This is particularly useful when many people are
 collaborating on the same repository.</p>
-<div class="codewrapper sourceCode" id="cb55">
+<div class="codewrapper sourceCode" id="cb56">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span></code></pre>
 </div>
 <p><code>git branch</code> is a command used to manage branches. We’ll
 discuss branches later on in the course. We saw this command during
 setup and earlier in this episode - it ensures the branch we are working
 on is called “main”. This will be the default branch of the project for
 everyone working on it.</p>
-<div class="codewrapper sourceCode" id="cb56">
+<div class="codewrapper sourceCode" id="cb57">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre>
 </div>
 <p>The <code>git push</code> command is used to update a remote
 repository with changes from your local repository. This command tells
@@ -1436,15 +1443,14 @@ good place to create that list and keep it together with the code.</p>
 things that could be improved with our software. Let’s add one of them
 as an issue now (we will continue to do this throughout the course -
 this is good practice).</p>
-<p>For example, we identified that variables (e.g. <code>w</code>,
-<code>t</code>, <code>tt</code>, <code>ttt</code>) should have more
-descriptive and meaningful names. To add this as an issue in GitHub, go
-to the <strong>Issues</strong> tab in your project’s GitHub page, and
-click the “New issue” green button. In the form that appears, we add a
-descriptive title for this new issue (e.g. “improve variable names”) and
-write more details about the issue (e.g. “rename variables
-<code>w</code>, <code>t</code>, <code>tt</code>, and <code>ttt</code> to
-be more descriptive”).</p>
+<p>For example, we identified that variables (e.g. <code>t</code>,
+<code>tt</code>, <code>ttt</code>) should have more descriptive and
+meaningful names. To add this as an issue in GitHub, go to the
+<strong>Issues</strong> tab in your project’s GitHub page, and click the
+“New issue” green button. In the form that appears, we add a descriptive
+title for this new issue (e.g. “improve variable names”) and write more
+details about the issue (e.g. “rename variables <code>t</code>,
+<code>tt</code>, and <code>ttt</code> to be more descriptive”).</p>
 <figure><img src="fig/github-add-issue.png" class="image-with-shadow figure mx-auto d-block" alt="Form for adding an issue on a GitHub repository showing issue title and issue description fields"><div class="figcaption"><em>Adding an issue in GitHub</em></div>
 </figure><p>Later on in the course, we will learn how to comment, reference, add
 more details and close issues.</p>
@@ -1583,7 +1589,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/02-better-start-version-control.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/02-better-start-version-control.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-02-03",
+  "dateModified": "2026-03-03",
   "datePublished": "2026-03-03"
 }
 
