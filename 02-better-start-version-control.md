@@ -411,13 +411,12 @@ nothing added to commit but untracked files present (use "git add" to track)
 ```
 
 You may see one or more hidden files or directries (starting with a dot) that are not tracked.
-To avoid seeing the "Untracked files" message every time we'll create a special text file called `.gitignore` to list these files. RStudio might create one automatically later, in which case you can see its content with command `cat .gitignore`. But let's learn how to do this now.
+To avoid seeing the "Untracked files" message every time we'll create a special text file called `.gitignore` to list these files. RStudio automatically creates one for you when you set up the project with git from the beginning, in which case you can see its content with command `cat .gitignore`. But let's learn how to do this now.
 
-The method that does not need any special editing software is via the shell, thanks the `echo` command and the power of redirection. The first command uses a single ">" to create the file. Note that if the `.gitignore` file already was present, this command would erase the content of the original. For the same reason the second command uses two `>>` to add (i.e. append) to the file without overwriting it. But we also need to add itself to the list
+The method that does not need any special editing software is via the shell, thanks the `echo` command and the power of redirection. We can use a single ">" to create the file. Note that if the `.gitignore` file already was present, this command would erase the content of the original. For the same reason any future additions with echo need two `>>` to add (i.e. append) to the file without overwriting it.
 
 ```bash
 $ echo ".Rproj.user" > .gitignore
-$ echo ".gitignore" >> .gitignore
 ```
 
 :::::::::::: spoiler
@@ -567,9 +566,9 @@ Try to make these changes yourself.
 Firstly, let's update the file names in our R script in RStudio:
 
 ```r
-data_f_file = './eva-data.json'
-data_t_file = './eva-data.csv'
-g_file = './cumulative_eva_graph.png'
+data_f_file = 'eva-data.json'
+data_t_file = 'eva-data.csv'
+g_file = 'cumulative_eva_graph.png'
 ```
 
 Save the file after changes are implemented.
@@ -597,6 +596,15 @@ Changes not staged for commit:
 ```
 (Untracked files are omitted for clarity.)
 
+Note that we modified `eva_data_analysis.R` in addition to renameing it.
+We can add those changes to the stage as well as part of this commit or commit them separately.
+In this case, we will go ahead and stage them together.
+```bash
+git add eva_data_analysis.R
+```
+
+
+
 Finally, we can commit our changes:
 
 ```bash
@@ -605,9 +613,9 @@ git commit -m "Implement informative file names and script editing"
 
 ```output
 [main 692b680] Implement informative file names and script editing
- 2 files changed, 0 insertions(+), 0 deletions(-)
+2 files changed, 3 insertions(+), 3 deletions(-)
  rename data.json => eva-data.json (100%)
- rename my_code_v2.R => eva_data_analysis.R (100%)
+ rename my_code_v2.R => eva_data_analysis.R (91%)
 ```
 :::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::
@@ -710,8 +718,6 @@ $ git status
 On branch main
 nothing to commit, working tree clean
 ```
-
-JYS: FOR NOW I DO NOT CHANGE ANYTHING BELOW FOR GITHUB
 
 ## Interacting with a remote Git server
 
@@ -854,9 +860,9 @@ The Issues tab is a good place to create that list and keep it together with the
 In one of the the previous exercises, we have identified a number of things that could be improved with our software. 
 Let's add one of them as an issue now (we will continue to do this throughout the course - this is good practice).
 
-For example, we identified that variables (e.g. `w`, `t`, `tt`, `ttt`) should have more descriptive and meaningful names.
+For example, we identified that variables (e.g. `t`, `tt`, `ttt`) should have more descriptive and meaningful names.
 To add this as an issue in GitHub, go to the **Issues** tab in your project's GitHub page, and click the "New issue" green button.
-In the form that appears, we add a descriptive title for this new issue (e.g. "improve variable names") and write more details about the issue (e.g. "rename variables `w`, `t`, `tt`, and `ttt` to be more descriptive").
+In the form that appears, we add a descriptive title for this new issue (e.g. "improve variable names") and write more details about the issue (e.g. "rename variables `t`, `tt`, and `ttt` to be more descriptive").
 
 ![*Adding an issue in GitHub*](fig/github-add-issue.png){alt="Form for adding an issue on a GitHub repository showing issue title and issue description fields" .image-with-shadow }
 
