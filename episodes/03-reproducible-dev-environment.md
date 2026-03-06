@@ -34,7 +34,7 @@ At this point, the code in your local software project's directory should be as 
 
 Some learners may encounter issues when installing packages or trying to restore recorded environments. To assist with troubleshooting during workshops, we have compiled a list of common issues that instructors have observed in the past.
 
-If you run into problems not mentioned here, please open an [issue in the lesson repository](https://github.com/carpentries-incubator/better-research-software/issues/) so we can track them and update the lesson material accordingly.
+If you run into problems not mentioned here, please open an [issue in the lesson repository](https://github.com/carpentries-incubator/better-research-software-r/issues/) so we can track them and update the lesson material accordingly.
 
 #### Troubleshooting package installation issues
 
@@ -63,7 +63,7 @@ If you run into problems not mentioned here, please open an [issue in the lesson
 
 If we have a look at our script, we may notice a few library calls such as `library("tidyverse")` throughout the code.
 
-This means that our code depends on or requires several **non base R packages.** (also called third-party libraries or **dependencies**) to function - namely `read_csv()`, `hour()`, `as_date()` and `ggplot2`.
+This means that our code depends on or requires several **non-base R packages.** (also called third-party libraries or **dependencies**) to function - namely `read_csv()`, `hour()`, `as_date()` and `ggplot2`.
 
 R code often relies on packages that are not part of the base R distribution.
 This means you’ll need to use a package management tool such as `install.packages()` or a dependency manager like {renv} to install and manage them.
@@ -93,7 +93,7 @@ Instead, isolation is done by a per-project library tree plus a lockfile, most c
 Under the hood it’s mostly library path manipulation.
 
 We can still implement this concept, even if implemented differently than Python’s venv or Conda.
-This is how
+We can do this using these abstract concepts and implementations in R.
 
 | Abstract Concept | R implementation |
 |------------------------------------|------------------------------------|
@@ -144,7 +144,7 @@ by keeping a detailed record (a _lock file_) of the specific package versions we
 {renv} is an R package designed to take care of the complete process - creating a project-specific library (`renv::init`), installing new dependencies (`renv::install`), keeping track of the packages installed in it (`renv::snapshot`), and restoring environments from a recorded lock file (`renv::restore`).
 
 Calling `renv::init()` captures packages and dependencies inside an RStudio project and lists them in a file called `renv.lock`.
-To use renv effectively, once you’ve run `renv::init()`, install additional packages using `renv::install()` instead of `install.packages()`. Doing so will update the lock file with the relevant package dependencies.
+To use `renv` effectively, once you’ve run `renv::init()`, install additional packages using `renv::install()` instead of `install.packages()`. Doing so will update the lock file with the relevant package dependencies.
 
 
 ### Creating virtual environments
@@ -180,14 +180,14 @@ The `renv::init()` command should have created a few files and directories:
 - `.Rprofile` is a file that executes when R is started in the project directory (e.g. when you open the RStudio project), and should now have a call to `source("renv/activate.R")` (see below)
 - `renv/.gitignore` tells git to ignore the `library` subdirectory (it can get quite large, and can always be recreated from the lock file)
 - `renv/activate.R` script that sets up the project to use the virtual environment (sets `.libPaths()` to use the project-specific library)
-- `library/PLATFORM/X.Y/ARCHITECTURE` subdirectory with (hard-links to) the installed packages.
+- `renv/library/PLATFORM/X.Y/ARCHITECTURE` subdirectory with (hard-links to) the installed packages.
 - `renv/settings.json` configuration settings for {renv} (see the caution box below for some important settings to consider)
 - `renv.lock` lock file that records the exact package versions and sources for the environment
 
 Note that, since our software project is being tracked by git, most of these files will show up in version control - we will see how to handle them using git in one of the subsequent episodes.
 
 
-:::::::::::::::::::::::::::::::::::::::::: callout
+:::::::::::::::::::::::::::::::::::::::::: spoiler
 
 1. Make sure to use `renv::init(bioconductor=TRUE)` if using any packages from {Bioconductor}.
 
