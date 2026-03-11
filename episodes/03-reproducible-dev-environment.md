@@ -219,13 +219,24 @@ Ideally, you should see:
 No issues found -- the project is in a consistent state.
 ```
 
+::::::::::::::::::::::: spoiler
+
 If, for any reason, you want to deactivate the virtual environment and go back to using the global R library paths, you can run:
 
 ```r
 renv::deactivate()
 ```
 
-This will remove the `source("renv/activate.R")` line from `.Rprofile`, but leave the rest of the environment intact, so you can reactivate it later with `renv::activate()`. Make sure to restart the R session after deactivating or activating the environment.
+This will remove the `source("renv/activate.R")` line from `.Rprofile`, but leave the rest of the environment intact.
+
+To reactivate we can run:
+```r
+renv::activate()
+```
+
+Make sure to restart the R session after deactivating or activating the environment.
+
+:::::::::::::::::::::::::
 
 
 ### Installing new packages
