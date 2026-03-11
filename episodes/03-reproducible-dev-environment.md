@@ -252,17 +252,17 @@ renv::restore("path/renv.lock")
 
 ### Ignoring files
 
-Note that you only need to share the small `renv.txt. file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
-We need to tell git to ignore that directory, so it is not tracked and shared - we do this by creating a file `.gitignore` in the root directory of our project and adding a line `venv_spacewalks` to it.
+Note that you only need to share the small `renv.txt` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
+We need to tell git to ignore that directory, so it is not tracked and shared - we do this by adding `venv_spacewalks` to the `.gitignore` in the root directory of our project.
 
 ```bash
 (venv_spacewalks) $ echo "venv_spacewalks/" >> .gitignore
 ```
-Remember the `.DS_Store` hidden file which is also not necessary to share with our project?
+If you are a MacOS user, remember the `.DS_Store` hidden file which is also not necessary to share with our project?
 We can tell git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
 That way it can safely reside in local projects of macOS users and can be ignored by the rest.
 
-Let's add and commit `.gitignore` to our repository (this file we do want to track and share).
+Let's add and commit our updated `.gitignore` to our repository.
 
 ```bash
 (venv_spacewalks) $ git add .gitignore
