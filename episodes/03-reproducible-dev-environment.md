@@ -261,6 +261,14 @@ We need to tell git to ignore that directory, so it is not tracked and shared - 
 If you are a MacOS user, remember the `.DS_Store` hidden file which is also not necessary to share with our project?
 We can tell git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
 That way it can safely reside in local projects of macOS users and can be ignored by the rest.
+This can be useful for Windows users as well, if they have or plan to have collaborators or users with MacOS.
+Let's add it to our `.gitignore`.
+
+```bash
+echo "**/.DS_Store" >> .gitignore 
+```
+
+
 
 Let's add and commit our updated `.gitignore` to our repository.
 
