@@ -434,16 +434,18 @@ confidence.</li>
 </ul></section><section id="03-reproducible-dev-environment"><h2 class="section-heading"><a href="03-reproducible-dev-environment.html">Reproducible software environments</a></h2>
 <hr class="half-width">
 <ul>
-<li>Virtual environments keep Python versions and dependencies required
-by different projects separate.</li>
-<li>A Python virtual environment is itself a directory structure.</li>
-<li>You can use <code>venv</code> to create and manage Python virtual
-environments, and <code>pip</code> to install and manage external
-dependencies your code relies on.</li>
-<li>By convention, you can save and export your Python virtual
-environment in <code>requirements.txt</code> file in your project’s root
-directory, which can then be shared with collaborators/users and used to
-replicate your virtual environment elsewhere.</li>
+<li>Virtual environments keep R package versions and dependencies
+required by different projects separate (without needing separate R
+installations in most workflows).</li>
+<li>An R project environment is itself a project directory plus a
+project-local package library (folder) and a lockfile.</li>
+<li>You can use renv to create and manage R project environments, and
+install packages with install.packages() (or renv::install()) to manage
+external dependencies your code relies on.</li>
+<li>By convention, you can save and export your R project environment in
+an renv.lock file in your project’s root directory, which can then be
+shared with collaborators/users and used to replicate your environment
+elsewhere.</li>
 </ul></section><section id="04-code-readability"><h2 class="section-heading"><a href="04-code-readability.html">Code readability</a></h2>
 <hr class="half-width">
 <ul>
@@ -575,8 +577,8 @@ world.</li>
   "url": "https://carpentries-incubator.github.io/better-research-software-r/key-points.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/key-points.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-03-10",
-  "datePublished": "2026-03-10"
+  "dateModified": "2026-03-12",
+  "datePublished": "2026-03-12"
 }
 
   </script><script>
