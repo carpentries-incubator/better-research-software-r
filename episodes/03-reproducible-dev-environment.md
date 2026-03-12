@@ -246,19 +246,45 @@ If you want to install a new package `my_package`, make sure this new package is
 ```r
 renv::install("my_package")
 ```
+Let's install the packages we need for this script. At this time, we need `jsonlite`, `lubridate` and `ggplot2`. 
 
-My can also install packages in any of the usual ways, i.e., `install.packages()` or `pak::pkg_install("ggplot2")`, but you'll have to complete an additional step to update the `lock` file enumerating packages and dependencies. A call to `renv::snapsjot()` should suffice. 
+```r
+renv::install("jsonlite", "lubridate", "ggplot2"), 
+```
 
+I can also install packages in any of the usual ways, i.e., `install.packages()` or `pak::pkg_install("ggplot2")`, but you'll have to complete an additional step to update the `lock` file enumerating packages and dependencies. A call to `renv::snapshot()` should suffice. 
+
+Now we can open the `renv.lock` file and see that it stores a lot of machine-readable information in plain text. However, you could also <kbd>COMMAND</kbd>+<kbd>F</kbd> (MacOS) or <kbd>CTRL</kbd>+<kbd>F</kbd> (Windows) to double check that the packages installed are now listed. 
 
 ### Sharing virtual environments
 
-Once you have a `renv.lock` file, sharing that file with a collaborator would allow said collaborator to reconstruct the package library and its dependencies. For a closer reproduction of the environment, keep in mind that `renv` does not manage the R version. 
+A collaborator can reconstruct your project libraries with just the `renv.lock` and knowing your version of R, because the version of R is not recorded in the lockfile. 
 
-To restore the libraries captured in `renv.lock`, at some moment the person hoping to reproduce the environment should run
+Let's delete the packages we just installed and then restore them using the existing `renv.lock` file.
 
 ```r
-# from inside the project
-renv::restore("path/renv.lock")
+remove.packages(c("jsonlite", "lubridate", "ggplot2"))
+```
+
+If you attempt to load these packages now, your get an error
+
+```r
+library("jsonlite)
+```
+
+```output
+Error in library(jsonlite) : there is no package called ‘jsonlite’
+```
+
+To restore the packages from the `renv.lock`, 
+```r
+renv::restore("renv.lock")
+```
+
+If you attempt to load these packages now, it will work!
+
+```r
+library("jsonlite)
 ```
 
 ### Ignoring files
