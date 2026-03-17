@@ -289,7 +289,7 @@ library("jsonlite)
 
 ### Ignoring files
 
-Note that you only need to share the small `renv.txt` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
+Note that you only need to share the small `renv.lock` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
 We need to tell git to ignore that directory, so it is not tracked and shared - we do this by adding `venv_spacewalks` to the `.gitignore` in the root directory of our project.
 
 ```bash
