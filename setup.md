@@ -8,8 +8,8 @@ To go through the course material on your own or at a workshop, you will need th
 
 - [Command line terminal (shell)](installation-instructions.html#command-line-tool) (such as **Bash**, **Zsh** or **Git Bash**)  
 - [Git version control tool](installation-instructions.html#git-version-control-tool)
-- [Python 3](installation-instructions.html#python-3-distribution)
-- [Visual Studio Code (VS Code)](installation-instructions.html#visual-studio-code) integrated development environment (IDE)
+- [R](installation-instructions.html#r)
+- [RStudio](installation-instructions.html#rstudio) integrated development environment (IDE)
 - [GitHub account](installation-instructions.html#github-account), and
 - [Spacewalks data and analysis code](installation-instructions.html#spacewalks) which we will be used for exercises in the course.
 
