@@ -359,7 +359,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reproducible software environments</h1>
-        <p>Last updated on 2026-03-17 |
+        <p>Last updated on 2026-03-25 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/03-reproducible-dev-environment.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -406,7 +406,7 @@ contribute to it. We now want to start developing the code further.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <!-- TODO: This reference must be updated to R-version of project: #20 -->
 <p>At this point, the code in your local software project’s directory
@@ -420,7 +420,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Some learners may encounter issues when installing packages or trying
 to restore recorded environments. To assist with troubleshooting during
@@ -665,7 +665,7 @@ handle them using git in one of the subsequent episodes.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li><p>Make sure to use <code>renv::init(bioconductor=TRUE)</code> if
 using any packages from {Bioconductor}.</p></li>
@@ -720,7 +720,7 @@ verify that the environment is active, you can run:</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>If, for any reason, you want to deactivate the virtual environment
 and go back to using the global R library paths, you can run:</p>
@@ -764,14 +764,21 @@ need <code>jsonlite</code>, <code>lubridate</code> and
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"jsonlite"</span>, <span class="st">"lubridate"</span>, <span class="st">"ggplot2"</span>), </span></code></pre>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"jsonlite"</span>, <span class="st">"lubridate"</span>, <span class="st">"ggplot2"</span><span class="op">)</span></span></code></pre>
 </div>
-<p>I can also install packages in any of the usual ways, i.e.,
+<p>We can also install packages in any of the usual ways, i.e.,
 <code>install.packages()</code> or
-<code>pak::pkg_install("ggplot2")</code>, but you’ll have to complete an
-additional step to update the <code>lock</code> file enumerating
-packages and dependencies. A call to <code>renv::snapshot()</code>
-should suffice.</p>
+<code>pak::pkg_install("ggplot2")</code> and <code>renv</code> will
+intercept and install it in the environment. Then we need to run the
+<code>snapshot()</code> function to update the <code>renv.lock</code>
+file with all the packages installed.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">snapshot</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
 <p>Now we can open the <code>renv.lock</code> file and see that it
 stores a lot of machine-readable information in plain text. However, you
 could also <kbd>COMMAND</kbd>+<kbd>F</kbd> (MacOS) or
@@ -785,17 +792,32 @@ installed are now listed.</p>
 version of R is not recorded in the lockfile.</p>
 <p>Let’s delete the packages we just installed and then restore them
 using the existing <code>renv.lock</code> file.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remove.packages</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"jsonlite"</span>, <span class="st">"lubridate"</span>, <span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <p>If you attempt to load these packages now, your get an error</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"jsonlite)</span></span></code></pre>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">library</span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span></span></code></pre>
+</div>
+<div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
+  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div class="accordion-body">
+<p>If the call to load <code>jsonlite</code> succeeds they might need to
+restart the R session because they loaded it previously and it is
+cached.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -803,32 +825,31 @@ using the existing <code>renv.lock</code> file.</p>
 <pre class="output" tabindex="0"><code>Error in library(jsonlite) : there is no package called ‘jsonlite’</code></pre>
 </div>
 <p>To restore the packages from the <code>renv.lock</code>,</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">restore</span><span class="op">(</span><span class="st">"renv.lock"</span><span class="op">)</span></span></code></pre>
-</div>
-<p>If you attempt to load these packages now, it will work!</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"jsonlite)</span></span></code></pre>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">restore</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<p>If you attempt to load these packages now, it will work!</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"jsonlite)</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="ignoring-files">Ignoring files<a class="anchor" aria-label="anchor" href="#ignoring-files"></a></h3>
 <p>Note that you only need to share the small <code>renv.lock</code>
-file with your collaborators - and not the entire
-<code>venv_spacewalks</code> directory with packages contained in your
-virtual environment. We need to tell git to ignore that directory, so it
-is not tracked and shared - we do this by adding
-<code>venv_spacewalks</code> to the <code>.gitignore</code> in the root
-directory of our project.</p>
-<div class="codewrapper sourceCode" id="cb16">
+file with your collaborators - and not the entire <code>renv</code>
+directory with packages contained in your virtual environment. We need
+to tell git to ignore that directory, so it is not tracked and shared -
+we do this by adding <code>renv</code> to the <code>.gitignore</code> in
+the root directory of our project.</p>
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> echo <span class="st">"venv_spacewalks/"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">"renv/"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre>
 </div>
 <p>If you are a MacOS user, remember the <code>.DS_Store</code> hidden
 file which is also not necessary to share with our project? We can tell
@@ -839,21 +860,32 @@ projects of macOS users and can be ignored by the rest. This can be
 useful for Windows users as well, if they have or plan to have
 collaborators or users with MacOS. Let’s add it to our
 <code>.gitignore</code>.</p>
-<div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"**/.DS_Store"</span> <span class="op">&gt;&gt;</span> .gitignore </span></code></pre>
-</div>
-<p>Let’s add and commit our updated <code>.gitignore</code> to our
-repository.</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add .gitignore</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Ignore venv folder and DS_Store file"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"**/.DS_Store"</span> <span class="op">&gt;&gt;</span> .gitignore </span></code></pre>
+</div>
+<p>Let’s add and commit our updated <code>.gitignore</code> to our
+repository.</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">$</span> git add .gitignore</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Ignore renv folder and DS_Store file"</span></span></code></pre>
 </div>
 <p>The same method can be applied to ignore various other files that you
 do not want git to track.</p>
+</div>
+<div class="section level3">
+<h3 id="adding-the-lock-file-to-the-repo">Adding the lock file to the repo<a class="anchor" aria-label="anchor" href="#adding-the-lock-file-to-the-repo"></a></h3>
+<p>We should also add our lock file to the repository so anyone who uses
+the repo going forward can rebuild our environment.</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">$</span> git add renv.lock</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Adding renv.lock file"</span></span></code></pre>
+</div>
 <div id="another-challenge-in-long-term-reproducibility" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -921,20 +953,20 @@ you well to troubleshoot problems if and when they arise.</p>
 </div>
 </section><section><h2 class="section-heading" id="running-the-code-and-reproducing-results">Running the code and reproducing results<a class="anchor" aria-label="anchor" href="#running-the-code-and-reproducing-results"></a></h2>
 <hr class="half-width"><p>We are now setup to run our code from the newly created R project</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> <span class="pp">**</span>Rscript eva_data_analysis.R<span class="pp">**</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a> <span class="ex">$</span> Rscript eva_data_analysis.R</span></code></pre>
 </div>
 <p>You should get a pop up window with a graph. However, some (but not
 all) Windows users will not. You might instead see an error like:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">Error</span> in file<span class="er">(</span><span class="ex">con,</span> <span class="st">"r"</span><span class="kw">)</span> <span class="bu">:</span> cannot open the connection</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="ex">In</span> addition: Warning message:</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="ex">In</span> file<span class="er">(</span><span class="ex">con,</span> <span class="st">"r"</span><span class="kw">)</span> <span class="bu">:</span> cannot open file <span class="st">'eva-data.json'</span>: No such file or directory</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="ex">Error</span> in file<span class="er">(</span><span class="ex">con,</span> <span class="st">"r"</span><span class="kw">)</span> <span class="bu">:</span> cannot open the connection</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="ex">In</span> addition: Warning message:</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="ex">In</span> file<span class="er">(</span><span class="ex">con,</span> <span class="st">"r"</span><span class="kw">)</span> <span class="bu">:</span> cannot open file <span class="st">'eva-data.json'</span>: No such file or directory</span></code></pre>
 </div>
 <p>This is not what we were expecting! The problem is <em>character
 encoding</em>. ‘Standard’ Latin characters are encoded using ASCII, but
@@ -957,7 +989,7 @@ reading and writing our files (and you should do this even if you have
 not had the encoding error when running the code - it is good practice
 and otherwise it may catch you the next time you run the code on a
 different platform):</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -968,12 +1000,12 @@ different platform):</p>
 <span><span class="va">...</span></span></code></pre>
 </div>
 <p>Remember to commit these latest changes.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.R</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Specify data encoding"</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git add eva_data_analysis.R</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Specify data encoding"</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="kw">(</span><span class="ex">venv_spacewalks</span><span class="kw">)</span> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 <p>Do not forget to commit any files that have been changed.</p>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
@@ -997,7 +1029,7 @@ see how we can improve it further.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
   <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/better-research-software-r/tree/04-code-readability" class="external-link uri">https://github.com/carpentries-incubator/better-research-software-r/tree/04-code-readability</a></p>
@@ -1100,8 +1132,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/03-reproducible-dev-environment.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/03-reproducible-dev-environment.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-03-17",
-  "datePublished": "2026-03-24"
+  "dateModified": "2026-03-25",
+  "datePublished": "2026-03-25"
 }
 
   </script><script>
