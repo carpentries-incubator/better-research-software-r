@@ -249,10 +249,15 @@ renv::install("my_package")
 Let's install the packages we need for this script. At this time, we need `jsonlite`, `lubridate` and `ggplot2`. 
 
 ```r
-renv::install("jsonlite", "lubridate", "ggplot2"), 
+renv::install("jsonlite", "lubridate", "ggplot2")
 ```
 
-I can also install packages in any of the usual ways, i.e., `install.packages()` or `pak::pkg_install("ggplot2")`, but you'll have to complete an additional step to update the `lock` file enumerating packages and dependencies. A call to `renv::snapshot()` should suffice. 
+We can also install packages in any of the usual ways, i.e., `install.packages()` or `pak::pkg_install("ggplot2")` and `renv` will intercept and install it in the environment.
+Then we need to run the `snapshot()` function to update the `renv.lock` file with all the packages installed.
+
+```r
+renv::snapshot()
+```
 
 Now we can open the `renv.lock` file and see that it stores a lot of machine-readable information in plain text. However, you could also <kbd>COMMAND</kbd>+<kbd>F</kbd> (MacOS) or <kbd>CTRL</kbd>+<kbd>F</kbd> (Windows) to double check that the packages installed are now listed. 
 
@@ -266,11 +271,18 @@ Let's delete the packages we just installed and then restore them using the exis
 remove.packages(c("jsonlite", "lubridate", "ggplot2"))
 ```
 
+
 If you attempt to load these packages now, your get an error
 
 ```r
-library("jsonlite)
+library("jsonlite")
 ```
+
+::::::::::::::: instructor
+
+If the call to load `jsonlite` succeeds they might need to restart the R session because they loaded it previously and it is cached.
+
+:::::::::::::::::::::::::::
 
 ```output
 Error in library(jsonlite) : there is no package called ‘jsonlite’
@@ -278,7 +290,7 @@ Error in library(jsonlite) : there is no package called ‘jsonlite’
 
 To restore the packages from the `renv.lock`, 
 ```r
-renv::restore("renv.lock")
+renv::restore()
 ```
 
 If you attempt to load these packages now, it will work!
@@ -289,11 +301,11 @@ library("jsonlite)
 
 ### Ignoring files
 
-Note that you only need to share the small `renv.lock` file with your collaborators - and not the entire `venv_spacewalks` directory with packages contained in your virtual environment.
-We need to tell git to ignore that directory, so it is not tracked and shared - we do this by adding `venv_spacewalks` to the `.gitignore` in the root directory of our project.
+Note that you only need to share the small `renv.lock` file with your collaborators - and not the entire `renv` directory with packages contained in your virtual environment.
+We need to tell git to ignore that directory, so it is not tracked and shared - we do this by adding `renv` to the `.gitignore` in the root directory of our project.
 
 ```bash
-(venv_spacewalks) $ echo "venv_spacewalks/" >> .gitignore
+$ echo "renv/" >> .gitignore
 ```
 If you are a MacOS user, remember the `.DS_Store` hidden file which is also not necessary to share with our project?
 We can tell git to ignore it by adding it on a new line in `.gitignore` as pattern `**/.DS_Store` (so it will be ignored in any sub-folder of our project).
@@ -310,11 +322,21 @@ echo "**/.DS_Store" >> .gitignore
 Let's add and commit our updated `.gitignore` to our repository.
 
 ```bash
-(venv_spacewalks) $ git add .gitignore
-(venv_spacewalks) $ git commit -m "Ignore venv folder and DS_Store file"
+$ git add .gitignore
+$ git commit -m "Ignore renv folder and DS_Store file"
 ```
 
 The same method can be applied to ignore various other files that you do not want git to track.
+
+
+### Adding the lock file to the repo
+
+We should also add our lock file to the repository so anyone who uses the repo going forward can rebuild our environment.
+
+```bash
+$ git add renv.lock
+$ git commit -m "Adding renv.lock file"
+```
 
 
 :::::::::::::::::::::: callout
@@ -359,7 +381,7 @@ We are now setup to run our code from the newly created R project
 
 ```bash
 
-(venv_spacewalks) $ **Rscript eva_data_analysis.R**
+ $ Rscript eva_data_analysis.R
 
 ```
 
