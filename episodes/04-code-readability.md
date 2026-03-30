@@ -1164,7 +1164,7 @@ Comments are really important. Roxygen2 can help you insert comment in a structe
 ### Code state
 
 At this point, the code in your local software project's directory should be as in:
-<https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure>
+<https://github.com/carpentries-incubator/better-research-software-r/blob/main/tree/04-code-structure>
 
 :::
 
