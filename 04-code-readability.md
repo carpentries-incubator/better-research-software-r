@@ -7,7 +7,7 @@ exercises: 30
 ::: questions
 
 - Why does code readability matter?
-- How can I organise my code to be more readable?
+- How can I organize my code to be more readable?
 - What types of documentation can I include to improve the readability of my code?
 
 :::
@@ -18,24 +18,18 @@ After completing this episode, participants should be able to:
 
 - Import third-party libraries at the top of a script
 - Choose function and variable names that help explain the purpose of the function or variable
-- Organise code into reusable functions that achieve a singular purpose
-- Write informative comments and docstrings to provide more detail about what the code is doing
+- Organize code into reusable functions that achieve a singular purpose
+- Write informative, `roxygen2` comments to provide more detail about what the code is doing
 
 :::
 
-In this episode, we will introduce the concept of readable code and consider how it can help create reusable 
-scientific software and empower collaboration between researchers.
+In this episode, we will introduce the concept of readable code and consider how it can help create reusable scientific software and empower collaboration between researchers.
 
-While all developers hope their code will be stable long term, software often has to change due to changes in the real world.
-As requirements change, so must the relevant code.
-When code needs to be changed, the developer that created it or more likely a different developer needs to understand that code before they can implement the new requirements.
-Readable code facilitates the reading and understanding of the abstraction phases and, as a result, facilitates the evolution of the codebase.
-Readable code saves future developers' time and effort.
+While all developers hope their code will be stable long term, software often has to change due to changes in the real world. As requirements change, so must the relevant code. When code needs to be changed, the developer that created it or more likely a different developer needs to understand that code before they can implement the new requirements. 
 
-In order to develop readable code, we should ask ourselves: "If I re-read this piece of code in fifteen days or one 
-year, will I be able to understand what I have done and why?" 
-Or even better: "If a new person who just joined the project reads my software, will they be able to understand 
-what I have written here?"
+Readable code facilitates the reading and understanding of the abstraction phases and, as a result, facilitates the evolution of the codebase. Readable code saves future developers' time and effort.
+
+In order to develop readable code, we should ask ourselves: "If I re-read this piece of code in fifteen days or one year, will I be able to understand what I have done and why?"  Or even better: "If a new person who just joined the project reads my software, will they be able to understand what I have written here?"
 
 In this episode, we will learn a few specific software best practices we can follow to help create more readable code. 
 
@@ -50,296 +44,268 @@ At this point, the code in your local software project's directory should be as 
 
 ::: spoiler
 
-### Activate your virtual environment
+### Make sure your packages and dependencies are up to date
 
-If it is not already active, make sure to activate your virtual environment from the root of
-the software project directory:
+In the previous section we discussed using the package renv.lock to track packages and their dependencies. At this time, you should have a current renv.lock files and you should have restored the packages library. 
 
-```bash
-$ source venv_spacewalks/bin/activate # Mac or Linux
-$ source venv_spacewalks/Scripts/activate # Windows
-(venv_spacewalks) $
+You can check that the project is up-to-date with 
+
+```r
+renv::status() #you can run this any time
+```
+
+If you haven't, you can restore the packages and their dependencies by running
+
+```r
+renv::restore("renv.lock")
 ```
 
 :::
 
-## Place `import` statements at the top
+## Place `library` functions at the top
 
-Let's have a look our code again - the first thing we may notice is that our script currently places import statements 
-throughout the code.
-Conventionally, all import statements are placed at the top of the script so that dependent libraries
-are clearly visible and not buried inside the code (there are also standard ways of describing dependencies -
-e.g. using a `requirements.txt` file).
-This will help readability (accessibility) and reusability of our code.
+Let’s look at our code again. One thing that stands out is that we’re calling library() in multiple places throughout the script. By convention, all libraries should be loaded at the top so dependencies are easy to see and not buried in the code. This improves readability and makes the code easier to reuse and maintain.
 
 Our code after the modification should look like the following.
 
-```python
-import json
-import csv
-import datetime as dt
-import matplotlib.pyplot as plt
-
+```r
 # https://data.nasa.gov/resource/eva.json (with modifications)
-data_f = open('./eva-data.json', 'r', encoding='ascii')
-data_t = open('./eva-data.csv','w', encoding='utf-8')
-g_file = './cumulative_eva_graph.png' 
+data_f_file = 'eva-data.json'
+data_t_file = 'eva-data.csv'
+g_file = 'cumulative_eva_graph.png'
+fieldnames <- c("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
 
+library(jsonlite)
 
-fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+j_l <- read_json(data_f_file)
+data=as.data.frame(j_l[[1]])
 
-data=[]
-
-for i in range(375):
-    line=data_f.readline()
-    print(line)
-    data.append(json.loads(line[1:-1]))
+for( i in 2:374){
+  r = j_l[[i]]
+    print(r)
+    data =merge(data, as.data.frame(r),  all=TRUE)
+}
 #data.pop(0)
 ## Comment out this bit if you don't want the spreadsheet
+write.csv(data_t_file)
 
-w=csv.writer(data_t)
 
-time = []
-date =[]
 
-j=0
-for i in data:
-    print(data[j])
+time <- c()
+library(lubridate)
+date = Date()
+
+
+j=1
+for (i in rownames(data)){
+    print(data[j, ])
     # and this bit
-    w.writerow(data[j].values())
-    if 'duration' in data[j].keys():
-        tt=data[j]['duration']
-        if tt == '':
-            pass
-        else:
-            t=dt.datetime.strptime(tt,'%H:%M')
-            ttt = dt.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second).total_seconds()/(60*60)
+    # w.writerow(data[j].values())
+    if (!is.na(data[j,]$duration)){
+        tt=data[j,]$duration
+        if(tt == ''){
+          #do nothing
+        }else{
+            t=as.POSIXlt(tt,format='%H:%M')
+            ttt <- as.numeric(as.difftime(hour(t), units = 'hours')+as.difftime(minute(t), units='mins')+as.difftime(second(t), units='secs'))/(60*60)
             print(t,ttt)
-            time.append(ttt)
-            if 'date' in data[j].keys():
-                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+            time <- c(time, ttt)
+            if(!is.na(data[j,]$date)){
+                date= c(date, as.Date(substr(data[j,'date'], 1, 10), format = '%Y-%m-%d'))
                 #date.append(data[j]['date'][0:10])
 
-            else:
-                time.pop(0)
-    j+=1
+            }else{
+              time <- time[1:length(time) -1]
+                }
+            }
+        }
+    j = j+1
+}
 
-t=[0]
-for i in time:
-    t.append(t[-1]+i)
+t=0
+for(i in time)
+    t <- c(t, t[length(t)]+i)
 
-date,time = zip(*sorted(zip(date, time)))
 
-plt.plot(date,t[1:], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(g_file)
-plt.show()
+df <- data.frame(
+date, time
+)[order(date, time), ]
+
+date <- df$date
+time <- df$time
+
+
+png(g_file)
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
+dev.off()
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
+
 ```
 
 Let's make sure we commit our changes.
 
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "Move import statements to the top of the script"
+ $ git add eva_data_analysis.R
+ $ git commit -m "Move library calls to the top of the script"
 ```
+## Rules for variable names in R
 
-## Use meaningful variable names
+ $ git add eva_data_analysis.R
+ $ git commit -m "Move library calls to the top of the script"
+Some highlights:
+Some highlights:
+- Only alphanumeric characters, dot, and underscores are permitted in variable names.  
+- Must start with a letter or a dot (.); if it starts with a dot, the next character cannot be a digit.
+- After the first character, you can use letters, digits, dots, and underscores.  
+Check the [official  R documentation](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_002c-case-sensitivity_002c-etc_002e). You may also find the [Tidyverse Style Guide](https://style.tidyverse.org/) useful.
+- Cannot be a reserved word (keywords) such as if, else, repeat, while, function, for, in, next, break, TRUE, FALSE, NULL, NA, NaN, Inf, etc.  
+Some highlights:
+- Only alphanumeric characters, dot, and underscores are permitted in variable names.  
+- Must start with a letter or a dot (.); if it starts with a dot, the next character cannot be a digit.
+
+### Useful things to consider when naming variables
 
 Variables are the most common thing you will assign when coding, and it's really important that it is clear what each variable means in order to understand what the code is doing.
+
 If you return to your code after a long time doing something else, or share your code with a colleague, it should be easy enough to understand what variables are involved in your code from their names.
-Therefore we need to give them clear names, but we also want to keep them concise so the code stays readable.
-There are no "hard and fast rules" here, and it's often a case of using your best judgment.
 
-Some useful tips for naming variables are:
+Therefore we need to give them clear names, but we also want to keep them concise so the code stays readable. There are no "hard and fast rules" here, and it's often a case of using your best judgment.
 
-- Short words are better than single character names. For example, if we were creating a variable to store the speed 
-to read a file, `s` (for 'speed') is not descriptive enough but `MBReadPerSecondAverageAfterLastFlushToLog` is too long 
-to read and prone to misspellings. `ReadSpeed` (or `read_speed`) would suffice.
-- If you are finding it difficult to come up with a variable name that is both short and descriptive, 
-go with the short version and use an inline comment to describe it further (more on those in the next section). 
-This guidance does not necessarily apply if your variable is a well-known constant in your domain - 
-for example, *c* represents the speed of light in physics.
-- Try to be descriptive where possible and avoid meaningless or funny names like `foo`, `bar`, `var`, `thing`, etc.
+:::::::::::::::::::::::: callout
 
-There are also some restrictions to consider when naming variables in Python:
+“There are only two hard things in Computer Science: cache invalidation and naming things.”  
+\- Phil Karlton
+Some useful tips for naming variables:
+:::::::::::::::::::::::::::::::::
 
-- Only alphanumeric characters and underscores are permitted in variable names.
-- You cannot begin your variable names with a numerical character as this will raise a syntax error.
-Numerical characters can be included in a variable name, just not as the first character. For example, `read_speed1` is a valid variable name, but `1read_speed` isn't. (This behaviour may be different for other programming languages.)
-- Variable names are case sensitive. So `speed_of_light` and `Speed_Of_Light` are not the same.
-- Programming languages often have global pre-built functions, such as `input`, which you may accidentally overwrite 
-if you assign a variable with the same name and no longer be able to access the original `input` function. In this case, 
-opting for something like `input_data` would be preferable. Note that this behaviour may be explicitly disallowed in other 
-programming languages but is not in Python.
+This guidance does not necessarily apply if your variable is a well-known constant in your domain - for example, *c* represents the speed of light in physics.  Though `c` in R often refers to the `c()` function which might be something to consider as well.
 
+Some useful tips for naming variables:
+
+- Short words are better than single character names. For example, if we were creating a variable to store the speed to read a file, `s` (for 'speed') is not descriptive enough but `MBReadPerSecondAverageAfterLastFlushToLog` is too long to read and prone to misspellings. `ReadSpeed` (or `read_speed`) would suffice.  
+- If you are finding it difficult to come up with a variable name that is both short and descriptive, go with the short version and use an inline comment to describe it further (more on those in the next section).  
+This guidance does not necessarily apply if your variable is a well-known constant in your domain - for example, *c* represents the speed of light in physics.  Though `c` in R often refers to the `c()` function which might be something to consider as well.
+- Try to be descriptive where possible and avoid meaningless or funny names like `foo`, `bar`, `var`, `thing`, etc.  
+- Programming languages often have global pre-built functions, such as `input`, which you may accidentally overwrite if you assign a variable with the same name and no longer be able to access the original `input` function. In this case, opting for something like `input_data` would be preferable. 
+Let's apply this to `eva_data_analysis.R`.
 
 :::::: challenge
 
 ### Rename our variables to be more descriptive (5 min)
 
-Let's apply this to `eva_data_analysis.py`.
+Let's apply this to `eva_data_analysis.R`.
 
 a. Edit the code as follows to use descriptive (and consistent) variable names:
 
     - Change `data_f` to `input_file`
-    - Change `data_t` to `output_file`
-    - Change `g_file` to `graph_file`
+    - Change data_t to output_file
+    - Change g_file to graph_file
+    
+*Be sure to change all the occurrences of each variable name.*
 
-    *Be sure to change all the occurrences of each variable name.*
-b. What other variable names in our code would benefit from renaming? 
-Rename these too. 
-Hint: variables `w`, `t`, `tt` and `ttt` could also be renamed to be more descriptive.
+b. What other variable names in our code would benefit from renaming? Rename these too. Hint: variables w, t, tt and ttt could also be renamed to be more descriptive.
+
 c. Commit your changes to your repository. Remember to use an informative commit message.
 
 
-::: solution
 
-a. 
-Updated code after renaming `data_f`, `data_t` and `g_file`:
+:::::::::::::::::: hint
 
-```python
-import json
-import csv
-import datetime as dt
-import matplotlib.pyplot as plt
-    
-# https://data.nasa.gov/resource/eva.json (with modifications)
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
-        
-fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
-    
-data=[]
-    
-for i in range(375):
-    line=input_file.readline()
-    print(line)
-    data.append(json.loads(line[1:-1]))
-#data.pop(0)
-## Comment out this bit if you don't want the spreadsheet
-    
-w=csv.writer(output_file)
-    
-time = []
-date =[]
-    
-j=0
-for i in data:
-    print(data[j])
-        # and this bit
-        w.writerow(data[j].values())
-        if 'duration' in data[j].keys():
-            tt=data[j]['duration']
-            if tt == '':
-                pass
-            else:
-                t=dt.datetime.strptime(tt,'%H:%M')
-                ttt = dt.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second).total_seconds()/(60*60)
-                print(t,ttt)
-                time.append(ttt)
-                if 'date' in data[j].keys():
-                    date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
-                    #date.append(data[j]['date'][0:10])
-    
-                else:
-                    time.pop(0)
-        j+=1
-    
-t=[0]
-for i in time:
-    t.append(t[-1]+i)
-    
-date,time = zip(*sorted(zip(date, time)))
-    
-plt.plot(date,t[1:], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
-```
-b. 
-Variables `w`, `t`, `tt` and `ttt` could also be renamed to be more descriptive. We could, for example: 
+Variables `t`, `tt` and `ttt` could also be renamed to be more descriptive.
+  - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
+  - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
+  - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
+
+::::::::::::::::::::::::
+Rename these too. 
+:::::::::::::::::: hint
+
+Variables `t`, `tt` and `ttt` could also be renamed to be more descriptive.
+  - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
+  - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
+  - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
+
+::::::::::::::::::::::::
+c. Commit your changes to your repository. Remember to use an informative commit message.
+
+:::::::: solution
+
+Updated code after renaming `data_f`, `data_t` and `g_file` as well as variables `t`, `tt` and `ttt` to be more descriptive. 
       
-- **Change `w` to `csv_writer`**: makes it clear this variable is a CSV writer object. Using "w" alone would more likely be interpreted as "width" or "weight".
-- **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
-- **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
-- **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
-    
-Updated code after renaming `w`, `t`, `tt` and `ttt`:
       
-```python
-import json
-import csv
-import datetime as dt
-import matplotlib.pyplot as plt
+```r
 
 # https://data.nasa.gov/resource/eva.json (with modifications)
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
-
-
-fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
-
-data=[]
-
-for i in range(375):
-    line=input_file.readline()
-    print(line)
-    data.append(json.loads(line[1:-1]))
+input_file = 'eva-data.json'
+output_file = 'eva-data.csv'
+graph_file = 'cumulative_eva_graph.png'
+fieldnames <- c("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+library(jsonlite)
+j_l <- read_json(input_file)
+data=as.data.frame(j_l[[1]])
+for( i in 2:374){
+  r = j_l[[i]]
+    print(r)
+    data =merge(data, as.data.frame(r),  all=TRUE)
+}
 #data.pop(0)
 ## Comment out this bit if you don't want the spreadsheet
-
-csv_writer=csv.writer(output_file)
-
-time = []
-date =[]
-
-j=0
-for i in data:
-    print(data[j])
+write.csv(output_file)
+time <- c()
+library(lubridate)
+date = Date()
+j=1
+for (i in rownames(data)){
+    print(data[j, ])
     # and this bit
-    csv_writer.writerow(data[j].values())
-    if 'duration' in data[j].keys():
-        duration_str=data[j]['duration']
-        if duration_str == '':
-            pass
-        else:
-            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
-            duration_hours = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
+    # csv_writer.writerow(data[j].values())
+    if (!is.na(data[j,]$duration)){
+        duration_dt=data[j,]$duration
+        if(duration_dt == ''){
+          #do nothing
+        }else{
+            duration_dt=as.POSIXlt(duration_dt,format='%H:%M')
+            duration_hours <- as.numeric(as.difftime(hour(duration_dt), units = 'hours')+as.difftime(minute(duration_dt), units='mins')+as.difftime(second(duration_dt), units='secs'))/(60*60)
             print(duration_dt,duration_hours)
-            time.append(duration_hours)
-            if 'date' in data[j].keys():
-                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+            time <- c(time, duration_hours)
+            if(!is.na(data[j,]$date)){
+                date= c(date, as.Date(substr(data[j,'date'], 1, 10), format = '%Y-%m-%d'))
                 #date.append(data[j]['date'][0:10])
+            }else{
+              time <- time[1:length(time) -1]
+                }
+            }
+        }
+    j = j+1
+}
+t=0
+for(i in time)
+    t <- c(t, t[length(t)]+i)
+df <- data.frame(
+date, time
+)[order(date, time), ]
+date <- df$date
+time <- df$time
+png(graph_file)
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
+dev.off()
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
 
-            else:
-                time.pop(0)
-    j+=1
-
-duration_dt=[0]
-for i in time:
-    duration_dt.append(duration_dt[-1]+i)
-
-date,time = zip(*sorted(zip(date, time)))
-
-plt.plot(date,duration_dt[1:], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
 ```
 c. Let's commit our latest changes:
 
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "Use descriptive variable names"
-(venv_spacewalks) $ git push origin main
+ $ git add eva_data_analysis.R
+ $ git commit -m "Use descriptive variable names"
+ $ git push origin main
 ```
 
 :::
@@ -351,10 +317,7 @@ There are more automated ways to close issues based on a commit/pull request tha
 
 ## Remove unused variables and imports
 
-Unused variables or import statements can cause confusion about what the code is doing, making it harder to 
-read and easier to introduce mistakes. Such things may seem harmless as they do not cause immediate syntax errors - but 
-they can potentially lead to subtle program logic errors, unexpected behavior, wrong results and issues later on - 
-making them especially tricky to detect and fix. Over time, this makes the codebase more fragile and harder to maintain and extend.
+Unused variables or import statements can cause confusion about what the code is doing, making it harder to read and easier to introduce mistakes. Such things may seem harmless as they do not cause immediate syntax errors - but they can potentially lead to subtle program logic errors, unexpected behavior, wrong results and issues later on making them especially tricky to detect and fix. Over time, this makes the codebase more fragile and harder to maintain and extend.
 
 :::::: challenge
 
@@ -368,88 +331,90 @@ Variable `fieldnames` (containing column names for CSV data file) is defined but
 
 Updated code:
 
-```python
-import json
-import csv
-import datetime as dt
-import matplotlib.pyplot as plt
+```r
 
 # https://data.nasa.gov/resource/eva.json (with modifications)
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
-
-
-data=[]
-
-for i in range(375):
-    line=input_file.readline()
-    print(line)
-    data.append(json.loads(line[1:-1]))
+input_file = 'eva-data.json'
+output_file = 'eva-data.csv'
+graph_file = 'cumulative_eva_graph.png'
+library(jsonlite)
+j_l <- read_json(input_file)
+data=as.data.frame(j_l[[1]])
+for( i in 2:374){
+  r = j_l[[i]]
+    print(r)
+    data =merge(data, as.data.frame(r),  all=TRUE)
+}
 #data.pop(0)
 ## Comment out this bit if you don't want the spreadsheet
-
-csv_writer=csv.writer(output_file)
-
-time = []
-date =[]
-
-j=0
-for i in data:
-    print(data[j])
+write.csv(output_file)
+time <- c()
+library(lubridate)
+date = Date()
+j=1
+for (i in rownames(data)){
+    print(data[j, ])
     # and this bit
-    csv_writer.writerow(data[j].values())
-    if 'duration' in data[j].keys():
-        duration_str=data[j]['duration']
-        if duration_str == '':
-            pass
-        else:
-            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
-            duration_hours = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
+    # csv_writer.writerow(data[j].values())
+    if (!is.na(data[j,]$duration)){
+        duration_dt=data[j,]$duration
+        if(duration_dt == ''){
+          #do nothing
+        }else{
+            duration_dt=as.POSIXlt(duration_dt,format='%H:%M')
+            duration_hours <- as.numeric(as.difftime(hour(duration_dt), units = 'hours')+as.difftime(minute(duration_dt), units='mins')+as.difftime(second(duration_dt), units='secs'))/(60*60)
             print(duration_dt,duration_hours)
-            time.append(duration_hours)
-            if 'date' in data[j].keys():
-                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+            time <- c(time, duration_hours)
+            if(!is.na(data[j,]$date)){
+                date= c(date, as.Date(substr(data[j,'date'], 1, 10), format = '%Y-%m-%d'))
                 #date.append(data[j]['date'][0:10])
+            }else{
+              time <- time[1:length(time) -1]
+                }
+            }
+        }
+    j = j+1
+}
+t=0
+for(i in time)
+    t <- c(t, t[length(t)]+i)
+df <- data.frame(
+date, time
+)[order(date, time), ]
+date <- df$date
+time <- df$time
+png(graph_file)
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
+dev.off()
+plot(date,t[2:length(t)],
+xlab = 'Year', ylab= 'Total time spent in space to date (hours)'
+)
 
-            else:
-                time.pop(0)
-    j+=1
-
-duration_dt=[0]
-for i in time:
-    duration_dt.append(duration_dt[-1]+i)
-
-date,time = zip(*sorted(zip(date, time)))
-
-plt.plot(date,duration_dt[1:], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
 
 ```
+
+:::::::
+:::::::::::::
 
 Commit changes:
 
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "Remove unused variable fieldname"
-(venv_spacewalks) $ git push origin main
+ $ git add eva_data_analysis.R
+ $ git commit -m "Remove unused variable fieldname"
+ $ git push origin main
 ```
-
-:::
-::::::
 
 :::::::::::::::::::::::::::::::: callout
 
-[Linters](https://glosario.carpentries.org/en/#linter) (static analysis tools) can be very helpful with tasks like this.
-Linters identify unused variables and unused imports among other useful tasks for formatting and making your code readable.
+A linter is a tool that automatically checks your source code for problems without running it.
 
-Some common linters for Python include PyLint, Black, Ruff and Flake8.
+Linters usually produce warnings/errors with line numbers and (often) suggested fixes.
 
-::::::::::::::::::::::::::::::::::::::::
+For R, 	lintr, the standard R linter does static code analysis for style issues and potential problems, supports many editors (including RStudio/VS Code), and is configurable via a .lintr file. Alongside lintr, R programmers commonly use styler which auto-formats R code so you eliminate many lint issues by formatting consistently.
+
+:::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::: callout
 
@@ -468,98 +433,115 @@ The IDE understands the underlying structure of the code, which makes these comp
 ::::::::::::::::::::::::::::::::::::::::
 
 
-## Use third-party libraries
 
-Our script currently reads the data line-by-line from the JSON data file and uses custom code to manipulate the data.
-Variables of interest are stored in lists but there are more suitable data structures (e.g. `pandas`' dataframe) to store data in our case.
-By choosing custom code over popular and well-tested libraries, we are making our code less readable and understandable and more error-prone.
+## Use existing packages from known developers
 
-The main functionality of our code can be rewritten as follows using the `pandas` library to load and manipulate the data in data frames.
+Our script currently reads the data line-by-line from the JSON data file and uses custom code to manipulate the data. Variables of interest are stored in lists but there are more suitable data structures (e.g. dataframes or tibbles) to store data in our case.
 
-First, we need to install this dependency into our virtual environment.
 
-```bash
-(venv_spacewalks) $ python3 -m pip install pandas
+By choosing custom code over popular and well-tested libraries, we are making our code less readable and understandable and more error-prone. The main functionality of our code can be rewritten as follows using data frames from base R or tibbles from the `tidyverse` package to load and manipulate the data in data frames.
+We will also edit our code to use `ggplot2` for plotting so that it consistently uses the `tidyverse`.
+
+First, we need to install the `tidyverse` as a dependency into our virtual environment.
+
+```r
+renv::install("tidyverse")
+renv::snapshot()
 ```
 
-Then we will edit the code to use `pandas`.
-For the sake of time in the workshop, we will give you the updated code.
-The code should now look like:
+Then we will edit the code to use `tibble`. For the sake of time in the workshop, we will give you the updated code. The code should now look like:
 
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
+```r
+library(tidyverse) #tidyverse "contains" ggplot2
+library(jsonlite)
+library(lubridate)
 
-# Data source: https://data.nasa.gov/resource/eva.json (with modifications)
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
 
-eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-eva_df['eva'] = eva_df['eva'].astype(float)
-eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
 
-eva_df.to_csv(output_file, index=False, encoding='utf-8')
 
-eva_df.sort_values('date', inplace=True)
+eva_tbl <- jsonlite::fromJSON(input_file) |>
+  as_tibble()
 
-eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
-plt.plot(eva_df['date'], eva_df['cumulative_time'], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
+subset=['duration','date'])
+eva_tbl <- eva_tbl |>
+  mutate(
+    eva  = as.numeric(eva),
+    date = ymd_hms(date, quiet = TRUE)
+  ) |>
+  filter(!is.na(duration), duration != "", !is.na(date))
+
+
+readr::write_csv(eva_tbl, output_file)
+
+
+eva_tbl <- eva_tbl |>
+  arrange(date)
+
+
+eva_tbl <- eva_tbl |>
+  mutate(
+    duration_hours = {
+      parts <- str_split(duration, ":", n = 2, simplify = TRUE)
+      as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+    },
+    cumulative_time = cumsum(duration_hours)
+  )
+
+
+p <- ggplot(eva_tbl, aes(x = date, y = cumulative_time)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Year",
+    y = "Total time spent in space to date (hours)"
+  ) +
+  theme_minimal()
+
+ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+print(p)
 
 ```
 
-Once we have replaced the  code in our Python script `eva_data_analysis.py` with the above code, we need to make sure that we capture the changes in our virtual development environment too.
-
-```bash
-(venv_spacewalks) $ python3 -m pip freeze > requirements.txt
+```r
+> renv::status() 
 ```
 
-Now, we need to commit the changes we have made. We can add multiple files to the same commit by listing all of them. Remember to use an informative commit message.
-
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py requirements.txt
-(venv_spacewalks) $ git commit -m "Refactor code and add Pandas to venv"
-(venv_spacewalks) $ git push origin main
+ $ git add eva_data_analysis.R renv.lock
+ $ git commit -m "Refactor code and add tidyverse to lockfile"
+ $ git push origin main
 ```
 
 We have committed the code and the environment changes together since they are related and form one logical unit of change.
 
 ## Use comments to explain functionality
 
-Commenting is a very useful practice to help convey the context of the code.
-It can be helpful as a reminder for your future self or your collaborators as to why code is written in a certain way, 
-how it is achieving a specific task, or the real-world implications of your code.
+Commenting is a very useful practice to help convey the context of the code. It can be helpful as a reminder for your future self or your collaborators as to why code is written in a certain way, how it is achieving a specific task, or the real-world implications of your code.
 
-There are several ways to add comments to code:
 
-- An **inline comment** is a comment on the same line as a code statement. 
-Typically, it comes after the code statement and finishes when the line ends and 
-is useful when you want to explain the code line in short. 
-Inline comments in Python should be separated by at least two spaces from the statement; they start with a # followed
-by a single space, and have no end delimiter.
-- A **single-line comment** or **prologue comment** is a comment that comes the line before a block of code to explain it.
-- A **multi-line** or **block comment** can span multiple lines and has a start and end sequence.
-To comment out a block of code in Python, you can either add a # at the beginning of each line of the block or 
-surround the entire block with three single (`'''`) or double quotes (`"""`).
+From the official [R documentation](https://cran.r-project.org/doc/manuals/r-patched/R-lang.html?utm_source=chatgpt.com#Comments-1): 
 
-```python
-x = 5  # In Python, inline comments begin with the `#` symbol and a single space.
+> Comments in R are ignored by the parser. Any text from a # character to the end of the line is taken to be a comment, unless the # character is inside a quoted string. For example,
+> x <- 1  # This is a comment...
+> y <- "  #... but this is not."
+
+The [Tidyverse Style Guide](https://style.tidyverse.org/functions.html#comments): 
+
+> In code, use comments to explain the “why” not the “what” or “how”. Each line of a comment should begin with the comment symbol and a single space: #.
+
+```r
+x <- 5  # In R, "inline comments"" begin with the `#` symbol and at least one space
 
 # this is a single-line comment
-y = x + 10
-z = y*2 + x
+y <- x + 10
+z <- y*2 + x
 
-'''
-This is a multiline
-comment
-in Python.
-'''
+# This is a multiline comment in R.
+# In reality, it's just a group of one-line comments
+# together  
 ```
 
 Here are a few things to keep in mind when commenting your code:
@@ -572,20 +554,20 @@ If your code is too complex for other programmers to understand, consider rewrit
 
 ### Examples of unhelpful comments
 
-```python
-statetax = 1.0625  # Assigns the float 1.0625 to the variable 'statetax'
-citytax = 1.01  # Assigns the float 1.01 to the variable 'citytax'
-specialtax = 1.01  # Assigns the float 1.01 to the variable 'specialtax'
+```r
+statetax <- 1.0625  # Assigns the float 1.0625 to the variable 'statetax'
+citytax <- 1.01  # Assigns the float 1.01 to the variable 'citytax'
+specialtax <- 1.01  # Assigns the float 1.01 to the variable 'specialtax'
 ```
 
 The comments in this code simply tell us what the code does, which is easy enough to figure out without the inline comments.
 
 ### Examples of helpful comments
 
-```python
-statetax = 1.0625  # State sales tax rate is 6.25% through Jan. 1
-citytax = 1.01  # City sales tax rate is 1% through Jan. 1
-specialtax = 1.01  # Special sales tax rate is 1% through Jan. 1
+```r
+statetax <- 1.0625  # State sales tax rate is 6.25% through Jan. 1
+citytax <- 1.01  # City sales tax rate is 1% through Jan. 1
+specialtax <- 1.01  # Special sales tax rate is 1% through Jan. 1
 ```
 
 In this case, it might not be immediately obvious what each variable represents, so the comments offer helpful, real-world context.
@@ -595,7 +577,7 @@ The date in the comment also indicates when the code might need to be updated.
 
 ### Add comments to our code (10 min)
 
-a. Examine `eva_data_analysis.py`.
+a. Examine `eva_data_analysis.R`.
 Add as many comments as you think is required to help yourself and others understand what that code is doing.
 b. Commit your changes to your repository. Remember to use an informative commit message.
 
@@ -605,74 +587,81 @@ b. Commit your changes to your repository. Remember to use an informative commit
 
 Some good comments may look like the example below.
 
-``` python
-import matplotlib.pyplot as plt
-import pandas as pd
+```r
 
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
 
-# https://data.nasa.gov/resource/eva.json (with modifications)
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
+# Files
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
 
-print("--START--")
-print(f'Reading JSON file {input_file}')
-# Read the data from a JSON file into a Pandas dataframe
-eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-eva_df['eva'] = eva_df['eva'].astype(float)
-# Clean the data by removing any rows where duration is missing
-eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
+# 1) Read JSON array into a tibble
+eva_tbl <- jsonlite::fromJSON(input_file) |>
+  as_tibble()
 
-print(f'Saving to CSV file {output_file}')
-# Save dataframe to CSV file for later analysis
-eva_df.to_csv(output_file, index=False, encoding='utf-8')
+# 2) Convert types + drop missing duration/date
+eva_tbl <- eva_tbl |>
+  mutate(
+    eva  = as.numeric(eva),
+    date = ymd_hms(date, quiet = TRUE)
+  ) |>
+  filter(!is.na(duration), duration != "", !is.na(date))
 
-# Sort dataframe by date ready to be plotted (date values are on x-axis)
-eva_df.sort_values('date', inplace=True)
+# 3) Write CSV (index=False equivalent)
+readr::write_csv(eva_tbl, output_file)
 
-# Plot cumulative time spent in space over years
-print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
-eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
-plt.plot(eva_df['date'], eva_df['cumulative_time'], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
-print("--END--")
+# 4) Sort by date
+eva_tbl <- eva_tbl |>
+  arrange(date)
+
+# 5) duration_hours + cumulative_time
+eva_tbl <- eva_tbl |>
+  mutate(
+    duration_hours = {
+      parts <- str_split(duration, ":", n = 2, simplify = TRUE)
+      as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+    },
+    cumulative_time = cumsum(duration_hours)
+  )
+
+# 6) Plot + save
+p <- ggplot(eva_tbl, aes(x = date, y = cumulative_time)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Year",
+    y = "Total time spent in space to date (hours)"
+  ) +
+  theme_minimal()
+
+ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+print(p)
+
 ```
-
-Note that we have also added some useful print statements, to let us know what stage the analysis is in.
+:::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::
 
 Commit changes:
 
 ```bash
-(venv_spacewalks) $ git add eva_data_analysis.py
-(venv_spacewalks) $ git commit -m "Add inline comments to the code"
-(venv_spacewalks) $ git push origin main
+ $ git add eva_data_analysis.R
+ $ git commit -m "Add comments to the code"
+ $ git push origin main
 ```
-
-:::
-:::
 
 ## Separate units of functionality
 
-Functions are a fundamental concept in writing software and are one of the core ways you can organise your code to 
-improve its readability.
-A function is an isolated section of code that performs a single, *specific* task that can be simple or complex.
-It can then be called multiple times with different inputs throughout a codebase, but its definition only needs to 
-appear once.
+Functions are a fundamental concept in writing software and are one of the core ways you can organize your code to improve its readability. A function is an isolated section of code that performs a single, *specific* task that can be simple or complex.
 
-Breaking up code into functions in this manner benefits readability since the smaller sections are easier to read 
+A function can then be called multiple times with different inputs throughout a codebase, but its definition only needs to appear once. Breaking up code into functions in this manner benefits readability since the smaller sections are easier to read 
 and understand.
-Since functions can be reused, codebases naturally begin to follow the [Don't Repeat Yourself principle][dry-principle] 
-which prevents software from becoming overly long and confusing.
-The software also becomes easier to maintain because, if the code encapsulated in a function needs to change, 
-it only needs updating in one place instead of many.
-As we will learn in a future episode, testing code also becomes simpler when code is written in functions.
-Each function can be individually checked to ensure it is doing what is intended, which improves confidence in 
-the software as a whole.
+
+Because functions are reusable, they naturally encourage the [Don’t Repeat Yourself (DRY) principle](https://glosario.carpentries.org/en/#dry): instead of copying the same logic throughout a codebase, you define it once and call it as needed. This keeps software from becoming unnecessarily long and confusing. It also improves maintainability—when the behavior in a function needs to change, you update it in one place rather than chasing down multiple copies.
+
+As we will learn in a future episode, testing code also becomes simpler when code is written in functions. Each function can be individually checked to ensure it is doing what is intended, which improves confidence in the software as a whole.
 
 ::: callout
 Decomposing code into functions helps with reusability of blocks of code and eliminating repetition, 
@@ -700,59 +689,71 @@ You will need to share the code below with the learners via copy-and-paste eithe
 
 After the initial refactoring, our code may look something like the following.
 
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
+```r
 
-def read_json_to_dataframe(input_file):
-    print(f'Reading JSON file {input_file}')
-    # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-    eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any rows where duration is missing
-    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
-    return eva_df
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
 
+# Files
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
 
-def write_dataframe_to_csv(df, output_file):
-    print(f'Saving to CSV file {output_file}')
-    # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False, encoding='utf-8')
+# 1) Read JSON array into a tibble
+read_json_to_dataframe <- function(input_file) {
+  jsonlite::fromJSON(input_file) |>
+    tibble::as_tibble()
+}
 
+# 2) Convert + write to CSV
+write_dataframe_to_csv <- function(df, output_file) {
+  df <- df |>
+    dplyr::mutate(
+      eva  = as.numeric(eva),
+      date = lubridate::ymd_hms(date, quiet = TRUE)
+    ) |>
+    dplyr::filter(!is.na(duration), duration != "", !is.na(date))
 
-# Main code
+  readr::write_csv(df, output_file)
+  df
+}
 
-print("--START--")
+# --- Pipeline ---
+eva_tbl <- read_json_to_dataframe(input_file)
+eva_tbl <- write_dataframe_to_csv(eva_tbl, output_file)
 
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
+# 4) Sort by date
+eva_tbl <- eva_tbl |>
+  arrange(date)
 
-# Read the data from JSON file
-eva_data = read_json_to_dataframe(input_file)
+# 5) duration_hours + cumulative_time
+eva_tbl <- eva_tbl |>
+  mutate(
+    duration_hours = {
+      parts <- str_split(duration, ":", n = 2, simplify = TRUE)
+      as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+    },
+    cumulative_time = cumsum(duration_hours)
+  )
 
-# Convert and export data to CSV file
-write_dataframe_to_csv(eva_data, output_file)
+# 6) Plot + save
+p <- ggplot(eva_tbl, aes(x = date, y = cumulative_time)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Year",
+    y = "Total time spent in space to date (hours)"
+  ) +
+  theme_minimal()
 
-# Sort dataframe by date ready to be plotted (date values are on x-axis)
-eva_data.sort_values('date', inplace=True)
+ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+print(p)
 
-# Plot cumulative time spent in space over years
-print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
-eva_data['duration_hours'] = eva_data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-eva_data['cumulative_time'] = eva_data['duration_hours'].cumsum()
-plt.plot(eva_data['date'], eva_data['cumulative_time'], 'ko-')
-plt.xlabel('Year')
-plt.ylabel('Total time spent in space to date (hours)')
-plt.tight_layout()
-plt.savefig(graph_file)
-plt.show()
-
-print("--END--")
 ```
 
 We have chosen to create functions for reading in and writing out data files since this is a very common task within research software.
-While these functions do not contain that many lines of code due to using the `pandas` in-built methods that do all the complex data reading, converting and writing operations, it can be useful to package these steps together into reusable functions if you need to read in or write out a lot of similarly structured files and process them in the same way.
+While these functions do not contain that many lines of code because they rely on the `jsonlite` and `readr` packages that do all the complex data reading, converting and writing operations, it can be useful to package these steps together into reusable functions if you need to read in or write out a lot of similarly structured files and process them in the same way.
 
 We can further simplify the main part of our code by extracting the code to plot a graph into a separate function `plot_cumulative_time_in_space`.
 Let's do that as an exercise.
@@ -773,207 +774,255 @@ Make sure to commit and push your changes.
 
 After extracting the code to plot a graph into a separate function, our code may look something like the following:
 
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
+```r
 
-def read_json_to_dataframe(input_file):
-    print(f'Reading JSON file {input_file}')
-    # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-    eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any rows where duration is missing
-    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
-    return eva_df
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
 
+# Files
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
 
-def write_dataframe_to_csv(df, output_file):
-    print(f'Saving to CSV file {output_file}')
-    # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False, encoding='utf-8')
+# 1) Read JSON array into a tibble
+read_json_to_dataframe <- function(input_file) {
+  jsonlite::fromJSON(input_file) |>
+    tibble::as_tibble()
+}
 
+# 2) Convert + write to CSV (returns the cleaned df invisibly for chaining)
+write_dataframe_to_csv <- function(df, output_file) {
+  df <- df |>
+    dplyr::mutate(
+      eva  = as.numeric(eva),
+      date = lubridate::ymd_hms(date, quiet = TRUE)
+    ) |>
+    dplyr::filter(!is.na(duration), duration != "", !is.na(date))
 
-def plot_cumulative_time_in_space(df, graph_file):
-    print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
-    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-    df['cumulative_time'] = df['duration_hours'].cumsum()
-    plt.plot(df['date'], df['cumulative_time'], 'ko-')
-    plt.xlabel('Year')
-    plt.ylabel('Total time spent in space to date (hours)')
-    plt.tight_layout()
-    plt.savefig(graph_file)
-    plt.show()
+  readr::write_csv(df, output_file)
+  df
+}
 
-# Main code
+# 3) Plot cumulative time in space and save the figure
+plot_cumulative_time_in_space <- function(df, graph_file) {
+  df <- df |>
+    dplyr::arrange(date) |>
+    dplyr::mutate(
+      duration_hours = {
+        parts <- stringr::str_split(duration, ":", n = 2, simplify = TRUE)
+        as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+      },
+      cumulative_time = cumsum(duration_hours)
+    )
 
-print("--START--")
+  p <- ggplot2::ggplot(df, ggplot2::aes(x = date, y = cumulative_time)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      x = "Year",
+      y = "Total time spent in space to date (hours)"
+    ) +
+    ggplot2::theme_minimal()
 
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
+  ggplot2::ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+  print(p)
 
-# Read the data from JSON file
-eva_data = read_json_to_dataframe(input_file)
+  invisible(p)
+  # Return p silently: print(p) above already rendered the plot,
+  # so invisible() prevents a second auto-print at the top level
+  # while still allowing callers to capture the plot object if needed
+}
 
-# Convert and export data to CSV file
-write_dataframe_to_csv(eva_data, output_file)
+# --- Main (now simplified) ---
+eva_tbl <- read_json_to_dataframe(input_file) |>
+  write_dataframe_to_csv(output_file = output_file)
 
-# Sort dataframe by date ready to be plotted (date values are on x-axis)
-eva_data.sort_values('date', inplace=True)
+plot_cumulative_time_in_space(eva_tbl, graph_file)
 
-# Plot cumulative time spent in space over years
-plot_cumulative_time_in_space(eva_data, graph_file)
-
-print("--END--")
 ```
 :::
 
 :::
 
-## Use docstrings to document functions
+## Use `roxygen2` comments to document functions
 
-Now that we have written some functions, it is time to document them so that we can quickly recall 
-(and others looking at our code in the future can understand) what the functions do without having to read
-the code.
+Now that we’ve written a few functions, it’s time to document them so we can quickly remember what they do. That way, someone reading this code later can understand the intent without having to reverse-engineer the implementation.
 
-*Docstrings* are a specific type of documentation that are provided within functions and [Python classes][python-classes].
-A function docstring should explain what that particular code is doing, what parameters the function needs (inputs)
-and what form they should take, what the function outputs (you may see words like 'returns' or 'yields' here), 
-and errors (if any) that might be raised.
+In scripts, the usual approach is to write clear comments directly above a function. For R packages, the standard is to use [`roxygen2`](https://`roxygen2`.r-lib.org/): a structured comment block, also known as a Roxygen skeleton, is composed of lines starting with #'. This comment block describes what the function does, what inputs it expects, what it returns, and any important edge cases.
 
-Providing these docstrings helps improve code readability since it makes the function code more transparent and aids 
-understanding.
-Particularly, docstrings that provide information on the input and output of functions makes it easier to reuse them 
-in other parts of the code, without having to read the full function to understand what needs to be provided and 
-what will be returned.
+Good function documentation improves readability by making the purpose of the code explicit. It also makes functions easier to reuse: when the documentation clearly spells out inputs and outputs, you can call the function elsewhere with confidence—without re-reading the whole body to figure out what it needs and what it produces.
 
-Python docstrings are defined by enclosing the text with 3 double quotes (`"""`).
-This text is also indented to the same level as the code defined beneath it, which is 4 whitespaces by convention.
+With `roxygen2`, documentation is written immediately above the function definition using` #'` comments. Structured tags such as `@param`, `@return`, and `@examples` are what give the comment block its meaning — `@param` documents each function argument, `@return` describes what the function gives back, and `@examples` provides runnable usage examples. Tooling can turn these structured comments into the help text you see via `?function_name`.
 
-### Example of a single-line docstring
+When building a formal R package, `roxygen2` processes these `#'` blocks and auto-generates `.Rd` files — R's native documentation format, stored in the `man/` directory of a package. These `.Rd` files are what power the built-in help system: `?`, `help()`, and the RStudio help pane all read from them.
 
-```python
-def add(x, y):
-    """Add two numbers together"""
-    return x + y
+That said, you can still use roxygen-style comments even if you're not building a formal package. In a regular project, this means adopting` #'` blocks as a consistent convention in your .R scripts, using the same tags (`@param`, `@return`, `@examples`) to standardize what you record. You won't automatically get `?my_function` help pages without a package build, but you still gain a structured, readable, and machine-friendly format that's easy to search and maintain — and if the project ever does become a package, most of the documentation work is already done.
+
+We will learn to generate the `.Rd` files later, but go ahead and start adding comments now.
+
+### Example of a single-line comment
+
+```r
+
+add <- function(x, y) {
+  # Add two numbers together
+  x + y
+}
+
 ```
 
-### Example of a multi-line docstring
+### Example of a multi-line `roxygen2` comment
 
-```python
-def divide(x, y):
-    """
-    Divide number x by number y.
+```r
 
-    Args:
-        x: A number to be divided.
-        y: A number to divide by.
+#' Add two numbers together
+#'
+#' @param x A numeric value.
+#' @param y A numeric value.
+#' @return A single numeric value equal to `x + y`.
+#' @examples
+#' add(1, 2)
+#' add(3.5, 4)
+add <- function(x, y) {
+  x + y
+}
 
-    Returns:
-        float: The division of x by y.
-        
-    Raises:
-        ZeroDivisionError: Cannot divide by zero.
-    """
-    return x / y
 ```
 
-Some projects may have their own guidelines on how to write docstrings, such as [numpy][numpy-docstring].
-If you are contributing code to a wider project or community, try to follow the guidelines and standards they provide 
+Some projects may have their own guidelines on how to write `roxygen2` comments, such as [The Tidyverse Style Guide ](https://style.tidyverse.org/documentation.html). If you are contributing code to a wider project or community, try to follow the guidelines and standards they provide 
 for code style.
 
-As your code grows and becomes more complex, the docstrings can form the content of a reference guide allowing 
-developers to quickly look up how to use the APIs, functions, and classes defined in your codebase.
-Hence, it is common to find tools that will automatically extract docstrings from your code and generate a website where people can learn about your code without downloading/installing and reading the code files - such as [MkDocs][mkdocs-org].
+As your code grows and becomes more complex, the `roxygen2` comments can form the content of a reference guide allowing developers to quickly look up how to use the APIs, functions, and classes defined in your codebase.
+In R, it’s common to use tooling that extracts function documentation from your source and publishes it as a browsable website, so people can learn how to use your code without cloning the repo or reading the raw files. For package-style documentation written with `roxygen2`, a typical workflow is to generate reference pages from your #' comments and build a site with pkgdown, which produces a documentation website from your package and its help files. We will do this in a later episode that focuses on documentation.
 
-Let's write a docstring for the function `read_json_to_dataframe` we introduced in the previous exercise using the 
-[Google Style Python Docstrings Convention][google-doc-string]. 
-Remember, questions we want to answer when writing the docstring include:
+Let's write `roxygen2` comments for the function `read_json_to_dataframe` we introduced in the previous exercise. Remember, questions we want to answer when writing the `roxygen2` comments include:
 
 - What the function does?
 - What kind of inputs does the function take? Are they required or optional? Do they have default values?
 - What output will the function produce?
 - What exceptions/errors, if any, it can produce?
 
-Our `read_json_to_dataframe` function fully described by a docstring may look like:
+Our `read_json_to_dataframe` function fully described by the `roxygen2` comments may look like:
 
-```python
-def read_json_to_dataframe(input_file):
-    """
-    Read the data from a JSON file into a Pandas dataframe.
-    Clean the data by removing any rows where the 'duration' value is missing.
+```r
 
-    Args:
-        input_file (file or str): The file object or path to the JSON file.
+#' Read EVA data from a JSON file into a tibble
+#'
+#' Reads a JSON file containing an array of records (objects) and returns the
+#' contents as a tibble for downstream analysis.
+#'
+#' @param input_file Path to a JSON file (character scalar). The file is expected
+#'   to contain a JSON array of objects, e.g. `[{"eva":"1", ...}, {"eva":"2", ...}]`.
+#' @return A tibble with one row per JSON record and one column per field.
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' dplyr::glimpse(eva_tbl)
+read_json_to_dataframe <- function(input_file) {
+  jsonlite::fromJSON(input_file) |>
+    tibble::as_tibble()
+}
 
-    Returns:
-         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
-    """
-    print(f'Reading JSON file {input_file}')
-    # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-    eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any rows where duration is missing
-    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
-    return eva_df
 ```
+
+:::::: callout
+
+In RStudio, you can add `roxygen2` documentation blocks quickly using built-in helpers. After installing and loading `roxygen2`, place your cursor inside (or immediately above) a function and use Code → Insert Roxygen Skeleton to generate a template comment block with #' lines and common tags like @param and @return. RStudio will pre-populate the parameter list based on the function signature, so you can focus on filling in descriptions and examples. Many people also bind a keyboard shortcut to “Insert Roxygen Skeleton” so documenting functions becomes part of the normal edit cycle, and then run Document (commonly via devtools) to regenerate the help files when working in a package.
+
+::::::
 
 :::::: challenge
 
-### Writing docstrings (5 min)
+### Writing `roxygen2` comments (5 min)
 
-Write docstrings for the functions `write_dataframe_to_csv` and `plot_cumulative_time_in_space` we introduced earlier.
+Write `roxygen2` comments for the functions `write_dataframe_to_csv` and `plot_cumulative_time_in_space` we introduced earlier.
 
 ::: solution
 
 ### Solution
 
-Our `write_dataframe_to_csv` function fully described by a docstring may look like:
+Our `write_dataframe_to_csv` function fully described by its `roxygen2` comments may look like:
 
-```python
-def write_dataframe_to_csv(df, output_file):
-    """
-    Write the dataframe to a CSV file.
+```r
 
-    Args:
-        df (pd.DataFrame): The input dataframe.
-        output_file (file or str): The file object or path to the output CSV file.
+#' Clean an EVA dataframe and write it to CSV
+#'
+#' Coerces key columns to the expected types (e.g., `eva` to numeric and `date`
+#' to POSIXct), drops records missing a usable `duration` or `date`, writes the
+#' result to a CSV file, and returns the cleaned dataframe.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns
+#'   include `eva`, `date`, and `duration`.
+#' @param output_file Path to the output CSV file (character scalar).
+#'
+#' @return The cleaned dataframe (same class as `df` where practical), invisibly
+#'   suitable for piping into downstream steps.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' eva_tbl <- write_dataframe_to_csv(eva_tbl, "./eva-data.csv")
+write_dataframe_to_csv <- function(df, output_file) {
+  df <- df |>
+    dplyr::mutate(
+      eva  = as.numeric(eva),
+      date = lubridate::ymd_hms(date, quiet = TRUE)
+    ) |>
+    dplyr::filter(!is.na(duration), duration != "", !is.na(date))
 
-    Returns:
-        None
-    """
-    print(f'Saving to CSV file {output_file}')
-    # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False, encoding='utf-8')
+  readr::write_csv(df, output_file)
+  df
+}
+
 ```
 
-Our `plot_cumulative_time_in_space` function fully described by a docstring may look like:
+Our `plot_cumulative_time_in_space` function fully described by its `roxygen2` comments may look like:
 
-```python
-def plot_cumulative_time_in_space(df, graph_file):
-    """
-    Plot the cumulative time spent in space over years.
+```r
 
-    Convert the duration column from strings to number of hours
-    Calculate cumulative sum of durations
-    Generate a plot of cumulative time spent in space over years and
-    save it to the specified location
 
-    Args:
-        df (pd.DataFrame): The input dataframe.
-        graph_file (file or str): The file object or path to the output graph file.
+#' Plot cumulative EVA time in space and save the figure
+#'
+#' Computes EVA duration in hours from a `duration` string column (expected format
+#' like `"H:MM"` or `"HH:MM"`), calculates cumulative time over chronological
+#' `date`, generates a ggplot line chart, saves it to disk, and prints it.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns:
+#'   `date` (POSIXct or parseable datetime) and `duration` (character `"H:MM"`).
+#' @param graph_file Path to the output image file (character scalar), e.g.
+#'   `"./cumulative_eva_graph.png"`.
+#'
+#' @return Invisibly returns the ggplot object.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json") |>
+#'   write_dataframe_to_csv("./eva-data.csv")
+#' plot_cumulative_time_in_space(eva_tbl, "./cumulative_eva_graph.png"
+plot_cumulative_time_in_space <- function(df, graph_file) {
+  df <- df |>
+    dplyr::arrange(date) |>
+    dplyr::mutate(
+      duration_hours = {
+        parts <- stringr::str_split(duration, ":", n = 2, simplify = TRUE)
+        as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+      },
+      cumulative_time = cumsum(duration_hours)
+    )
 
-    Returns:
-        None
-    """
-    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-    df['cumulative_time'] = df['duration_hours'].cumsum()
-    plt.plot(df['date'], df['cumulative_time'], 'ko-')
-    plt.xlabel('Year')
-    plt.ylabel('Total time spent in space to date (hours)')
-    plt.tight_layout()
-    plt.savefig(graph_file)
-    plt.show()
+  p <- ggplot2::ggplot(df, ggplot2::aes(x = date, y = cumulative_time)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      x = "Year",
+      y = "Total time spent in space to date (hours)"
+    ) +
+    ggplot2::theme_minimal()
+
+  ggplot2::ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+  print(p)
+
+  invisible(p)
+}
+
 ```
 
 :::
@@ -982,112 +1031,133 @@ def plot_cumulative_time_in_space(df, graph_file):
 
 Finally, our code may look something like the following:
 
-``` python
-import matplotlib.pyplot as plt
-import pandas as pd
+```r
 
-def read_json_to_dataframe(input_file):
-    """
-    Read the data from a JSON file into a Pandas dataframe.
-    Clean the data by removing any rows where the 'duration' value is missing.
+# EVA cumulative time pipeline (tidyverse-first, with reusable functions + roxygen-style docs)
 
-    Args:
-        input_file (file or str): The file object or path to the JSON file.
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
 
-    Returns:
-         eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
-    """
-    print(f'Reading JSON file {input_file}')
-    # Read the data from a JSON file into a Pandas dataframe
-    eva_df = pd.read_json(input_file, convert_dates=['date'], encoding='ascii')
-    eva_df['eva'] = eva_df['eva'].astype(float)
-    # Clean the data by removing any rows where duration is missing
-    eva_df.dropna(axis=0, subset=['duration', 'date'], inplace=True)
-    return eva_df
+# Files
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
 
+#' Read EVA data from a JSON file into a tibble
+#'
+#' Reads a JSON file containing an array of records (objects) and returns the
+#' contents as a tibble for downstream analysis.
+#'
+#' @param input_file Path to a JSON file (character scalar). The file is expected
+#'   to contain a JSON array of objects, e.g. `[{"eva":"1", ...}, {"eva":"2", ...}]`.
+#' @return A tibble with one row per JSON record and one column per field.
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' dplyr::glimpse(eva_tbl)
+read_json_to_dataframe <- function(input_file) {
+  jsonlite::fromJSON(input_file) |>
+    tibble::as_tibble()
+}
 
-def write_dataframe_to_csv(df, output_file):
-    """
-    Write the dataframe to a CSV file.
+#' Clean an EVA dataframe and write it to CSV
+#'
+#' Coerces key columns to the expected types (e.g., `eva` to numeric and `date`
+#' to POSIXct), drops records missing a usable `duration` or `date`, writes the
+#' result to a CSV file, and returns the cleaned dataframe.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns
+#'   include `eva`, `date`, and `duration`.
+#' @param output_file Path to the output CSV file (character scalar).
+#'
+#' @return The cleaned dataframe (same class as `df` where practical), suitable
+#'   for piping into downstream steps.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' eva_tbl <- write_dataframe_to_csv(eva_tbl, "./eva-data.csv")
+write_dataframe_to_csv <- function(df, output_file) {
+  df <- df |>
+    dplyr::mutate(
+      eva  = as.numeric(eva),
+      date = lubridate::ymd_hms(date, quiet = TRUE)
+    ) |>
+    dplyr::filter(!is.na(duration), duration != "", !is.na(date))
 
-    Args:
-        df (pd.DataFrame): The input dataframe.
-        output_file (file or str): The file object or path to the output CSV file.
+  readr::write_csv(df, output_file)
+  df
+}
 
-    Returns:
-        None
-    """
-    print(f'Saving to CSV file {output_file}')
-    # Save dataframe to CSV file for later analysis
-    df.to_csv(output_file, index=False, encoding='utf-8')
+#' Plot cumulative EVA time in space and save the figure
+#'
+#' Computes EVA duration in hours from a `duration` string column (expected format
+#' like `"H:MM"` or `"HH:MM"`), calculates cumulative time over chronological
+#' `date`, generates a ggplot line chart, saves it to disk, and prints it.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns:
+#'   `date` (POSIXct or parseable datetime) and `duration` (character `"H:MM"`).
+#' @param graph_file Path to the output image file (character scalar), e.g.
+#'   `"./cumulative_eva_graph.png"`.
+#'
+#' @return Invisibly returns the ggplot object.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json") |>
+#'   write_dataframe_to_csv("./eva-data.csv")
+#' plot_cumulative_time_in_space(eva_tbl, "./cumulative_eva_graph.png")
+plot_cumulative_time_in_space <- function(df, graph_file) {
+  df <- df |>
+    dplyr::arrange(date) |>
+    dplyr::mutate(
+      duration_hours = {
+        parts <- stringr::str_split(duration, ":", n = 2, simplify = TRUE)
+        as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+      },
+      cumulative_time = cumsum(duration_hours)
+    )
 
-def plot_cumulative_time_in_space(df, graph_file):
-    """
-    Plot the cumulative time spent in space over years.
+  p <- ggplot2::ggplot(df, ggplot2::aes(x = date, y = cumulative_time)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      x = "Year",
+      y = "Total time spent in space to date (hours)"
+    ) +
+    ggplot2::theme_minimal()
 
-    Convert the duration column from strings to number of hours
-    Calculate cumulative sum of durations
-    Generate a plot of cumulative time spent in space over years and
-    save it to the specified location
+  ggplot2::ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+  print(p)
 
-    Args:
-        df (pd.DataFrame): The input dataframe.
-        graph_file (file or str): The file object or path to the output graph file.
+  invisible(p)
+}
 
-    Returns:
-        None
-    """
-    print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
-    df['duration_hours'] = df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-    df['cumulative_time'] = df['duration_hours'].cumsum()
-    plt.plot(df['date'], df['cumulative_time'], 'ko-')
-    plt.xlabel('Year')
-    plt.ylabel('Total time spent in space to date (hours)')
-    plt.tight_layout()
-    plt.savefig(graph_file)
-    plt.show()
+# --- Main ---
+eva_tbl <- read_json_to_dataframe(input_file) |>
+  write_dataframe_to_csv(output_file = output_file)
 
-# Main code
+plot_cumulative_time_in_space(eva_tbl, graph_file)
 
-print("--START--")
-
-input_file = open('./eva-data.json', 'r', encoding='ascii')
-output_file = open('./eva-data.csv', 'w', encoding='utf-8')
-graph_file = './cumulative_eva_graph.png'
-
-# Read the data from JSON file
-eva_data = read_json_to_dataframe(input_file)
-
-# Convert and export data to CSV file
-write_dataframe_to_csv(eva_data, output_file)
-
-# Sort dataframe by date ready to be plotted (date values are on x-axis)
-eva_data.sort_values('date', inplace=True)
-
-# Plot cumulative time spent in space over years
-plot_cumulative_time_in_space(eva_data, graph_file)
-
-print("--END--")
 ```
 
 Do not forget to commit any uncommitted changes you may have and then push your work to GitHub.
 
 ```bash
-(venv_spacewalks) $ git add <your_changed_files>
-(venv_spacewalks) $ git commit -m "Your commit message"
-(venv_spacewalks) $ git push origin main
+ $ git add <your_changed_files>
+ $ git commit -m "Your commit message"
+ $ git push origin main
 ```
+
+
+
+
 
 ## Summary
 
-Good code readability brings many benefits to software development. 
-It makes code easier to understand, maintain, and debug. 
-This benefits collaborators and future developers as well as the original author. 
-Readable code reduces the risk of errors, speeds up onboarding of new team members, and simplifies code reviews. 
-It also supports long-term sustainability, as clear code is more adaptable and easier to extend or refactor over time.
+Good code readability brings many benefits to software development. It makes code easier to understand, maintain, and debug—helping collaborators and future developers as well as the original author. Readable code reduces the risk of errors, speeds up onboarding for new team members, and simplifies code reviews. It also supports long-term sustainability: clear code is easier to extend, adapt, and refactor over time.
 
-Integrated Development Environments (IDEs) significantly enhance code readability by using built-in static analysis tools (linters) that automatically identify and flag issues in real-time as you write code.
-This proactive approach allows developers to identify and fix many issues as they write code, rather than later in the development cycle.
+Integrated development environments (IDEs) can further improve readability by surfacing issues early through built-in or integrated static analysis tools (linters). Linters flag common problems and style violations as you write code, which helps you address issues immediately rather than discovering them later in the development cycle.
+
+Comments are really important. Roxygen2 can help you insert comment in a structed way that later be used to automate documentation. 
 
 :::::: spoiler
 
@@ -1104,20 +1174,15 @@ We recommend the following resources for some additional reading on the topic of
 
 - [7 tell-tale signs of unreadable code](https://www.index.dev/blog/7-tell-tale-signs-of-unreadable-code-how-to-identify-and-fix-the-problem)
 - ['Code Readability Matters' from the Guardian's engineering blog][guardian-code-readability]
-- [PEP 8 Style Guide for Python][pep8-comments]
-- [Coursera: Inline commenting in Python][coursera-inline-comments]
-- [Introducing Functions from Introduction to Python][python-functions-intro]
-- [W3Schools.com Python Functions][python-functions-w3schools]
 
 Also check the [full reference set](learners/reference.md#litref) for the course.
 
 ::: keypoints
 
-- Readable code is easier to understand, maintain, debug and extend (reuse) - saving time and effort.
-- Choosing descriptive variable and function names will communicate their purpose more effectively.
-- Using comments and docstrings to describe parts of the code will help transmit understanding and context.
-- Use libraries or packages for common functionality to avoid duplication.
-- Creating functions from the smallest, reusable units of code will make the code more readable and help.
-compartmentalise which parts of the code are doing what actions and isolate specific code sections for reuse.
+	-	Readable code is easier to understand, maintain, debug, and extend (reuse), which saves time and effort.
+	-	Choosing descriptive variable and function names communicates intent more clearly.
+	-	Using `roxygen2` comments adds context and helps others understand why the code exists, not just what it does.
+	-	Use packages for common functionality to avoid duplicating work.
+		Refactor repeated logic into small, reusable functions. This improves readability by making responsibilities clear, compartmentalizing what each section does, and isolating code that can be reused elsewhere.
 
 :::
