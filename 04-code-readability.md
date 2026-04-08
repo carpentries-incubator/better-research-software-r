@@ -57,7 +57,7 @@ renv::status() #you can run this any time
 If you haven't, you can restore the packages and their dependencies by running
 
 ```r
-renv::restore("renv.lock")
+renv::restore()
 ```
 
 :::
