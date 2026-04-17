@@ -696,7 +696,7 @@ Then add the new or modified files. Based in how you ran the code you might not 
 
 ```bash
 $  git add eva_data_analysis.R cumulative_eva_graph.png Rplots.pdf .DS_Store
-```bash
+```
 
 ```bash
  git commit -m "fixed code and saving output files"
