@@ -179,8 +179,10 @@ Therefore we need to give them clear names, but we also want to keep them concis
 
 “There are only two hard things in Computer Science: cache invalidation and naming things.”  
 \- Phil Karlton
-Some useful tips for naming variables:
+
 :::::::::::::::::::::::::::::::::
+
+Some useful tips for naming variables:
 
 This guidance does not necessarily apply if your variable is a well-known constant in your domain - for example, *c* represents the speed of light in physics.  Though `c` in R often refers to the `c()` function which might be something to consider as well.
 
@@ -201,13 +203,13 @@ Let's apply this to `eva_data_analysis.R`.
 
 a. Edit the code as follows to use descriptive (and consistent) variable names:
 
-    - Change `data_f` to `input_file`
-    - Change data_t to output_file
-    - Change g_file to graph_file
+    - Change `data_f_file` to `input_file`
+    - Change `data_t_file` to `output_file`
+    - Change `g_file` to `graph_file`
     
 *Be sure to change all the occurrences of each variable name.*
 
-b. What other variable names in our code would benefit from renaming? Rename these too. Hint: variables w, t, tt and ttt could also be renamed to be more descriptive.
+b. What other variable names in our code would benefit from renaming? Rename these too. Hint: variables t, tt and ttt could also be renamed to be more descriptive.
 
 c. Commit your changes to your repository. Remember to use an informative commit message.
 
@@ -216,25 +218,26 @@ c. Commit your changes to your repository. Remember to use an informative commit
 :::::::::::::::::: hint
 
 Variables `t`, `tt` and `ttt` could also be renamed to be more descriptive.
-  - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
-  - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
-  - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
+
+ - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
+ - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
+ - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
 
 ::::::::::::::::::::::::
 Rename these too. 
 :::::::::::::::::: hint
 
 Variables `t`, `tt` and `ttt` could also be renamed to be more descriptive.
-  - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
-  - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
-  - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
+ - **Change `t` to `duration_dt`**: a datetime object parsed from the string, indicated by "_dt".
+ - **Change `tt` to `duration_str`**: represents a string form of the duration, indicated by "_str".
+ - **Change `ttt` to `duration_hours`**: the duration converted into (decimal) hours.
 
 ::::::::::::::::::::::::
 c. Commit your changes to your repository. Remember to use an informative commit message.
 
 :::::::: solution
 
-Updated code after renaming `data_f`, `data_t` and `g_file` as well as variables `t`, `tt` and `ttt` to be more descriptive. 
+Updated code after renaming `data_f_file`, `data_t_file` and `g_file` as well as variables `t`, `tt` and `ttt` to be more descriptive. 
       
       
 ```r
@@ -927,7 +930,7 @@ read_json_to_dataframe <- function(input_file) {
 
 :::::: callout
 
-In RStudio, you can add `roxygen2` documentation blocks quickly using built-in helpers. After installing and loading `roxygen2`, place your cursor inside (or immediately above) a function and use Code → Insert Roxygen Skeleton to generate a template comment block with #' lines and common tags like @param and @return. RStudio will pre-populate the parameter list based on the function signature, so you can focus on filling in descriptions and examples. Many people also bind a keyboard shortcut to “Insert Roxygen Skeleton” so documenting functions becomes part of the normal edit cycle, and then run Document (commonly via devtools) to regenerate the help files when working in a package.
+In RStudio, you can add `roxygen2` documentation blocks quickly using built-in helpers. Place your cursor inside a function and use Code → Insert Roxygen Skeleton to generate a template comment block with #' lines and common tags like @param and @return. RStudio will pre-populate the parameter list based on the function signature, so you can focus on filling in descriptions and examples. Many people also bind a keyboard shortcut to “Insert Roxygen Skeleton” so documenting functions becomes part of the normal edit cycle, and then run Document (commonly via devtools) to regenerate the help files when working in a package.
 
 ::::::
 
