@@ -358,7 +358,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Code readability</h1>
-        <p>Last updated on 2026-04-08 |
+        <p>Last updated on 2026-04-27 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/04-code-readability.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -427,7 +427,7 @@ we can follow to help create more readable code.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability</a></p>
@@ -440,7 +440,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Make sure your packages and dependencies are up to date </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>In the previous section we discussed using the package renv.lock to
 track packages and their dependencies. At this time, you should have a
@@ -595,10 +595,11 @@ rules” here, and it’s often a case of using your best judgment.</p>
 <div class="callout-content">
 <p>“There are only two hard things in Computer Science: cache
 invalidation and naming things.”<br>
-- Phil Karlton Some useful tips for naming variables:</p>
+- Phil Karlton</p>
 </div>
 </div>
 </div>
+<p>Some useful tips for naming variables:</p>
 <p>This guidance does not necessarily apply if your variable is a
 well-known constant in your domain - for example, <em>c</em> represents
 the speed of light in physics. Though <code>c</code> in R often refers
@@ -642,16 +643,18 @@ min)</h3>
 <ol style="list-style-type: lower-alpha"><li>
 <p>Edit the code as follows to use descriptive (and consistent)
 variable names:</p>
-<ul><li>Change <code>data_f</code> to <code>input_file</code>
+<ul><li>Change <code>data_f_file</code> to <code>input_file</code>
 </li>
-<li>Change data_t to output_file</li>
-<li>Change g_file to graph_file</li>
+<li>Change <code>data_t_file</code> to <code>output_file</code>
+</li>
+<li>Change <code>g_file</code> to <code>graph_file</code>
+</li>
 </ul></li>
 </ol><p><em>Be sure to change all the occurrences of each variable
 name.</em></p>
 <ol start="2" style="list-style-type: lower-alpha"><li><p>What other variable names in our code would benefit from
-renaming? Rename these too. Hint: variables w, t, tt and ttt could also
-be renamed to be more descriptive.</p></li>
+renaming? Rename these too. Hint: variables t, tt and ttt could also be
+renamed to be more descriptive.</p></li>
 <li><p>Commit your changes to your repository. Remember to use an
 informative commit message.</p></li>
 </ol></div>
@@ -662,17 +665,22 @@ informative commit message.</p></li>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>Variables <code>t</code>, <code>tt</code> and <code>ttt</code> could
-also be renamed to be more descriptive. - <strong>Change <code>tt</code>
-to <code>duration_str</code></strong>: represents a string form of the
-duration, indicated by “_str”. - <strong>Change <code>t</code> to
-<code>duration_dt</code></strong>: a datetime object parsed from the
-string, indicated by “_dt”. - <strong>Change <code>ttt</code> to
+also be renamed to be more descriptive.</p>
+<ul><li>
+<strong>Change <code>t</code> to <code>duration_dt</code></strong>:
+a datetime object parsed from the string, indicated by “_dt”.</li>
+<li>
+<strong>Change <code>tt</code> to
+<code>duration_str</code></strong>: represents a string form of the
+duration, indicated by “_str”.</li>
+<li>
+<strong>Change <code>ttt</code> to
 <code>duration_hours</code></strong>: the duration converted into
-(decimal) hours.</p>
-</div>
+(decimal) hours.</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -688,11 +696,11 @@ min)<em> (continued)</em>
 <div class="callout-content">
 <p>Rename these too. :::::::::::::::::: hint</p>
 <p>Variables <code>t</code>, <code>tt</code> and <code>ttt</code> could
-also be renamed to be more descriptive. - <strong>Change <code>tt</code>
-to <code>duration_str</code></strong>: represents a string form of the
-duration, indicated by “_str”. - <strong>Change <code>t</code> to
-<code>duration_dt</code></strong>: a datetime object parsed from the
-string, indicated by “_dt”. - <strong>Change <code>ttt</code> to
+also be renamed to be more descriptive. - <strong>Change <code>t</code>
+to <code>duration_dt</code></strong>: a datetime object parsed from the
+string, indicated by “_dt”. - <strong>Change <code>tt</code> to
+<code>duration_str</code></strong>: represents a string form of the
+duration, indicated by “_str”. - <strong>Change <code>ttt</code> to
 <code>duration_hours</code></strong>: the duration converted into
 (decimal) hours.</p>
 </div>
@@ -705,11 +713,12 @@ informative commit message.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>Updated code after renaming <code>data_f</code>, <code>data_t</code>
-and <code>g_file</code> as well as variables <code>t</code>,
-<code>tt</code> and <code>ttt</code> to be more descriptive.</p>
+<p>Updated code after renaming <code>data_f_file</code>,
+<code>data_t_file</code> and <code>g_file</code> as well as variables
+<code>t</code>, <code>tt</code> and <code>ttt</code> to be more
+descriptive.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -822,7 +831,7 @@ updated code to the git repo.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Variable <code>fieldnames</code> (containing column names for CSV
 data file) is defined but never used in the code - it should be
@@ -1160,7 +1169,7 @@ informative commit message.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Some good comments may look like the example below.</p>
 <div class="codewrapper sourceCode" id="cb16">
@@ -1283,7 +1292,7 @@ steps. We will continue to work on steps 3 and 4 above later on.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>You will need to share the code below with the learners via
 copy-and-paste either in shared notes or chat in a virtual training.
@@ -1394,7 +1403,7 @@ save the plot.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>After extracting the code to plot a graph into a separate function,
 our code may look something like the following:</p>
@@ -1602,15 +1611,15 @@ the <code>roxygen2</code> comments may look like:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <p>In RStudio, you can add <code>roxygen2</code> documentation blocks
-quickly using built-in helpers. After installing and loading
-<code>roxygen2</code>, place your cursor inside (or immediately above) a
-function and use Code → Insert Roxygen Skeleton to generate a template
-comment block with #’ lines and common tags like <span class="citation">@param</span> and <span class="citation">@return</span>. RStudio will pre-populate the parameter
-list based on the function signature, so you can focus on filling in
-descriptions and examples. Many people also bind a keyboard shortcut to
-“Insert Roxygen Skeleton” so documenting functions becomes part of the
-normal edit cycle, and then run Document (commonly via devtools) to
-regenerate the help files when working in a package.</p>
+quickly using built-in helpers. Place your cursor inside a function and
+use Code → Insert Roxygen Skeleton to generate a template comment block
+with #’ lines and common tags like <span class="citation">@param</span>
+and <span class="citation">@return</span>. RStudio will pre-populate the
+parameter list based on the function signature, so you can focus on
+filling in descriptions and examples. Many people also bind a keyboard
+shortcut to “Insert Roxygen Skeleton” so documenting functions becomes
+part of the normal edit cycle, and then run Document (commonly via
+devtools) to regenerate the help files when working in a package.</p>
 </div>
 </div>
 </div>
@@ -1634,7 +1643,7 @@ min)</h3>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Our <code>write_dataframe_to_csv</code> function fully described by
 its <code>roxygen2</code> comments may look like:</p>
@@ -1866,7 +1875,7 @@ in a structed way that later be used to automate documentation.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure</a></p>
@@ -1966,7 +1975,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/04-code-readability.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/04-code-readability.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-04-08",
+  "dateModified": "2026-04-27",
   "datePublished": "2026-04-27"
 }
 

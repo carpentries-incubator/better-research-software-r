@@ -710,7 +710,7 @@ understand what the code is doing and how it is organised.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>Below are some suggested questions to help you assess the code. These
 are not the only criteria on which you could evaluate the code and you
@@ -741,7 +741,7 @@ different statistic, or run the analysis on a different input file?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>What the code does:</p>
 <ul>
@@ -2934,7 +2934,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-04-code-readability"><p>Content from <a href="04-code-readability.html">Code readability</a></p>
 <hr>
-<p>Last updated on 2026-04-08 |
+<p>Last updated on 2026-04-27 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/04-code-readability.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 90 minutes</p>
@@ -3000,7 +3000,7 @@ we can follow to help create more readable code.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/04-code-readability</a></p>
@@ -3013,7 +3013,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Make sure your packages and dependencies are up to date </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>In the previous section we discussed using the package renv.lock to
 track packages and their dependencies. At this time, you should have a
@@ -3173,10 +3173,11 @@ rules” here, and it’s often a case of using your best judgment.</p>
 <div class="callout-content">
 <p>“There are only two hard things in Computer Science: cache
 invalidation and naming things.”<br>
-- Phil Karlton Some useful tips for naming variables:</p>
+- Phil Karlton</p>
 </div>
 </div>
 </div>
+<p>Some useful tips for naming variables:</p>
 <p>This guidance does not necessarily apply if your variable is a
 well-known constant in your domain - for example, <em>c</em> represents
 the speed of light in physics. Though <code>c</code> in R often refers
@@ -3226,10 +3227,12 @@ min)</h3>
 <p>Edit the code as follows to use descriptive (and consistent)
 variable names:</p>
 <ul>
-<li>Change <code>data_f</code> to <code>input_file</code>
+<li>Change <code>data_f_file</code> to <code>input_file</code>
 </li>
-<li>Change data_t to output_file</li>
-<li>Change g_file to graph_file</li>
+<li>Change <code>data_t_file</code> to <code>output_file</code>
+</li>
+<li>Change <code>g_file</code> to <code>graph_file</code>
+</li>
 </ul>
 </li>
 </ol>
@@ -3237,8 +3240,8 @@ variable names:</p>
 name.</em></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li><p>What other variable names in our code would benefit from
-renaming? Rename these too. Hint: variables w, t, tt and ttt could also
-be renamed to be more descriptive.</p></li>
+renaming? Rename these too. Hint: variables t, tt and ttt could also be
+renamed to be more descriptive.</p></li>
 <li><p>Commit your changes to your repository. Remember to use an
 informative commit message.</p></li>
 </ol>
@@ -3250,16 +3253,23 @@ informative commit message.</p></li>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>Variables <code>t</code>, <code>tt</code> and <code>ttt</code> could
-also be renamed to be more descriptive. - <strong>Change <code>tt</code>
-to <code>duration_str</code></strong>: represents a string form of the
-duration, indicated by “_str”. - <strong>Change <code>t</code> to
-<code>duration_dt</code></strong>: a datetime object parsed from the
-string, indicated by “_dt”. - <strong>Change <code>ttt</code> to
+also be renamed to be more descriptive.</p>
+<ul>
+<li>
+<strong>Change <code>t</code> to <code>duration_dt</code></strong>:
+a datetime object parsed from the string, indicated by “_dt”.</li>
+<li>
+<strong>Change <code>tt</code> to
+<code>duration_str</code></strong>: represents a string form of the
+duration, indicated by “_str”.</li>
+<li>
+<strong>Change <code>ttt</code> to
 <code>duration_hours</code></strong>: the duration converted into
-(decimal) hours.</p>
+(decimal) hours.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -3276,11 +3286,11 @@ min)<em> (continued)</em>
 <div class="callout-content">
 <p>Rename these too. :::::::::::::::::: hint</p>
 <p>Variables <code>t</code>, <code>tt</code> and <code>ttt</code> could
-also be renamed to be more descriptive. - <strong>Change <code>tt</code>
-to <code>duration_str</code></strong>: represents a string form of the
-duration, indicated by “_str”. - <strong>Change <code>t</code> to
-<code>duration_dt</code></strong>: a datetime object parsed from the
-string, indicated by “_dt”. - <strong>Change <code>ttt</code> to
+also be renamed to be more descriptive. - <strong>Change <code>t</code>
+to <code>duration_dt</code></strong>: a datetime object parsed from the
+string, indicated by “_dt”. - <strong>Change <code>tt</code> to
+<code>duration_str</code></strong>: represents a string form of the
+duration, indicated by “_str”. - <strong>Change <code>ttt</code> to
 <code>duration_hours</code></strong>: the duration converted into
 (decimal) hours.</p>
 </div>
@@ -3295,11 +3305,12 @@ informative commit message.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>Updated code after renaming <code>data_f</code>, <code>data_t</code>
-and <code>g_file</code> as well as variables <code>t</code>,
-<code>tt</code> and <code>ttt</code> to be more descriptive.</p>
+<p>Updated code after renaming <code>data_f_file</code>,
+<code>data_t_file</code> and <code>g_file</code> as well as variables
+<code>t</code>, <code>tt</code> and <code>ttt</code> to be more
+descriptive.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -3416,7 +3427,7 @@ updated code to the git repo.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Variable <code>fieldnames</code> (containing column names for CSV
 data file) is defined but never used in the code - it should be
@@ -3766,7 +3777,7 @@ informative commit message.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Some good comments may look like the example below.</p>
 <div class="codewrapper sourceCode" id="cb16">
@@ -3893,7 +3904,7 @@ steps. We will continue to work on steps 3 and 4 above later on.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>You will need to share the code below with the learners via
 copy-and-paste either in shared notes or chat in a virtual training.
@@ -4006,7 +4017,7 @@ save the plot.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>After extracting the code to plot a graph into a separate function,
 our code may look something like the following:</p>
@@ -4220,15 +4231,15 @@ the <code>roxygen2</code> comments may look like:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <p>In RStudio, you can add <code>roxygen2</code> documentation blocks
-quickly using built-in helpers. After installing and loading
-<code>roxygen2</code>, place your cursor inside (or immediately above) a
-function and use Code → Insert Roxygen Skeleton to generate a template
-comment block with #’ lines and common tags like <span class="citation">@param</span> and <span class="citation">@return</span>. RStudio will pre-populate the parameter
-list based on the function signature, so you can focus on filling in
-descriptions and examples. Many people also bind a keyboard shortcut to
-“Insert Roxygen Skeleton” so documenting functions becomes part of the
-normal edit cycle, and then run Document (commonly via devtools) to
-regenerate the help files when working in a package.</p>
+quickly using built-in helpers. Place your cursor inside a function and
+use Code → Insert Roxygen Skeleton to generate a template comment block
+with #’ lines and common tags like <span class="citation">@param</span>
+and <span class="citation">@return</span>. RStudio will pre-populate the
+parameter list based on the function signature, so you can focus on
+filling in descriptions and examples. Many people also bind a keyboard
+shortcut to “Insert Roxygen Skeleton” so documenting functions becomes
+part of the normal edit cycle, and then run Document (commonly via
+devtools) to regenerate the help files when working in a package.</p>
 </div>
 </div>
 </div>
@@ -4252,7 +4263,7 @@ min)</h3>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Our <code>write_dataframe_to_csv</code> function fully described by
 its <code>roxygen2</code> comments may look like:</p>
@@ -4486,7 +4497,7 @@ in a structed way that later be used to automate documentation.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure</a></p>
@@ -4588,7 +4599,7 @@ whole.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure</a></p>
@@ -4601,7 +4612,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Activate your virtual environment </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>If it is not already active, make sure to activate your virtual
 environment from the root of the software project directory:</p>
@@ -4668,7 +4679,7 @@ explain their functionalities.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>You will need to share the code below with the learners via
 copy-and-paste either in shared notes or chat in a virtual training.
@@ -4889,7 +4900,7 @@ programming interface (API) for advanced users.</li>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>You will need to share the code below with the learners via
 copy-and-paste either in shared notes or chat in a virtual training.
@@ -5049,7 +5060,7 @@ list - remember to import this library first.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
   <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>You will need to share the code below with the learners via
 copy-and-paste either in shared notes or chat in a virtual training.
@@ -5327,7 +5338,7 @@ running the code or your code will fail.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Create <code>data/</code> folder and move the data file into it.
 Create an empty <code>results</code> folder too.</p>
@@ -5505,7 +5516,7 @@ smoother scaling, testing, and deployment as the codebase grows.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/06-code-correctness" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/06-code-correctness</a></p>
@@ -5606,7 +5617,7 @@ a piece of code meet our expectations, i.e. are correct.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/06-code-correctness" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/06-code-correctness</a></p>
@@ -5619,7 +5630,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Activate your virtual environment </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>If it is not already active, make sure to activate your virtual
 environment from the root of the software project directory:</p>
@@ -5712,7 +5723,7 @@ working together correctly.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ul>
 <li>End-to-end tests compare the actual output of a program to the
@@ -5834,7 +5845,7 @@ verify that a piece of code is behaving as expected?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>It can be tempting to test our code informally because this
 approach:</p>
@@ -6327,7 +6338,7 @@ FAILED tests/test_analyse.py::test_mean_duration - NameError: name 'length' is n
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: lower-alpha">
 <li>Nine tests were detected in the test suite</li>
@@ -6489,7 +6500,7 @@ function. Cover typical cases and edge cases.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>We can add the following test functions to our test suite.</p>
 <div class="codewrapper sourceCode" id="cb31">
@@ -6741,7 +6752,7 @@ test suite?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <ol style="list-style-type: lower-alpha">
 <li>You can find this information on the “Files” tab of the HTML report
@@ -7030,7 +7041,7 @@ principles</a> by making our code more <strong>accessible</strong> and
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation</a>.</p>
@@ -7155,7 +7166,7 @@ the people who need it – both users and developers.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-documentation</a></p>
@@ -7168,7 +7179,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Activate your virtual environment </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>If it is not already active, make sure to activate your virtual
 environment from the root of the software project directory:</p>
@@ -7354,7 +7365,7 @@ and which are good to have but <strong>optional</strong>?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>To support the FAIR principles (Findability, Accessibility,
 Interoperability, and Reusability), certain sections in a README file
@@ -7426,7 +7437,7 @@ code and who it is for.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>You may want to share the following README excerpts directly in chat
 or the shared notes document with learners to copy-paste.</p>
@@ -7479,7 +7490,7 @@ installed. You will also need the following libraries (minimum versions in brack
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Installation instructions:</p>
 <p>NB: In the solution below the back ticks of each code block have been
@@ -7540,7 +7551,7 @@ choose for your code and that we recommend for further reading.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Make sure to mention the <a href="licensing.html">extra content on
 different open source software licences</a>, briefly cover it if there
@@ -7605,7 +7616,7 @@ your code repository.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>Licence can be done in either of the following two ways:
@@ -7953,7 +7964,7 @@ deploying our documentation to a hosting service.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Some options for hosting documentation </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <div class="section level3">
 <h3 id="github-pages">GitHub Pages<a class="anchor" aria-label="anchor" href="#github-pages"></a>
@@ -8092,7 +8103,7 @@ dataset generated by the Spacewalks software.</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>An effective how-to guide should:</p>
 <ul>
@@ -8148,7 +8159,7 @@ dataset when running the analysis script.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Here is what an example tutorial may look like.</p>
 <pre><code>## Introduction
@@ -8274,7 +8285,7 @@ our example how-to guide?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
   <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <p>In terms of content:</p>
 <ul>
@@ -8319,7 +8330,7 @@ framework for structuring documentation effectively.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
   <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Code state </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/08-open-collaboration" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/08-open-collaboration</a></p>
@@ -8448,7 +8459,7 @@ consider which we will cover here.</p>
   Code state
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/08-open-collaboration" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/08-open-collaboration</a></p>
@@ -8464,7 +8475,7 @@ should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software
   Activate your virtual environment
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>If it is not already active, make sure to activate your virtual
 environment from the root of the software project directory:</p>
@@ -8580,7 +8591,7 @@ meant to exist forever).</p>
   Optional challenge: archive our GitHub repository to Zenodo (5 min)
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>You can choose to do the following as an exercise or by live coding
 based on what you think the learners would prefer. You can copy the
@@ -8649,7 +8660,7 @@ repository and the corresponding Markdown:</p>
   Problems with GitHub and Zenodo integration
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>The integration between GitHub and Zenodo does not interact well with
 some browsers’ privacy features and extensions. Firefox can be
@@ -8683,7 +8694,7 @@ the software related to the DOI we are adding.</p>
   Optional challenge: add a DOI and software version to the citation file (5 min)
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>You can choose to do the following as an exercise or by live coding
 based on what you think the learners would prefer. You can copy the the
@@ -9226,7 +9237,7 @@ branches.</p>
   How to pull changes from a remote branch
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>If we needed to pull changes from a branch on a remote (for example
 if we have made changes on another computer or via GitHub’s web based
@@ -9249,7 +9260,7 @@ command.</p>
   Merging branches
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
 <p>If we are working alone, when we have completed working on a branch
 (for example adding a feature or fixing a bug) then we can merge our
@@ -9406,7 +9417,7 @@ computer and in GitHub.</li>
   Updated function to copy-paste
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -9470,7 +9481,7 @@ community-driven development.</p>
   Code state
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
 should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/final" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/final</a></p>
