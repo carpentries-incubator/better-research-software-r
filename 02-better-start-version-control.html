@@ -355,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Better start with a software project</h1>
-        <p>Last updated on 2026-04-17 |
+        <p>Last updated on 2026-04-28 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/02-better-start-version-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1199,14 +1199,17 @@ afterwards.)</li>
 <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> calls a name that matches a Vignette. It
 seems that the function <code>Date()</code> was called before the
 library was requested.</p>
+<p>This is a good reminder that functions from packages must be loaded
+before use. A common and recommended practice is to load all required
+libraries at the top of a script to avoid errors and make dependencies
+clear.</p>
 <p>Therefore, the solution is to move <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> at
-least above the <code>date=-Date()</code> code line. While this should
-work, it may be judicious to place the <code>library</code> command at
-the top of the script.</p>
+least above the <code>date=-Date()</code> code line.</p>
 <p>Let’s edit the file again: place <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> one
 line above <code>date = Date()</code></p>
 <p>Then run the code with either RStudio or <code>Rscript</code>. The
 code should now run its course without error.</p>
+
 </div>
 </div>
 </div>
@@ -1586,7 +1589,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/02-better-start-version-control.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/02-better-start-version-control.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-04-17",
+  "dateModified": "2026-04-28",
   "datePublished": "2026-04-28"
 }
 

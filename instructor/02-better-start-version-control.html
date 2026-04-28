@@ -355,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Better start with a software project</h1>
-        <p>Last updated on 2026-04-17 |
+        <p>Last updated on 2026-04-28 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/02-better-start-version-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1237,14 +1237,41 @@ afterwards.)</li>
 <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> calls a name that matches a Vignette. It
 seems that the function <code>Date()</code> was called before the
 library was requested.</p>
+<p>This is a good reminder that functions from packages must be loaded
+before use. A common and recommended practice is to load all required
+libraries at the top of a script to avoid errors and make dependencies
+clear.</p>
 <p>Therefore, the solution is to move <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> at
-least above the <code>date=-Date()</code> code line. While this should
-work, it may be judicious to place the <code>library</code> command at
-the top of the script.</p>
+least above the <code>date=-Date()</code> code line.</p>
 <p>Let’s edit the file again: place <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> one
 line above <code>date = Date()</code></p>
 <p>Then run the code with either RStudio or <code>Rscript</code>. The
 code should now run its course without error.</p>
+<div id="accordionInstructor3" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
+  <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div class="accordion-body">
+<p>It is expected that some learners will not have
+<code>lubridate</code> installed here. They will still get an error when
+the code is run. This is a good opportunity to preview and motivate that
+the next section will teach how to control what is installed with
+<code>renv</code>.</p>
+<p>Since this is an intermediate lesson, learners may already be
+familiar with the difference between <code>install.packages()</code> and
+<code>library()</code>. However, this is a good place to briefly review
+that distinction and ensure everyone has <strong>lubridate</strong>
+installed so they can proceed.</p>
+<p>If <code><a href="https://lubridate.tidyverse.org" class="external-link">library(lubridate)</a></code> throws an error, pause to help
+learners install it (via <code>install.packages("lubridate")</code> or
+the <em>Packages</em> tab). Note that installing a package will also
+install any required dependencies.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1624,7 +1651,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/02-better-start-version-control.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/02-better-start-version-control.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-04-17",
+  "dateModified": "2026-04-28",
   "datePublished": "2026-04-28"
 }
 
