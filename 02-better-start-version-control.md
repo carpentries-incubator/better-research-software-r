@@ -656,12 +656,22 @@ But which Vignette can help us?
 
 If we look 2 lines below the error line in `eva_data_analysis.R` , we can note that the line `library(lubridate)` calls a name that matches a Vignette. It seems that the function `Date()` was called before the library was requested.
 
+This is a good reminder that functions from packages must be loaded before use. A common and recommended practice is to load all required libraries at the top of a script to avoid errors and make dependencies clear. 
+
 Therefore, the solution is to move `library(lubridate)` at least above the `date=-Date()` code line.
-While this should work, it may be judicious to place the `library` command at the top of the script.
 
 Let's edit the file again: place `library(lubridate)` one line above `date = Date()`
 
 Then run the code with either RStudio or `Rscript`. The code should now run its course without error.
+
+::: instructor
+It is expected that some learners will not have `lubridate` installed here.  They will still get an error when the code is run.
+This is a good opportunity to preview and motivate that the next section will teach how to control what is installed with `renv`.
+
+Since this is an intermediate lesson, learners may already be familiar with the difference between `install.packages()` and `library()`. However, this is a good place to briefly review that distinction and ensure everyone has **lubridate** installed so they can proceed.
+
+If `library(lubridate)` throws an error, pause to help learners install it (via `install.packages("lubridate")` or the *Packages* tab). Note that installing a package will also install any required dependencies.
+:::
 
 :::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::

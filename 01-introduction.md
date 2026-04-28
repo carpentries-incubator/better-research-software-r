@@ -126,6 +126,12 @@ RStudio will then reopen into your project.
 Note, now it says `spacewalks` in the upper-right hand corner of RStudio since that project is open and the Files pane is showing the files from the `spacewalks` folder.
 When you return to working on this project later, you can click on the `spackewalks.Rproj` file in your file explorer/finder window or you can use the Rproject menu in the upper-right hand side of RStudio to select which projct you would like to work in.
 
+Reproducibility note: For reproducible workflows, it’s best to start each session with a clean environment. Best practice is to turn off workspace saving/loading (Tools → Global Options → General: uncheck “Restore .RData…” and set “Save workspace” to “Never”). If you are prompted to save your workspace when closing RStudio, click "No". This ensures your code runs from a fresh start every time and avoids hidden dependencies on objects left over from previous sessions. 
+
+::: instructor 
+Pause here for some discussion. Are there instances where saving your workspace might be useful? When or why? 
+:::
+
 You may notice that the software project contains:
 
 1. A JSON file called `data.json` - a snippet of which is shown below - with data on extra-vehicular activities 
