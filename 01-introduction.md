@@ -1,5 +1,5 @@
 ---
-title: "Course introduction"
+title: "Course Introduction"
 teaching: 10
 exercises: 10
 ---
@@ -34,21 +34,20 @@ That is, enabling others to run our code and obtain the same results we did.
 ## Why should I care about reproducibility?
 
 Scientific transparency and rigor are key factors in research.
-Scientific methodology and results need to be published openly and replicated and confirmed by several independent parties.
-However, research papers often lack the full details required for independent reproduction or replication. 
-Many attempts at reproducing or replicating the results of scientific studies have failed in a variety of disciplines ranging from psychology ([The Open Science Collaboration (2015)][replication-crisis-osc]) to cancer sciences ([Errington et al (2021)][replication-crisis-errington]).
-These are called [**the reproducibility and replicability crises**][reproducibility-crisis] - ongoing methodological crises in which the results of many scientific studies are difficult or impossible to repeat.
+Scientific methodology and results need to be published openly, replicated and confirmed by several independent parties.
+However, research papers often lack the full details required for independent reproduction (reaching the same results with the same data) or replication (reaching the same results with new data). 
+Across many disciplines, the failure of attempts to reproduce or replicate scientific conclusions have resulted in [**reproducibility and replicability crises**][reproducibility-crisis], leading to reduced confidence in the scientific conclusions of fields as diverse as psychology ([The Open Science Collaboration (2015)][replication-crisis-osc]) and cancer sciences ([Errington et al (2021)][replication-crisis-errington]).
 
 Reproducible research is a practice that ensures that researchers can repeat the same analysis multiple times with the same results.
 It offers many benefits to those who practice it:
 
-* Reproducible research helps researchers remember how and why they performed specific tasks and analyses; this enables easier explanation of work to collaborators and reviewers.
-* Reproducible research enables researchers to quickly modify analyses and figures - this is often required at all stages of research and automating this process saves loads of time.
-* Reproducible research enables reusability of previously conducted tasks so that new projects that require the same or similar tasks become much easier and efficient by reusing or reconfiguring previous work.
-* Reproducible research supports researchers' career development by facilitating the reuse and citation of all research outputs - including both code and data.
+* Reproducible research helps researchers remember how and why they performed specific tasks and analyses; this makes work easier to explain to collaborators and reviewers.
+* Reproducible research enables researchers to quickly modify analyses and figures, saving time and effort when datasets or methods change.
+* Reproducible research is reusable; tasks can be recycled or reconfigured in future work.
+* Reproducible research supports researchers' career development by facilitating the citation of all research outputs, including both code and data.
 * Reproducible research is a strong indicator of rigor, trustworthiness, and transparency in scientific research.
   This can increase the quality and speed of peer review, because reviewers can directly access the analytical process described in a manuscript.
-  It increases the probability that errors are caught early on - by collaborators or during the peer-review process, helping alleviate the reproducibility crisis.  
+  It increases the probability that errors are caught early on, by collaborators or during the peer-review process, helping alleviate the reproducibility crisis.  
 
 However, reproducible research often requires that researchers implement new practices and learn new tools.
 This course aims to teach some of these practices and tools pertaining to the use of software to conduct reproducible research.
@@ -57,7 +56,7 @@ Review [the Reproducible Research Discussion](./reproducible-research-discussion
 
 ::::::::::::::::::::::::::::::
 
-## Practices for building better research software
+## Practices for Building Better Research Software
 
 The practices we will cover for building better research software fall into three areas.
 
@@ -92,7 +91,7 @@ Write your reflections in the shared collaborative document.
 
 ::::::::::::::::::
 
-## Our research software project
+## Our Research Software Project
 
 You are going to follow a fairly typical experience of a new researcher (e.g. a PhD student or a postdoc) joining a research group.
 You were emailed some spacewalks data and analysis code bundled in the `spacewalks.zip` archive, written by another group 
@@ -245,7 +244,7 @@ So, we cannot even run the code on our machines.
 There is also a number of issues we identified with the software project that could do with improving.
 For the rest of this course, we will work on fixing these issues and applying some good software engineering practices.
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on reproducible research:
 
@@ -259,6 +258,6 @@ We recommend the following resources for some additional reading on reproducible
 * [Training materials on different aspects of research software engineering][intersect-rse-training] (including open source, reproducibility, research software testing, engineering, design, continuous integration, collaboration, version control, packaging,  etc.), compiled by the [INTERSECT project](https://intersect-training.org/)
 * [Curated resources][forrt-resources] by the [Framework for Open and Reproducible Research Training](https://forrt.org/) (FORRT)
 
-## Acknowledgements and references
+## Acknowledgements and References
 
 The content of this course borrows from or references [various work](learners/reference.md#litref), especially the [original version of this course with python examples][bbrs-py].

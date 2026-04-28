@@ -1,5 +1,5 @@
 ---
-title: Reproducible software environments
+title: Reproducible Software Environments
 teaching: 30
 exercises: 0
 ---
@@ -59,7 +59,7 @@ If you run into problems not mentioned here, please open an [issue in the lesson
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Software dependencies
+## Software Dependencies
 
 If we have a look at our script, we may notice a few library calls such as `library("tidyverse")` throughout the code.
 
@@ -74,7 +74,7 @@ As a result, each R project you work on may require a different setup and set of
 To prevent conflicts and maintain reproducibility across projects, it’s helpful to keep these configurations isolated.
 The typical solution is to create a project-specific environment using tools like {renv}, which maintains its own library of packages and records exact versions in a lockfile—ensuring that the project always runs with the same package set it was developed with.
 
-## What are virtual software environments?
+## What Are Virtual Software Environments?
 
 So what exactly are virtual software environments, and why use them?
 
@@ -119,7 +119,7 @@ We should not let the difficulty of attaining "perfect" reproducibility prevent 
 
 ::::::::::::::::::::::::::::::
 
-## Managing virtual environments R-style
+## Managing Virtual Environments R-Style
 
 Instantiating virtual environments in R is multi-step, multi-tool process.
 
@@ -375,7 +375,7 @@ Furthermore, your expertise will develop as you get more practice with managing 
 
 ::::::::::::::::::::::::::::::
 
-## Running the code and reproducing results
+## Running the Code and Reproducing Results
 
 We are now setup to run our code from the newly created R project 
 
@@ -452,7 +452,7 @@ At this point, the code in your local software project's directory should be as 
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

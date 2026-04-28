@@ -1,5 +1,5 @@
 ---
-title: Code readability
+title: Code Readability
 teaching: 60
 exercises: 30
 ---
@@ -62,7 +62,7 @@ renv::restore()
 
 :::
 
-## Place `library` functions at the top
+## Place `library` Functions at the Top
 
 Let’s look at our code again. One thing that stands out is that we’re calling library() in multiple places throughout the script. By convention, all libraries should be loaded at the top so dependencies are easy to see and not buried in the code. This improves readability and makes the code easier to reuse and maintain.
 
@@ -152,7 +152,7 @@ Let's make sure we commit our changes.
  $ git add eva_data_analysis.R
  $ git commit -m "Move library calls to the top of the script"
 ```
-## Rules for variable names in R
+## Rules for Variable Names in R
 
  $ git add eva_data_analysis.R
  $ git commit -m "Move library calls to the top of the script"
@@ -318,7 +318,7 @@ As we have now updated all the variable names to be more descriptive, we can now
 To do so, we open our repository in GitHub, switch to the Issues tab, find the issue to "improve variable names" we created earlier.
 There are more automated ways to close issues based on a commit/pull request that we will learn later, for now we will click the "Close issue" button at the bottom of the discussion.
 
-## Remove unused variables and imports
+## Remove Unused Variables and Imports
 
 Unused variables or import statements can cause confusion about what the code is doing, making it harder to read and easier to introduce mistakes. Such things may seem harmless as they do not cause immediate syntax errors - but they can potentially lead to subtle program logic errors, unexpected behavior, wrong results and issues later on making them especially tricky to detect and fix. Over time, this makes the codebase more fragile and harder to maintain and extend.
 
@@ -437,7 +437,7 @@ The IDE understands the underlying structure of the code, which makes these comp
 
 
 
-## Use existing packages from known developers
+## Use Existing Packages From Known Developers
 
 Our script currently reads the data line-by-line from the JSON data file and uses custom code to manipulate the data. Variables of interest are stored in lists but there are more suitable data structures (e.g. dataframes or tibbles) to store data in our case.
 
@@ -520,7 +520,7 @@ print(p)
 
 We have committed the code and the environment changes together since they are related and form one logical unit of change.
 
-## Use comments to explain functionality
+## Use Comments to Explain Functionality
 
 Commenting is a very useful practice to help convey the context of the code. It can be helpful as a reminder for your future self or your collaborators as to why code is written in a certain way, how it is achieving a specific task, or the real-world implications of your code.
 
@@ -655,7 +655,7 @@ Commit changes:
  $ git push origin main
 ```
 
-## Separate units of functionality
+## Separate Units of Functionality
 
 Functions are a fundamental concept in writing software and are one of the core ways you can organize your code to improve its readability. A function is an isolated section of code that performs a single, *specific* task that can be simple or complex.
 
@@ -848,7 +848,7 @@ plot_cumulative_time_in_space(eva_tbl, graph_file)
 
 :::
 
-## Use `roxygen2` comments to document functions
+## Use `roxygen2` Comments to Document Functions
 
 Now that we’ve written a few functions, it’s time to document them so we can quickly remember what they do. That way, someone reading this code later can understand the intent without having to reverse-engineer the implementation.
 
@@ -1171,7 +1171,7 @@ At this point, the code in your local software project's directory should be as 
 
 :::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

@@ -1,5 +1,5 @@
 ---
-title: Better start with a software project
+title: Better Start With a Software Project
 teaching: 30
 exercises: 30
 ---
@@ -32,7 +32,7 @@ produces can be trusted and others can build upon it with confidence.
 Let's begin by creating a new software project from our existing code,
 and start tracking changes to it with version control.
 
-## From script to software project
+## From Script to Software Project
 
 In the previous episode you have unzipped `spacewalks.zip` into a directory `spacewalks` in your home directory.
 
@@ -70,7 +70,7 @@ Over the rest of the course, we will transform a collection of these files into 
 The first thing you may notice that our software project contains folder `astronaut-data-analysis-old` which presumably tries to keep track of older versions of the code. There is a better way to do that using version control tool, such as Git, and we can delete this folder but will wait until after we set up our version control with git.
 This way we can keep that version in our history and can delete it so it isn't currently in our folder.
 
-## Version control
+## Version Control
 
 Before we do any further changes to our software, we want to make sure we can keep a history of what changes we have done since we inherited the code from our colleague.
 
@@ -729,7 +729,7 @@ On branch main
 nothing to commit, working tree clean
 ```
 
-## Interacting with a remote Git server
+## Interacting With a Remote Git Server
 
 Git is distributed version control system and lets us synchronise work between multiple copies of the same repository - 
 which may not be on your machine (called **remote repositories**).
@@ -830,7 +830,7 @@ This command tells Git to update the "main" branch on the "origin" remote.
 The `-u` flag (short for `--set-upstream`) sets the 'tracking reference' for the current branch,
 so that in future `git push` will default to sending to `origin main`.
 
-## Software project in GitHub
+## Software Project in GitHub
 
 We now have our software project in GitHub and have linked it to our local working copy.
 We are ready to start more work on software development and publishing and backing up that work on GitHub.
@@ -903,7 +903,7 @@ At this point, the code in your local software project's directory should be as 
 
 :::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

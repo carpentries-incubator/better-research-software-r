@@ -1,5 +1,5 @@
 ---
-title: Software documentation
+title: Software Documentation
 teaching: 60
 exercises: 30
 ---
@@ -52,7 +52,7 @@ the software project directory:
 ```
 :::
 
-## Why document our software?
+## Why Document Our Software?
 
 Software documentation is often perceived as a thankless and time-consuming task with few tangible benefits and is often neglected in research projects. 
 However, like software testing, documenting our software help us produce **better software** and conduct (more) **reproducible** research:
@@ -66,7 +66,7 @@ However, like software testing, documenting our software help us produce **bette
   - How-to guides and tutorials ensure that users can install our software independently and make use of its basic features
   - Reference guides and background information can help developers understand our code sufficiently to modify/extend/repurpose it.
 
-## Code-level documentation
+## Code-Level Documentation
 
 In previous episodes we encountered several different forms of in-code documentation aspects, including in-line comments and docstrings. 
 These are an excellent way to improve the readability of our code, but by themselves are insufficient to ensure that our code is easy to use, understand and modify - this requires additional software-level documentation.
@@ -82,7 +82,7 @@ Software-level technical documentation encompasses:
 - Reference - a lookup manual to help users find relevant information about the software e.g. functions and their parameters.
 - Explanation - conceptual discussion of the code to help users understand implementation decisions 
 
-## Project-level documentation
+## Project-Level Documentation
 
 Project-level documentation includes various information and metadata about software that help to discover it, explain the legal terms of reusing it, describe its functionality on a high level and how to install, run and contribute to it.
 
@@ -420,7 +420,7 @@ You can either do it directly on GitHub or creating the file locally and the com
 command line.
 ::::::
 
-## Documentation tools
+## Documentation Tools
 
 Once our project reaches a certain size or level of complexity we may want to add
 additional documentation such as a standalone tutorial or “background” explaining our methodological choices.
@@ -668,7 +668,7 @@ You can find out about other deployment options including free documentation hos
 ::::::
 :::::::::::::::::::::::::::::::::::::
 
-## Documentation guides
+## Documentation Guides
 
 Once we start to consider other forms of documentation beyond the README,
 we can also increase reusability of our code by ensuring that the content and style of
@@ -874,7 +874,7 @@ At this point, the code in your local software project's directory should be as 
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

@@ -1,5 +1,5 @@
 ---
-title: Code structure
+title: Code Structure
 teaching: 60
 exercises: 30
 ---
@@ -52,7 +52,7 @@ $ source venv_spacewalks/Scripts/activate # Windows
 
 :::
 
-## Functions for modular and reusable code 
+## Functions for Modular and Reusable Code 
 
 As we have already seen in the previous episode - functions play a key role in creating modular and reusable code.
 After extracting units of functionality into separate functions, the main part of our code became much simpler and more readable, only containing the invocation of the following three functions:
@@ -211,7 +211,7 @@ print("--END--")
 
 Even though our code became a bit longer than previously, it is more readable and new functions we added can potentially be reused elsewhere too.
 
-## Creating a main function
+## Creating a Main Function
 
 Now we also want to move the main functionality into a main function.
 There is a common code structure (pattern) for writing a main function in Python:
@@ -405,7 +405,7 @@ if __name__ == "__main__":
     main(input_file, output_file, graph_file)
 ```
 
-## Command-line interface to code
+## Command-Line Interface to Code
 
 A common way to structure code is to have a command-line interface to allow the passing of various parameters. 
 For example, we can pass the input data file to be read and the output file 
@@ -576,7 +576,7 @@ Remember to commit our changes.
 (venv_spacewalks) $ git commit -m "Add command line functionality to script"
 ```
 
-## Directory structure for software projects
+## Directory Structure for Software Projects
 
 Expanding on the code structure theme, following conventions on consistent and informative directory structure 
 for your projects will ensure people will immediately know where to find things within your project, especially helpful 
@@ -823,7 +823,7 @@ At this point, the code in your local software project's directory should be as 
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 
