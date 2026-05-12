@@ -1029,7 +1029,7 @@ plot_cumulative_time_in_space <- function(df, graph_file) {
 
 ::::::
 
-Finally, our code may look something like the following:
+At this time, our code may look something like the following:
 
 ```r
 
@@ -1138,6 +1138,149 @@ eva_tbl <- read_json_to_dataframe(input_file) |>
 plot_cumulative_time_in_space(eva_tbl, graph_file)
 
 ```
+
+Now that we have abstracted away the code into functions, we can place them inside their own .R files and remove them from the main body of the code to further improve readability . Once the functions are tucked away in their .R files, we can `source()` them and make them available.
+
+To accomplish this, we can place three .R scrips inside the `R/` folder. Each .R contains its own function. A common name convention is to use dashes rather than underscores for filenames. We would end up with these three files 
+
+```r
+#read-json-to-dataframe.R 
+
+
+#' Read EVA data from a JSON file into a tibble
+#'
+#' Reads a JSON file containing an array of records (objects) and returns the
+#' contents as a tibble for downstream analysis.
+#'
+#' @param input_file Path to a JSON file (character scalar). The file is expected
+#'   to contain a JSON array of objects, e.g. `[{"eva":"1", ...}, {"eva":"2", ...}]`.
+#' @return A tibble with one row per JSON record and one column per field.
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' dplyr::glimpse(eva_tbl)
+read_json_to_dataframe <- function(input_file) {
+  jsonlite::fromJSON(input_file) |>
+    tibble::as_tibble()
+}
+
+```
+
+```r
+
+# write-dataframe-to-csv.R
+
+#' Clean an EVA dataframe and write it to CSV
+#'
+#' Coerces key columns to the expected types (e.g., `eva` to numeric and `date`
+#' to POSIXct), drops records missing a usable `duration` or `date`, writes the
+#' result to a CSV file, and returns the cleaned dataframe.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns
+#'   include `eva`, `date`, and `duration`.
+#' @param output_file Path to the output CSV file (character scalar).
+#'
+#' @return The cleaned dataframe (same class as `df` where practical), suitable
+#'   for piping into downstream steps.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json")
+#' eva_tbl <- write_dataframe_to_csv(eva_tbl, "./eva-data.csv")
+write_dataframe_to_csv <- function(df, output_file) {
+  df <- df |>
+    dplyr::mutate(
+      eva  = as.numeric(eva),
+      date = lubridate::ymd_hms(date, quiet = TRUE)
+    ) |>
+    dplyr::filter(!is.na(duration), duration != "", !is.na(date))
+
+  readr::write_csv(df, output_file)
+  df
+}
+
+```
+ 
+ 
+```r
+
+# plot-cumulative-time-in-space.R
+
+#' Plot cumulative EVA time in space and save the figure
+#'
+#' Computes EVA duration in hours from a `duration` string column (expected format
+#' like `"H:MM"` or `"HH:MM"`), calculates cumulative time over chronological
+#' `date`, generates a ggplot line chart, saves it to disk, and prints it.
+#'
+#' @param df A data frame or tibble containing EVA records. Expected columns:
+#'   `date` (POSIXct or parseable datetime) and `duration` (character `"H:MM"`).
+#' @param graph_file Path to the output image file (character scalar), e.g.
+#'   `"./cumulative_eva_graph.png"`.
+#'
+#' @return Invisibly returns the ggplot object.
+#'
+#' @examples
+#' eva_tbl <- read_json_to_dataframe("./eva-data.json") |>
+#'   write_dataframe_to_csv("./eva-data.csv")
+#' plot_cumulative_time_in_space(eva_tbl, "./cumulative_eva_graph.png")
+plot_cumulative_time_in_space <- function(df, graph_file) {
+  df <- df |>
+    dplyr::arrange(date) |>
+    dplyr::mutate(
+      duration_hours = {
+        parts <- stringr::str_split(duration, ":", n = 2, simplify = TRUE)
+        as.numeric(parts[, 1]) + as.numeric(parts[, 2]) / 60
+      },
+      cumulative_time = cumsum(duration_hours)
+    )
+
+  p <- ggplot2::ggplot(df, ggplot2::aes(x = date, y = cumulative_time)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      x = "Year",
+      y = "Total time spent in space to date (hours)"
+    ) +
+    ggplot2::theme_minimal()
+
+  ggplot2::ggsave(graph_file, plot = p, width = 9, height = 5, dpi = 300)
+  print(p)
+
+  invisible(p)
+}
+
+```
+
+With these file in place, our main code block should look like this, 
+
+
+```r
+
+# EVA cumulative time pipeline (tidyverse-first, with reusable functions + roxygen-style docs)
+
+library(tidyverse)
+library(jsonlite)
+library(lubridate)
+
+# Files
+input_file  <- "./eva-data.json"
+output_file <- "./eva-data.csv"
+graph_file  <- "./cumulative_eva_graph.png"
+
+
+#these source() calls make the functions available inside this R session
+
+source("read-json-to-dataframe.R ")
+source("write-dataframe-to-csv.R")
+source("plot-cumulative-time-in-space.R")
+
+# --- Main ---
+eva_tbl <- read_json_to_dataframe(input_file) |>
+  write_dataframe_to_csv(output_file = output_file)
+
+plot_cumulative_time_in_space(eva_tbl, graph_file)
+
+
+```
+
 
 Do not forget to commit any uncommitted changes you may have and then push your work to GitHub.
 
