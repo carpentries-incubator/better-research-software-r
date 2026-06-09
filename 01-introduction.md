@@ -230,19 +230,6 @@ This is a (non-exhaustive) list of things that could be fixed/improved with our 
 As you have seen from the previous exercise - there are quite a few things that can be improved with this code.
 We will try to make this research software project a "bit better" for future use.
 
-### Running the code
-
-Let's try to run the code and see if we can reproduce the results.
-
-Open the script, `my code v2.R`,  in RStudio and run it all via source or by selecting all the code and running it.
-
-You will get an error. We get this error because the paths to the data files have been hard coded as absolute paths for the original developer's machine.
-Hard-coding paths is not very reproducible, as it means the paths need to be changed whenever the code is run on a new computer.
-We will soon fix the code to use the relative paths within the project structure and eventually we will change the code to take in arguments from the command line when it is run too.
-
-So, we cannot even run the code on our machines.
-There is also a number of issues we identified with the software project that could do with improving.
-For the rest of this course, we will work on fixing these issues and applying some good software engineering practices.
 
 ## Further Reading
 
