@@ -640,6 +640,10 @@ In both cases there will be another error:
 Error in Date() : could not find function "Date"
 ```
 
+**Note:** If you don't have both `lubridate` and `jsonlite` already installed, you may get an error notifying you of the missing packages.
+For now, go ahead and install them using either the `install.packages()` command or by selecting "install" in the alert banner in the Source pane.
+We'll cover a reproducible approach to package installation in Episode 3.
+
 :::::::::::::::::::::::::::: challenge
 
 - Where in the code is the problem? Which line?
