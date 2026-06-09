@@ -219,6 +219,9 @@ nothing added to commit but untracked files present (use "git add" to track)
 This tells us that Git has noticed two files in our directory, but unlike Dropbox or OneDrive, it does not *automatically* track them. We need to tell Git explicitly which files we want it to track.
 This is not a handicap, but rather helpful, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
 This is not a problem, but rather a helpful feature, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
+
+### Running the Code
+
 Before we commit this initial version, we should try to run it. This is often the first thing you might do upon receiving someone's code.
 
 There are multiple ways to run R code:
@@ -231,15 +234,11 @@ Option 1: within R console
 Option 2: from the Terminal tab
 
 - An R script can be run within the shell with command **`Rscript`** which is part of any R installation.
-- The command is all uppercase and blank spaces in the file name have to be escaped by a backslash as shown:
+- Blank spaces in the file name have to be marked with a backslash, as shown:
 
 ```bash
 $ Rscript my\ code\ v2.R 
 ```
-Option 2: from the Shell window
-
-- An R script can be run within the shell with command **`Rscript`** plus the path to the R file we want to run. which is part of any R installation. For example:
-
 
 ```output
 Error in open.connection(con, "rb") : cannot open the connection
@@ -252,9 +251,9 @@ Execution halted
 
 We get this error because the paths to the data files have been hard coded as absolute paths for the original developer's machine.
 Hard-coding paths is not very reproducible, as it means the paths need to be changed whenever the code is run on a new computer.
-Instead, we will soon change the code to use the relative paths within the project structure and eventually we will change the code to take in arguments from the command line when it is run.
+Coming up, we will change the code to use the relative paths within the project structure. Later, we will make the code even more flexible by allowing it to take arguments from the command line.
 When we commit the files, we will note that the code is broken in our commit message.
-This is a best practice if you decide to commit broken code.
+This is a best practice when committing broken code.
 
 ### Add files into repository
 
