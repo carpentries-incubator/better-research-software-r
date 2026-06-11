@@ -123,7 +123,7 @@ Git stores files in **repositories** - directories where changes to the files ca
 The diagram below shows the different parts of a Git repository,
 and the most common commands used to work with one.
 
-![Software development lifecycle with Git](fig/ep02_fig05-git-lifecycle.svg){alt='Software development lifecycle with Git diagram showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository'}
+![Software development lifecycle with Git](fig/git-tracking-changes-lifecycle.svg){alt='Software development lifecycle with Git diagram showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository'}
 
 - **Working directory** - a local directory (including any subdirectories) where your project files live,
   and where you are currently working.
@@ -219,6 +219,9 @@ nothing added to commit but untracked files present (use "git add" to track)
 This tells us that Git has noticed two files in our directory, but unlike Dropbox or OneDrive, it does not *automatically* track them. We need to tell Git explicitly which files we want it to track.
 This is not a handicap, but rather helpful, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
 This is not a problem, but rather a helpful feature, since scientific code can have vast inputs or outputs we might not want Git to track and store (GBs to TBs of space telescope data) or require sensitive information we cannot share (for example, medical records).
+
+### Running the Code
+
 Before we commit this initial version, we should try to run it. This is often the first thing you might do upon receiving someone's code.
 
 There are multiple ways to run R code:
@@ -231,15 +234,11 @@ Option 1: within R console
 Option 2: from the Terminal tab
 
 - An R script can be run within the shell with command **`Rscript`** which is part of any R installation.
-- The command is all uppercase and blank spaces in the file name have to be escaped by a backslash as shown:
+- Blank spaces in the file name have to be marked with a backslash, as shown:
 
 ```bash
 $ Rscript my\ code\ v2.R 
 ```
-Option 2: from the Shell window
-
-- An R script can be run within the shell with command **`Rscript`** plus the path to the R file we want to run. which is part of any R installation. For example:
-
 
 ```output
 Error in open.connection(con, "rb") : cannot open the connection
@@ -252,9 +251,9 @@ Execution halted
 
 We get this error because the paths to the data files have been hard coded as absolute paths for the original developer's machine.
 Hard-coding paths is not very reproducible, as it means the paths need to be changed whenever the code is run on a new computer.
-Instead, we will soon change the code to use the relative paths within the project structure and eventually we will change the code to take in arguments from the command line when it is run.
+Coming up, we will change the code to use the relative paths within the project structure. Later, we will make the code even more flexible by allowing it to take arguments from the command line.
 When we commit the files, we will note that the code is broken in our commit message.
-This is a best practice if you decide to commit broken code.
+This is a best practice when committing broken code.
 
 ### Add files into repository
 
@@ -641,6 +640,10 @@ In both cases there will be another error:
 Error in Date() : could not find function "Date"
 ```
 
+**Note:** If you don't have both `lubridate` and `jsonlite` already installed, you may get an error notifying you of the missing packages.
+For now, go ahead and install them using either the `install.packages()` command or by selecting "install" in the alert banner in the Source pane.
+We'll cover a reproducible approach to package installation in Episode 3.
+
 :::::::::::::::::::::::::::: challenge
 
 - Where in the code is the problem? Which line?
@@ -757,20 +760,20 @@ Let's push our **local repository** to [GitHub](https://github.com) and share it
    there is a menu labelled "+" with a dropdown.
    Click the dropdown and select "New repository" from the options:
 
-   ![*Creating a new GitHub repository*](fig/ep02_fig01-create_new_repo.png){alt="Selecting the 'New repository' option from GitHub's dropdown menu labelled '+'" .image-with-shadow }
+   ![*Creating a new GitHub repository*](fig/github-create-new-repo.png){alt="Selecting the 'New repository' option from GitHub's dropdown menu labelled '+'" .image-with-shadow }
 
 3. You will be presented with some options to fill in or select while creating your repository.
    In the "Repository Name" field, type "spacewalks".
    This is the name of your project and matches the name of your local folder.
 
-   ![*Naming the GitHub repository*](fig/ep02_fig02-repository_name.png){alt="Setting the name of the repository on GitHub through the 'Repository Name' text field" .image-with-shadow }
+   ![*Naming the GitHub repository*](fig/github-repository-name.png){alt="Setting the name of the repository on GitHub through the 'Repository Name' text field" .image-with-shadow }
 
    Ensure the visibility of the repository is "Public" and leave all other options blank.
    Since this repository will be connected to a local repository,
    it needs to be empty which is why we chose not to initialise with a README or add a license or `.gitignore` file.
    Click "Create repository" at the bottom of the page:
 
-   ![*Complete GitHub repository creation*](fig/ep02_fig03-create_repository.png){alt="Completing the creation of the GitHub repository by clicking on the 'Create repository' button" .image-with-shadow }
+   ![*Complete GitHub repository creation*](fig/github-create-repository.png){alt="Completing the creation of the GitHub repository by clicking on the 'Create repository' button" .image-with-shadow }
 
 4. Now we have a  **remote repository** on GitHub's servers,
    you need to send it the files and history from your **local repository**.
@@ -792,7 +795,7 @@ Let's push our **local repository** to [GitHub](https://github.com) and share it
    You can copy these commands using the button that looks like two overlapping squares to the right-hand side of the commands.
    Paste them into your terminal and run them.
 
-  ![*Copy the commands to sync the local and remote repositories*](fig/ep02_fig04-copy_commands.png){alt="Copying the commands to sync the local and remote repositories from the remote repository's home page on GitHub" .image-with-shadow }
+  ![*Copy the commands to sync the local and remote repositories*](fig/github-copy-commands.png){alt="Copying the commands to sync the local and remote repositories from the remote repository's home page on GitHub" .image-with-shadow }
 
 5. If you refresh your browser window,
    you should now see the two files `eva_data_analysis.py` and `eva-data.json` visible in the GitHub repository,
