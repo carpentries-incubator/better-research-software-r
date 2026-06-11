@@ -156,7 +156,8 @@ Let's make sure we commit our changes.
 
  $ git add eva_data_analysis.R
  $ git commit -m "Move library calls to the top of the script"
-Some highlights:
+
+
 Some highlights:
 - Only alphanumeric characters, dot, and underscores are permitted in variable names.  
 - Must start with a letter or a dot (.); if it starts with a dot, the next character cannot be a digit.
