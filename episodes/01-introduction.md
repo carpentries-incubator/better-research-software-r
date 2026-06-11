@@ -112,7 +112,7 @@ In addition to keeping all our files for this project organized for ourselves, u
 We will discover in the next episode the issues with "hard coding" specific filesystem paths, and how using R projects allows us to create consistent file path references.
 
 To create a new project, open RStudio and go to **File -> New Project**. This will open the new project setup wizard.
-Choose **Existing Directory**, then navigate to and select the spacewalks folder in your home directory using the **Browse...** button. Once the spacewalks folder is selected, click **Open**.
+Choose **Existing Directory**, then navigate to and select the `spacewalks` folder in your home directory using the **Browse...** button. Once the `spacewalks` folder is selected, click **Open**.
 Then click **Create Project**. 
 RStudio will then reopen into your project.
 Note that it now says `spacewalks` in the upper-right hand corner of RStudio (because that is the open project). The files pane should show the files from inside the `spacewalks` folder.
