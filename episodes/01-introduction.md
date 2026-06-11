@@ -191,7 +191,7 @@ This is a (non-exhaustive) list of things that could be fixed/improved with our 
 - R script's name (`my code v2.R`) should not contain blank spaces as it may cause problems when running the code from command line
 - variables (e.g. `t`, `tt`, `ttt`) should have more descriptive and meaningful names
 - version control is embedded in file name (`my code v2.R`) - there are better ways of keeping track of changes to code and its different versions
-- the project contains a hidden file `.DS_Store` which is local and personal config file that does not need to be shared and doesn't run outside a Mac ecosystem
+- the project contains a hidden file `.DS_Store` which is local and personal config file that does not need to be shared and isn't used outside a Mac ecosystem
 
 #### Code organisation and style
 
