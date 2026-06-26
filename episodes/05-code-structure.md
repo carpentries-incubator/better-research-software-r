@@ -49,7 +49,7 @@ You can check that the project is up-to-date with
 renv::status() #you can run this any time
 ```
 
-If you haven't, you can restore the packages and their dependencies by running
+If you don't have up-to-date packages, you can restore the packages and their dependencies by running
 
 ```r
 renv::restore("renv.lock")
