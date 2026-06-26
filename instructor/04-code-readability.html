@@ -354,7 +354,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Code Readability</h1>
-        <p>Last updated on 2026-04-28 |
+        <p>Last updated on 2026-06-26 |
 
         <a href="https://github.com/carpentries-incubator/better-research-software-r/edit/main/episodes/04-code-readability.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -556,9 +556,9 @@ and makes the code easier to reuse and maintain.</p>
 </div>
 </section><section><h2 class="section-heading" id="rules-for-variable-names-in-r">Rules for Variable Names in R<a class="anchor" aria-label="anchor" href="#rules-for-variable-names-in-r"></a></h2>
 <hr class="half-width"><p>$ git add eva_data_analysis.R $ git commit -m “Move library calls to
-the top of the script” Some highlights: Some highlights: - Only
-alphanumeric characters, dot, and underscores are permitted in variable
-names.<br>
+the top of the script”</p>
+<p>Some highlights: - Only alphanumeric characters, dot, and underscores
+are permitted in variable names.<br>
 - Must start with a letter or a dot (.); if it starts with a dot, the
 next character cannot be a digit. - After the first character, you can
 use letters, digits, dots, and underscores.<br>
@@ -1731,7 +1731,7 @@ described by its <code>roxygen2</code> comments may look like:</p>
 </div>
 </div>
 </div>
-<p>Finally, our code may look something like the following:</p>
+<p>At this time, our code may look something like the following:</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1841,14 +1841,167 @@ described by its <code>roxygen2</code> comments may look like:</p>
 <span></span>
 <span><span class="fu">plot_cumulative_time_in_space</span><span class="op">(</span><span class="va">eva_tbl</span>, <span class="va">graph_file</span><span class="op">)</span></span></code></pre>
 </div>
+<p>Now that we have abstracted away the code into functions, we can
+place them inside their own .R files and remove them from the main body
+of the code to further improve readability . Once the functions are
+tucked away in their .R files, we can <code>source()</code> them and
+make them available.</p>
+<p>To accomplish this, we can create three .R scripts (one with each
+function) inside the <code>R/</code> folder. A common name convention is
+to use dashes rather than underscores for filenames. This reorganization
+gets us closer to having an R package that is reusable by us and others
+in the future. The scripts should look like the following:</p>
+<p>The first script is `<code>read-json-to-dataframe.R</code></p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#read-json-to-dataframe.R </span></span>
+<span></span>
+<span></span>
+<span><span class="co">#' Read EVA data from a JSON file into a tibble</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' Reads a JSON file containing an array of records (objects) and returns the</span></span>
+<span><span class="co">#' contents as a tibble for downstream analysis.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param input_file Path to a JSON file (character scalar). The file is expected</span></span>
+<span><span class="co">#'   to contain a JSON array of objects, e.g. `[{"eva":"1", ...}, {"eva":"2", ...}]`.</span></span>
+<span><span class="co">#' @return A tibble with one row per JSON record and one column per field.</span></span>
+<span><span class="co">#' @examples</span></span>
+<span><span class="co">#' eva_tbl &lt;- read_json_to_dataframe("./eva-data.json")</span></span>
+<span><span class="co">#' dplyr::glimpse(eva_tbl)</span></span>
+<span><span class="va">read_json_to_dataframe</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input_file</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu">fromJSON</span><span class="op">(</span><span class="va">input_file</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">tibble</span><span class="fu">::</span><span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+<p>The 2nd script is <code>write-dataframe-to-csv.R</code></p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># write-dataframe-to-csv.R</span></span>
+<span></span>
+<span><span class="co">#' Clean an EVA dataframe and write it to CSV</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' Coerces key columns to the expected types (e.g., `eva` to numeric and `date`</span></span>
+<span><span class="co">#' to POSIXct), drops records missing a usable `duration` or `date`, writes the</span></span>
+<span><span class="co">#' result to a CSV file, and returns the cleaned dataframe.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param df A data frame or tibble containing EVA records. Expected columns</span></span>
+<span><span class="co">#'   include `eva`, `date`, and `duration`.</span></span>
+<span><span class="co">#' @param output_file Path to the output CSV file (character scalar).</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @return The cleaned dataframe (same class as `df` where practical), suitable</span></span>
+<span><span class="co">#'   for piping into downstream steps.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @examples</span></span>
+<span><span class="co">#' eva_tbl &lt;- read_json_to_dataframe("./eva-data.json")</span></span>
+<span><span class="co">#' eva_tbl &lt;- write_dataframe_to_csv(eva_tbl, "./eva-data.csv")</span></span>
+<span><span class="va">write_dataframe_to_csv</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">output_file</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span></span>
+<span>      eva  <span class="op">=</span> <span class="fu">as.numeric</span><span class="op">(</span><span class="va">eva</span><span class="op">)</span>,</span>
+<span>      date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu">ymd_hms</span><span class="op">(</span><span class="va">date</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">duration</span><span class="op">)</span>, <span class="va">duration</span> <span class="op">!=</span> <span class="st">""</span>, <span class="op">!</span><span class="fu">is.na</span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span><span class="va">df</span>, <span class="va">output_file</span><span class="op">)</span></span>
+<span>  <span class="va">df</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+<p>The last script is <code>plot-cumulative-time-in-space.R</code></p>
+<div class="codewrapper sourceCode" id="cb28">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># plot-cumulative-time-in-space.R</span></span>
+<span></span>
+<span><span class="co">#' Plot cumulative EVA time in space and save the figure</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' Computes EVA duration in hours from a `duration` string column (expected format</span></span>
+<span><span class="co">#' like `"H:MM"` or `"HH:MM"`), calculates cumulative time over chronological</span></span>
+<span><span class="co">#' `date`, generates a ggplot line chart, saves it to disk, and prints it.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param df A data frame or tibble containing EVA records. Expected columns:</span></span>
+<span><span class="co">#'   `date` (POSIXct or parseable datetime) and `duration` (character `"H:MM"`).</span></span>
+<span><span class="co">#' @param graph_file Path to the output image file (character scalar), e.g.</span></span>
+<span><span class="co">#'   `"./cumulative_eva_graph.png"`.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @return Invisibly returns the ggplot object.</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @examples</span></span>
+<span><span class="co">#' eva_tbl &lt;- read_json_to_dataframe("./eva-data.json") |&gt;</span></span>
+<span><span class="co">#'   write_dataframe_to_csv("./eva-data.csv")</span></span>
+<span><span class="co">#' plot_cumulative_time_in_space(eva_tbl, "./cumulative_eva_graph.png")</span></span>
+<span><span class="va">plot_cumulative_time_in_space</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">graph_file</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">arrange</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span></span>
+<span>      duration_hours <span class="op">=</span> <span class="op">{</span></span>
+<span>        <span class="va">parts</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_split</span><span class="op">(</span><span class="va">duration</span>, <span class="st">":"</span>, n <span class="op">=</span> <span class="fl">2</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        <span class="fu">as.numeric</span><span class="op">(</span><span class="va">parts</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">as.numeric</span><span class="op">(</span><span class="va">parts</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">60</span></span>
+<span>      <span class="op">}</span>,</span>
+<span>      cumulative_time <span class="op">=</span> <span class="fu">cumsum</span><span class="op">(</span><span class="va">duration_hours</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">cumulative_time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">labs</span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="st">"Year"</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">"Total time spent in space to date (hours)"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">ggsave</span><span class="op">(</span><span class="va">graph_file</span>, plot <span class="op">=</span> <span class="va">p</span>, width <span class="op">=</span> <span class="fl">9</span>, height <span class="op">=</span> <span class="fl">5</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
+<span>  <span class="fu">print</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">invisible</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+<p>With these file in place, our main code block from our original
+script should be edited to use the <code>source()</code> function to
+reuse those functions.</p>
+<div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># EVA cumulative time pipeline (tidyverse-first, with reusable functions + roxygen-style docs)</span></span>
+<span></span>
+<span><span class="kw">library</span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span>
+<span><span class="kw">library</span><span class="op">(</span><span class="va">jsonlite</span><span class="op">)</span></span>
+<span><span class="kw">library</span><span class="op">(</span><span class="va">lubridate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Files</span></span>
+<span><span class="va">input_file</span>  <span class="op">&lt;-</span> <span class="st">"./eva-data.json"</span></span>
+<span><span class="va">output_file</span> <span class="op">&lt;-</span> <span class="st">"./eva-data.csv"</span></span>
+<span><span class="va">graph_file</span>  <span class="op">&lt;-</span> <span class="st">"./cumulative_eva_graph.png"</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#these source() calls make the functions available inside this R session</span></span>
+<span></span>
+<span><span class="kw">source</span><span class="op">(</span><span class="st">"read-json-to-dataframe.R "</span><span class="op">)</span></span>
+<span><span class="kw">source</span><span class="op">(</span><span class="st">"write-dataframe-to-csv.R"</span><span class="op">)</span></span>
+<span><span class="kw">source</span><span class="op">(</span><span class="st">"plot-cumulative-time-in-space.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># --- Main ---</span></span>
+<span><span class="va">eva_tbl</span> <span class="op">&lt;-</span> <span class="fu">read_json_to_dataframe</span><span class="op">(</span><span class="va">input_file</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_dataframe_to_csv</span><span class="op">(</span>output_file <span class="op">=</span> <span class="va">output_file</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plot_cumulative_time_in_space</span><span class="op">(</span><span class="va">eva_tbl</span>, <span class="va">graph_file</span><span class="op">)</span></span></code></pre>
+</div>
 <p>Do not forget to commit any uncommitted changes you may have and then
 push your work to GitHub.</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a> <span class="ex">$</span> git add <span class="op">&lt;</span>your_changed_files<span class="op">&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Your commit message"</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a> <span class="ex">$</span> git push origin main</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a> <span class="ex">$</span> git add <span class="op">&lt;</span>your_changed_files<span class="op">&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a> <span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Your commit message"</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a> <span class="ex">$</span> git push origin main</span></code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
@@ -1874,7 +2027,7 @@ in a structed way that later be used to automate documentation.</p>
 <div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>At this point, the code in your local software project’s directory
-should be as in: <a href="https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure" class="external-link uri">https://github.com/carpentries-incubator/bbrs-software-project/tree/05-code-structure</a></p>
+should be as in: <a href="https://github.com/carpentries-incubator/better-research-software-r/blob/main/tree/04-code-structure" class="external-link uri">https://github.com/carpentries-incubator/better-research-software-r/blob/main/tree/04-code-structure</a></p>
 </div>
 </div>
 </div>
@@ -1895,14 +2048,14 @@ for the course.</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="ex">-</span>	Readable code is easier to understand, maintain, debug, and extend <span class="er">(</span><span class="ex">reuse</span><span class="kw">)</span><span class="ex">,</span> which saves time and effort.</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a><span class="ex">-</span>	Choosing descriptive variable and function names communicates intent more clearly.</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1" aria-label="code-block-27-3"></a><span class="ex">-</span>	Using <span class="kw">`</span><span class="ex">roxygen2</span><span class="kw">`</span> comments adds context and helps others understand why the code exists, not just what it does.</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1" aria-label="code-block-27-4"></a><span class="ex">-</span>	Use packages for common functionality to avoid duplicating work.</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1" aria-label="code-block-27-5"></a>	<span class="ex">Refactor</span> repeated logic into small, reusable functions. This improves readability by making responsibilities clear, compartmentalizing what each section does, and isolating code that can be reused elsewhere.</span></code></pre>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1" aria-label="code-block-31-1"></a><span class="ex">-</span>	Readable code is easier to understand, maintain, debug, and extend <span class="er">(</span><span class="ex">reuse</span><span class="kw">)</span><span class="ex">,</span> which saves time and effort.</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1" aria-label="code-block-31-2"></a><span class="ex">-</span>	Choosing descriptive variable and function names communicates intent more clearly.</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1" aria-label="code-block-31-3"></a><span class="ex">-</span>	Using <span class="kw">`</span><span class="ex">roxygen2</span><span class="kw">`</span> comments adds context and helps others understand why the code exists, not just what it does.</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1" aria-label="code-block-31-4"></a><span class="ex">-</span>	Use packages for common functionality to avoid duplicating work.</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1" aria-label="code-block-31-5"></a>	<span class="ex">Refactor</span> repeated logic into small, reusable functions. This improves readability by making responsibilities clear, compartmentalizing what each section does, and isolating code that can be reused elsewhere.</span></code></pre>
 </div>
 </div>
 </div>
@@ -1971,8 +2124,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/better-research-software-r/instructor/04-code-readability.html",
   "identifier": "https://carpentries-incubator.github.io/better-research-software-r/instructor/04-code-readability.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2026-04-28",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-26",
+  "datePublished": "2026-06-26"
 }
 
   </script><script>
