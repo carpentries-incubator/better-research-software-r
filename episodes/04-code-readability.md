@@ -1251,7 +1251,7 @@ plot_cumulative_time_in_space <- function(df, graph_file) {
 
 ```
 
-With these file in place, our main code block should look like this, 
+With these file in place, our main code block from our original script should be edited to use the `source()` function to reuse those functions. 
 
 
 ```r
