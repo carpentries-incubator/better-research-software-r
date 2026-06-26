@@ -1,5 +1,5 @@
 ---
-title: Wrap-up
+title: Wrap-Up
 teaching: 45
 exercises: 0
 ---

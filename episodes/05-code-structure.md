@@ -1,5 +1,5 @@
 ---
-title: Code structure
+title: Code Structure
 teaching: 60
 exercises: 30
 ---
@@ -57,7 +57,7 @@ renv::restore("renv.lock")
 
 :::
 
-## Functions for modular and reusable code 
+## Functions for Modular and Reusable Code 
 
 As we have already seen in the previous episode - functions play a key role in creating modular and reusable code.
 After extracting units of functionality into separate functions, the main part of our code became much simpler and more readable, only containing the invocation of the following three functions:
@@ -230,7 +230,10 @@ plot_cumulative_time_in_space(eva_tbl, graph_file)
 
 Even though our code became a bit longer than previously, it is more readable and new functions we added can potentially be reused elsewhere too.
 
-## Creating a cleaner code base
+## Creating a Main Function
+
+Now we also want to move the main functionality into a main function.
+There is a common code structure (pattern) for writing a main function in Python:
 
 Some programming languages — Python, for instance — favor a main function so that code can be imported as a module *and* run directly as a script. This is done to prevent execution on import.
 
@@ -325,9 +328,7 @@ my_arg <- args[1]
 # main block of code
 ```
 
-With that implemented, we would be able to run `Rscript eva_data_analysis.R new_eva_data.json`, where `args[1]` will hold the value `new_eva_data.json`.
-
-:::
+## Command-Line Interface to Code
 
 A common way to structure code is to have a command-line interface that allows the passing of various parameters. For example, we can pass the input data file to be read and the output file to be written to as parameters to our script, and avoid hard-coding them. This improves interoperability and reusability of our code, as it can now be run over any data file of the same structure, invoked from the command line terminal, and integrated into other scripts or workflows and pipelines.
 
@@ -390,7 +391,7 @@ $ git add eva_data_analysis.R
 $ git commit -m "Add command line functionality to script"
 ```
 
-## Directory structure for software projects
+## Directory Structure for Software Projects
 
 Expanding on the code structure theme, following conventions on consistent and informative directory structure for your projects will ensure people immediately know where to find things — especially helpful for long-term research projects or when working in teams. The directory structure for organizing your research software project involves creating a clear and logical layout for files and data, ensuring easy navigation, collaboration, and reproducibility.
 
@@ -560,7 +561,7 @@ At this point, the code in your local software project's directory should be as 
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

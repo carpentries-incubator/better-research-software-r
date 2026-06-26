@@ -1,5 +1,5 @@
 ---
-title: Software management & collaboration
+title: Software Management & Collaboration
 teaching: 60
 exercises: 30
 ---
@@ -52,7 +52,7 @@ $ source venv_spacewalks/Scripts/activate # Windows
 ```
 :::
 
-## Sharing code to encourage collaboration
+## Sharing Code to Encourage Collaboration
 
 ### Making the code public
 
@@ -228,7 +228,7 @@ There also journals which specialise in research software such as the [Journal o
 With these venues, the submission will be the software itself and not a paper, although a short abstract or description of the software is often required.
 :::
 
-## Working with collaborators
+## Working With Collaborators
 
 The strength of online collaboration platforms such as GitHub does not just lie in the ability to share code. 
 They also allow us to track problems with that code, for multiple developers to work on it independently and bring their changes together and to review those changes before they are accepted.
@@ -785,7 +785,7 @@ At this point, the code in your local software project's directory should be as 
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the topic of this episode:
 

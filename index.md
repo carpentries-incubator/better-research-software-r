@@ -7,7 +7,7 @@ The course can be delivered over 2 full or 4 half days.
 
 ## Target audience
 
-- Post-graduate students, early career researchers or junior Research Software Engineers (RSEs) who are starting their research or software projects, have foundational knowledge of Python, version control and using software tools from command line shell, and want to develop software to support their research using established best practices
+- Post-graduate students, early career researchers or junior Research Software Engineers (RSEs) who are starting their research or software projects, have foundational knowledge of R, version control and using software tools from command line shell, and want to develop software to support their research using established best practices
 - Researchers or scientists who had foundational software training before but wish to refresh, reinforce or improve their skills and practices in the wider context of FAIR scientific practice and sharing and writing software for open and reproducible research 
 
 Check out a few example [learner profiles](./profiles.html), to see if this course is a right fit for you.
@@ -18,7 +18,7 @@ Check out a few example [learner profiles](./profiles.html), to see if this cour
 
 Foundational knowledge of the following is **required** to be able to understand code examples used in the course:
 
-* Python used to write scientific code
+* R used to write scientific code
 * Version control with Git 
 * Working in a command line interface (shell)
 

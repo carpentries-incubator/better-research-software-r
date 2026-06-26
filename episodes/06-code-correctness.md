@@ -1,5 +1,5 @@
 ---
-title: "Code correctness & testing"
+title: "Code Correctness & Testing"
 teaching: 60
 exercises: 30
 ---
@@ -55,7 +55,7 @@ $ source venv_spacewalks/Scripts/activate # Windows
 
 :::
 
-## Why use software testing?
+## Why Use Software Testing?
 
 Including testing in our research workflow helps us to produce **better software** and conduct **better research**:
 
@@ -74,7 +74,7 @@ Including testing in our research workflow helps us to produce **better software
   step-by-step approach that we can apply to verify that our code is
   correct.
 
-## Types of software tests
+## Types of Software Tests
 
 There are many different types of software tests, including:
 
@@ -125,7 +125,7 @@ Fill in the blanks in the sentences below:
 :::
 :::
 
-## Informal testing
+## Informal Testing
 
 How should we test our code? One approach is to copy/paste the code or a function into a Python terminal - *different from a command line terminal* - which allows you to interact with the Python interpreter more directly.
 From the Python terminal we can then run one function or a piece of code at a time and check that they behave as expected.
@@ -224,7 +224,7 @@ However, there are limitations to this approach:
 :::
 ::::::
 
-## Formal testing
+## Formal Testing
 
 We can overcome some of these limitations by formalising our testing process. 
 A formal approach to testing our code is to write dedicated test functions to check it. 
@@ -397,7 +397,7 @@ To run our remaining tests we would have to manually comment out our failing tes
 As our code base grows, testing in this way becomes cumbersome and error-prone. 
 These limitations can be overcome by automating our tests using a **testing framework**.
 
-## Testing frameworks
+## Testing Frameworks
 
 Testing frameworks can automatically find all the tests in our code base, run all of them (so we do not have to invoke 
 them explicitly or, even worse, forget to invoke them), and present the test results as a readable summary.
@@ -644,7 +644,7 @@ As a result, running the function raises a `NameError` rather than returning a c
 :::
 :::
 
-## Test suite design
+## Test Suite Design
 
 We now have the tools in place to automatically run tests. 
 However, that alone is not enough to properly test code.
@@ -1187,7 +1187,7 @@ if __name__ == "__main__":
 
 There is an [optional exercise](../learners/test-suite-exercise.md) to implement additional tests and practice writing tests some more.
 
-## Continuous Integration for automated testing
+## Continuous Integration for Automated Testing
 
 Continuous Integration (CI) services provide the infrastructure to automatically run every test function in 
 the test code suite every time changes are pushed to a remote repository.
@@ -1220,7 +1220,7 @@ https://github.com/carpentries-incubator/bbrs-software-project/tree/07-software-
 
 ::::::
 
-## Further reading
+## Further Reading
 
 We recommend the following resources for some additional reading on the
 topic of this episode:
