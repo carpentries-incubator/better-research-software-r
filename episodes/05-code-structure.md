@@ -24,7 +24,7 @@ readability, accessibility and reproducibility.
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 In the previous episode we have seen some tools and practices that can help up improve readability of our code - 
-including breaking our code into small, reusable functions that perform one specific task.
+including breaking our code into asmall, reusable functions that perform one specific task.
 We are going to explore a bit more how using common code structures can improve readability, accessibility and 
 reusability of our code, and will expand these practices on our (research or code) projects as a whole.
 
@@ -327,6 +327,8 @@ my_arg <- args[1]
 
 # main block of code
 ```
+
+:::
 
 ## Command-Line Interface to Code
 
