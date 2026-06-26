@@ -1142,7 +1142,7 @@ plot_cumulative_time_in_space(eva_tbl, graph_file)
 
 Now that we have abstracted away the code into functions, we can place them inside their own .R files and remove them from the main body of the code to further improve readability . Once the functions are tucked away in their .R files, we can `source()` them and make them available.
 
-To accomplish this, we can place three .R scrips inside the `R/` folder. Each .R contains its own function. A common name convention is to use dashes rather than underscores for filenames. We would end up with these three files 
+To accomplish this, we can create three .R scripts (one with each function) inside the `R/` folder. A common name convention is to use dashes rather than underscores for filenames.  This reorganization gets us closer to having an R package that is reusable by us and others in the future.  The scripts should look like the following:
 
 The first script is ``read-json-to-dataframe.R`
 ```r
