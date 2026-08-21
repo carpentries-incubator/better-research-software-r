@@ -157,8 +157,8 @@ renv::init()
 
 If you list the contents of the project directory, you should see something like:
 
-```bash
-$ tree -a -L 5
+```r
+fs::dir_tree()
 ```
 
 ```output
