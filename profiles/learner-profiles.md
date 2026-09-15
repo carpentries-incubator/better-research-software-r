@@ -5,10 +5,10 @@ title: Learner Profiles
 ## Bobby the Bioinformatician
 Bobby is a postdoctoral researcher in bioinformatics who finished his PhD 2 years ago.
 He attended a [Software Carpentry][swc-lessons] workshop 3 years ago during his PhD, which covered foundational knowledge of 
-UNIX shell, version control system Git and Python programming language. 
+UNIX shell, version control system Git and R programming language. 
 
-Bobby wrote a couple of Python data analysis scripts during his PhD, but has not done much coding recently. 
-He now needs to run a set of Python scripts written by another researcher who has recently left his group. 
+Bobby wrote a couple of R data analysis scripts during his PhD, but has not done much coding recently. 
+He now needs to run a set of R scripts written by another researcher who has recently left his group. 
 These scripts read data in FASTQ format (textual file format for storing biological sequence data and its 
 corresponding quality score) and write out a set of CSV files with summary information. 
 The scripts may require minor bug fixes and improved documentation so that others can more easily understand and 
@@ -22,7 +22,7 @@ data, documentation on how to run the code, results and any supporting informati
 
 ## Gerry the Geographer
 Gerry is a research assistant in human geography, with a Masters degree in geography.
-During her studies for a Masters degree, Gerry wrote some Python scripts for downloading and analysing data.
+During her studies for a Masters degree, Gerry wrote some R scripts for downloading and analysing data.
 
 Gerry has joined a new research project and is now responsible for developing new R analysis scripts that 
 take CSV and JSON geo-referenced time series data from several online sources, perform some statistical analysis 
@@ -36,9 +36,9 @@ make it available to all project stakeholders for comments and reuse.
 
 ## Philippa the Physicist
 Philippa is a Research Fellow with a PhD in particle physics and several years of postdoc experience.
-She wrote some Fortran modules as an undergraduate, and is a self-taught Python programmer. 
+She wrote some Fortran modules as an undergraduate, and is a self-taught R programmer. 
 
-She has built a large set of Python routines which perform a novel type of simulation on an HPC system. 
+She has built a large set of R routines which perform a novel type of simulation on an HPC system. 
 The simulation is configured via a JSON file and writes out data in a custom binary format. 
 Another set of scripts produce visualisations out of the resulting simulation data. 
 
@@ -62,9 +62,9 @@ Excel or SPSS (the tools that Sam has mainly used so far).
 Sam has never shared his code, apart from emailing it to a few close collaborators. 
 He has now received some funding to employ a software engineering undergraduate student over the summer, and 
 wants to be able to direct them towards best practices for building research software. 
-Sam wants the student to use Python over proprietary SPSS for this project to make the work more easily reproducible.
+Sam wants the student to use R over proprietary SPSS for this project to make the work more easily reproducible.
 
-In addition, members of Sam's current group all use Python and could verify and contribute to the code, 
+In addition, members of Sam's current group all use R and could verify and contribute to the code, 
 and maintain it after the summer placement finishes.
 
 Finally, a colleague has told Sam that the code should be shared on GitHub (so that the wider community can 
