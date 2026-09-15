@@ -22,5 +22,4 @@
 "learners/licensing.md" "a1929a660164e48b952774d23292788b" "site/built/licensing.md" "2025-09-30"
 "learners/ethical-environmental-considerations.md" "a21d2780d9d1fc86bd1104a214edbd26" "site/built/ethical-environmental-considerations.md" "2025-09-30"
 "learners/setup.md" "a10c74c631874c01812d705a4286c1ad" "site/built/setup.md" "2026-03-23"
-"profiles/learner-profiles.md" "8fb91d65843f75b9b4aa60783eb65389" "site/built/learner-profiles.md" "2025-09-30"
-"renv/profiles/lesson-requirements/renv.lock" NA "site/built/renv.lock" "2026-09-15"
+"profiles/learner-profiles.md" "d9a6b2a346574fd70127da3628596c67" "site/built/learner-profiles.md" "2026-09-15"
